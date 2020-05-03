@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch> 
+	<!-- This is the top-level launch file for the bbot gazebo sim -->
+	<include file="$(find bbot_gazebo)/launch/bbot_world.launch"> 
+	</include>
+</launch>
