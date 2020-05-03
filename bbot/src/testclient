@@ -1,0 +1,44 @@
+#! /usr/bin/env python
+
+
+import roslib
+roslib.load_manifest('bbot')
+import rospy
+import actionlib
+import random
+
+from bbot.msg import bbotAction, bbotGoal
+from moveit_msgs.msg import RobotState, RobotTrajectory
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+
+def rundemo():
+	client = actionlib.SimpleActionClient('bbotaxn', bbotAction)
+	rospy.loginfo("Client created. Waiting for server.")
+	client.wait_for_server()
+	rospy.loginfo("Action client started")
+	bbottraj = RobotTrajectory()
+	bbottraj.joint_trajectory.joint_names = ['1', '2', '3', '4', '5','6']
+	bbottraj.joint_trajectory.points = []
+	
+	maxcmd = 4000.0
+	cmdlen = 1
+	jtp = JointTrajectoryPoint()
+	for i in range(cmdlen):
+		jtp.positions = [0, 0, 0, 0, 0, 0] # [2* random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd]
+		jtp.time_from_start = rospy.Duration.from_sec(i*1.0)
+		bbottraj.joint_trajectory.points.append(jtp)
+
+	goal = bbotGoal(traj = bbottraj) # a RobotTrajectory msg
+	client.send_goal(goal)
+	client.wait_for_result(rospy.Duration.from_sec(cmdlen+10))
+	return client.get_result() # a boolean object
+
+
+
+if __name__ == '__main__':
+	try:
+		rospy.init_node('robo_client')
+		result = rundemo()
+		print(result)
+	except rospy.ROSInterruptException:
+		print("program interrupted before completion")

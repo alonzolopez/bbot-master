@@ -1,0 +1,17 @@
+The dynamixels are now controlled by a ROS action server 'bbotaxn'
+Its callback function takes a RobotTrajectory object as a goal and 
+proceeds point by point through the object via a for loop
+At the top of the for loop, it checks that the goal has not been cancelled, 
+and then proceeds to command the motors to achieve the next waypoint. Throughout execution, it gives feedback.currentpos.joint_stat based on the current position
+of the motors. Once it has cycled through all of the waypoints, the action result.complete is published
+as True. 
+
+The motor commands clamp to min and max values set for each motor, TO BE EDITED LATER
+ONCE THE CAD IS COMPLETE
+
+Right now, the goal.traj.joint_trajectory.positions come in as direct motor commands, but down the road the goal.traj.joint_trajectory.positions is meant to be taken in as numbers with physical meaning, aka theta_n or d_n values appropriate as the variable for each joint. Each waypoint comes with a time value attached to it that the bbot_dynamixel script waits before moving on to the next waypoint so it does not move through commands too quickly.
+
+Still need to write the IK and FK in the client node, or possibly as a service.
+
+
+I want the timer to publish jointState at a specified rate, but I can't get it to work with the action server. The problem is that both the Timer and the action server are trying to access the Serial comm to read the present pos of the motors. SOLUTION: implemented an action lock to only allow the action server's callback to read the serial port when the goal is being executed. Once the goal is complete, the Timer is free to communicate with the serial port again.

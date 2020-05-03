@@ -1,0 +1,48 @@
+#! /usr/bin/env python
+
+
+import roslib
+roslib.load_manifest('bbot')
+import rospy
+import actionlib
+import random
+
+from bbot.msg import bbotAction, bbotGoal
+from moveit_msgs.msg import RobotState, RobotTrajectory
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+
+def initializeJoints():
+	client = actionlib.SimpleActionClient('bbotaxn', bbotAction)
+	rospy.loginfo("Client created. Waiting for server.")
+	client.wait_for_server()
+	rospy.loginfo("Action client started")
+	bbottraj = RobotTrajectory()
+	bbottraj.joint_trajectory.joint_names = ['1', '2', '3', '4', '5','6', '7']
+	bbottraj.joint_trajectory.points = []
+	
+	zero = 2047
+	opengrip = 2150
+	closegrip = 2775
+	rightturn = 4095/4
+	zero = 2047
+	thirtydeg = rightturn/3
+	fortyfivedeg = rightturn/2
+	sixtydeg = 2*rightturn/3
+	jtp = JointTrajectoryPoint()
+	jtp.positions = [zero, zero, zero - rightturn, zero, zero, zero, opengrip]
+	jtp.time_from_start = rospy.Duration.from_sec(1.0)
+	bbottraj.joint_trajectory.points.append(jtp)
+
+	goal = bbotGoal(traj = bbottraj) # a RobotTrajectory msg
+	client.send_goal(goal)
+	client.wait_for_result(rospy.Duration.from_sec(10))
+	return client.get_result() # a boolean object
+
+
+if __name__ == '__main__':
+	try:
+		rospy.init_node('robo_client')
+		result = initializeJoints()
+		print(result)
+	except rospy.ROSInterruptException:
+		print("program interrupted before completion")

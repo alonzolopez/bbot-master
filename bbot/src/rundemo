@@ -1,0 +1,101 @@
+#! /usr/bin/env python
+
+
+import roslib
+roslib.load_manifest('bbot')
+import rospy
+import actionlib
+import random
+
+from bbot.msg import bbotAction, bbotGoal
+from moveit_msgs.msg import RobotState, RobotTrajectory
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+
+def initializeJoints():
+	client = actionlib.SimpleActionClient('bbotaxn', bbotAction)
+	rospy.loginfo("Client created. Waiting for server.")
+	client.wait_for_server()
+	rospy.loginfo("Action client started")
+	bbottraj = RobotTrajectory()
+	bbottraj.joint_trajectory.joint_names = ['1', '2', '3', '4', '5','6', '7']
+	bbottraj.joint_trajectory.points = []
+	
+	zero = 2047
+	priszero = 2000
+	jtp = JointTrajectoryPoint()
+	jtp.positions = [priszero, zero, zero, zero, zero, zero, zero]
+	jtp.time_from_start = rospy.Duration.from_sec(1.0)
+	bbottraj.joint_trajectory.points.append(jtp)
+
+	goal = bbotGoal(traj = bbottraj) # a RobotTrajectory msg
+	client.send_goal(goal)
+	client.wait_for_result(rospy.Duration.from_sec(10))
+	return client.get_result() # a boolean object
+
+def rundemo():
+	client = actionlib.SimpleActionClient('bbotaxn', bbotAction)
+	rospy.loginfo("Client created. Waiting for server.")
+	client.wait_for_server()
+	rospy.loginfo("Action client started")
+	bbottraj = RobotTrajectory()
+	bbottraj.joint_trajectory.joint_names = ['1', '2','3', '4', '5', '6', '7'] 
+	bbottraj.joint_trajectory.points = []
+	# jtp = JointTrajectoryPoint()
+	prisrange = [6000, 2000] # [close to motor, away from motor]
+	priszero = 2200
+	rightturn = 4095/4
+	zero = 2047
+	thirtydeg = rightturn/3
+	fortyfivedeg = rightturn/2
+	sixtydeg = 2*rightturn/3
+	closegrip = 2775
+	opengrip = 2150
+	tdef = 2.0 # default time alotted for each waypoint in seconds
+	cmds = [
+	[tdef*2, priszero, zero, zero, zero, zero, zero, opengrip] # initial waypoint
+	# ,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero, zero] 
+	,[tdef*1.5, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, opengrip] # initial pos
+	,[tdef, priszero, zero-fortyfivedeg, zero, zero+2*fortyfivedeg, zero, zero, opengrip]
+	,[tdef*1.5, priszero+2500, zero-fortyfivedeg, zero-thirtydeg*2/3, zero+rightturn, zero+thirtydeg*5/6, zero, opengrip] # cup 1 location, pickup cup
+	,[tdef, priszero+2500, zero-fortyfivedeg, zero-thirtydeg*2/3, zero+rightturn, zero+thirtydeg*5/6, zero, closegrip] # cup 1 location 
+	,[tdef*.4, priszero+2500, zero-fortyfivedeg, zero-thirtydeg/2, zero+rightturn, zero+thirtydeg*2/3, zero, closegrip]
+	,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, closegrip]
+	,[tdef, priszero, zero+sixtydeg+thirtydeg/2, zero+fortyfivedeg, zero+rightturn, zero-fortyfivedeg, zero, closegrip] # dump cup location
+	,[tdef*.75, priszero, zero+sixtydeg+thirtydeg/2, zero+fortyfivedeg, zero+rightturn, zero-fortyfivedeg, zero-rightturn-fortyfivedeg, closegrip] # dump cup action 1
+	,[tdef*.75, priszero, zero+sixtydeg+thirtydeg/2, zero+fortyfivedeg, zero+rightturn, zero-fortyfivedeg, zero, closegrip] # dump cup action 2
+	,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, closegrip] # initial pos
+	,[tdef*1.5, priszero+2500, zero-fortyfivedeg, zero-thirtydeg/2, zero+rightturn, zero+thirtydeg*2/3, zero, closegrip] # cup 1 location, return cup
+	,[tdef*.75, priszero+2500, zero-fortyfivedeg, zero-thirtydeg/2, zero+rightturn, zero+thirtydeg*2/3, zero, opengrip] # cup 1 location 
+	,[tdef, priszero, zero-fortyfivedeg, zero-thirtydeg/2, zero+rightturn, zero+thirtydeg*2/3, zero, opengrip]
+
+	,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, opengrip] # initial pos
+	,[tdef*1.5, priszero, zero, zero-sixtydeg, zero+2*fortyfivedeg, zero+sixtydeg, zero, opengrip] # cup 2 location
+	,[tdef, priszero, zero, zero-sixtydeg, zero+2*fortyfivedeg, zero+sixtydeg, zero, closegrip] # cup 2 location
+	,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, closegrip] # initial pos
+	,[tdef, priszero, zero+sixtydeg+thirtydeg/2, zero+fortyfivedeg, zero+rightturn, zero-fortyfivedeg, zero, closegrip] # dump cup location
+	,[tdef, priszero, zero+sixtydeg+thirtydeg/2, zero+fortyfivedeg, zero+rightturn, zero-fortyfivedeg, zero-rightturn-fortyfivedeg, closegrip] # dump cup action 1
+	,[tdef, priszero, zero+sixtydeg+thirtydeg/2, zero+fortyfivedeg, zero+rightturn, zero-fortyfivedeg, zero, closegrip] # dump cup action 2
+	,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, closegrip] # initial pos
+	,[tdef, priszero, zero, zero-sixtydeg, zero+2*fortyfivedeg, zero+sixtydeg, zero, closegrip] # cup 2 location
+	,[tdef, priszero, zero, zero-sixtydeg, zero+2*fortyfivedeg, zero+sixtydeg, zero, opengrip]
+	# ,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, opengrip] # initial pos
+	,[tdef, priszero, zero, zero+fortyfivedeg, zero+2*fortyfivedeg, zero-fortyfivedeg, zero, opengrip]
+	]
+	for i in range(len(cmds)):
+		jtp = JointTrajectoryPoint()
+		jtp.positions = cmds[i][1:len(cmds[i])] # * maxcmd, random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd, random.random() * maxcmd]
+		jtp.time_from_start = rospy.Duration.from_sec(cmds[i][0])
+		bbottraj.joint_trajectory.points.append(jtp)
+
+	goal = bbotGoal(traj = bbottraj) # a RobotTrajectory msg
+	client.send_goal(goal)
+	client.wait_for_result(rospy.Duration.from_sec(100))
+	return client.get_result() # a boolean object
+
+if __name__ == '__main__':
+	try:
+		rospy.init_node('robo_client')
+		result = rundemo()
+		print(result)
+	except rospy.ROSInterruptException:
+		print("program interrupted before completion")

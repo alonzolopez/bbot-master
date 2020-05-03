@@ -1,0 +1,8 @@
+# Define the goal
+moveit_msgs/RobotTrajectory traj # RobotTrajectory we'd like to execute
+---
+# Define the result
+bool complete		# was the trajectory completed? True if yes				
+---
+# Define a feedback message
+moveit_msgs/RobotState currentpos
