@@ -1,10 +1,14 @@
 <?xml version="1.0"?>
 <launch>
+    <!-- These are arguments you can pass to this launch file-->
     <arg name="debug" default="false"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
+    <arg name="robot_name" default="bbot"/>
+
+    <!-- This includes the empty_world.launch to launch an empty world in gazebo with the params we pass-->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find bbot_gazebo)/worlds/bbot.world"/>
         <arg name="debug" value="$(arg debug)"/>
@@ -13,4 +17,12 @@
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
     </include>
+
+    <!-- Load the bbot URDF-->
+    <include file="$(find bbot_description)/launch/bbot_upload.launch">
+        <arg name="robot_name" value="$(arg robot_name)"/>
+    </include>
+
+    <!-- Spawn the URDF in Gazebo -->
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model bbot -param robot_description"/>
 </launch>

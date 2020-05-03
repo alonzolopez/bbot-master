@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="bbot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<!-- Import Rviz colors -->
+	<xacro:include filename="$(find bbot_description)/urdf/materials.xacro" />
+
+	<!-- Import the bbot macro -->
+	<xacro:include filename="$(find bbot_description)/urdf/bbot.xacro"/>
+	<xacro:arg name="robot_name" default="bbot"/>
+	<xacro:arg name="origin_xyz" default="0 0 0"/>
+  	<xacro:arg name="origin_rpy" default="0 0 0"/>
+
+  	<!-- Fix to world-->
+  	<link name="world"/>
+
+  	<!-- call bbot xacro -->
+  	<xacro:bbot robot_name="$(arg robot_name)" parent="world">
+  		<origin xyz="$(arg origin_xyz)" rpy="$(arg origin_rpy)"/>
+  	</xacro:bbot>
+
+
+</robot>
