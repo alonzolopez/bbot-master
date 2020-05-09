@@ -26,11 +26,11 @@
             <inertial>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
                 <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <inertia ixx="0.000070" ixy="0" ixz="0" iyy="0.000174" iyz="0" izz="0.000107"/>
             </inertial>
 
             <visual>
-                <origin xyz="-0.0502 0.0508 0" rpy="${pi/2.0} 0 0"/>
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/baseplate.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -38,7 +38,7 @@
             </visual>
 
             <collision>
-                <origin xyz="-0.0502 0.0508 0" rpy="${pi/2.0} 0 0"/>
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/baseplate.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -54,31 +54,31 @@
 
         <link name="${robot_name}_link_motor1">
             <inertial>
-                <origin xyz="0.0386 -0.0178 0" rpy="0 0 ${pi/2.0}"/>
+                <origin xyz="0 0 0.01" rpy="0 0 ${pi/2.0}"/>
                 <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000013" iyz="0" izz="0.000027"/>
             </inertial>
 
             <visual>
-                <origin xyz="0.0386 -0.0178 0.00083" rpy="0 0 ${pi/2.0}"/>
+                <origin xyz="0 0 0.01" rpy="0 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_no_idler.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
 
             <collision>
-                <origin xyz="0.0386 -0.0178 0.00083" rpy="0 0 ${pi/2.0}"/>
+                <origin xyz="0 0 0.01" rpy="0 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_no_idler.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
         </link>
 
-        <joint name="${robot_name}_motor1_motor2_joint" type="revolute">
+        <joint name="${robot_name}_joint_motor1_link1_2" type="revolute">
             <parent link="${robot_name}_link_motor1"/>
-            <child link="${robot_name}_link_motor2"/>
+            <child link="${robot_name}_link1_2"/>
             <origin xyz="0 0 0.0517" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
@@ -90,29 +90,121 @@
             <dynamics damping="${joint_damping}"/>
         </joint>
 
-        <link name="${robot_name}_link_motor2">
+        <link name="${robot_name}_link1_2">
             <inertial>
-                <origin xyz="-0.0178 0.015 0" rpy="${pi/2.0} 0 0"/>
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
                 <mass value="1"/>
                 <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
             </inertial>
 
             <visual>
-                <origin xyz="-0.0178 0.015 0" rpy="${pi/2.0} 0 0"/>
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link1_2.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/link1_2.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </collision>
+        </link>
+
+        <joint name="${robot_name}_link1_2_motor2" type="fixed">
+            <parent link="${robot_name}_link1_2"/>
+            <child link="${robot_name}_link_motor2"/>
+            <origin xyz="0 0 0.00719" rpy="0 0 0"/>
+        </joint>
+
+        <link name="${robot_name}_link_motor2">
+            <inertial>
+                <origin xyz="0 0 0.2" rpy="${pi/2} 0 ${pi}"/>
+                <mass value="1"/>
+                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0.2" rpy="${pi/2} 0 ${pi}"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
 
             <collision>
-                <origin xyz="-0.0178 0.015 0" rpy="${pi/2.0} 0 0"/>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
         </link>
+
+        <joint name="${robot_name}_joint_motor2_link2_3" type="revolute">
+            <parent link="${robot_name}_link_motor2"/>
+            <child link="${robot_name}_link2_3"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+                effort="${max_effort}" velocity="${max_velocity}" />
+            <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                     soft_upper_limit="${168 * pi / 180}"
+                     k_position="${safety_controller_k_pos}"
+                     k_velocity="${safety_controller_k_vel}"/> 
+            <dynamics damping="${joint_damping}"/>
+        </joint>
+
+        <link name="${robot_name}_link2_3">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="1"/>
+                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/link2_3.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/link2_3.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </collision>
+        </link>
+
+        <!-- joint between motor 2 and link2_3 -->
+        <!-- link 2_3 -->
+        <!-- joint between link2_3 and motor 3 -->
+        <!-- motor3 as link-->
+        <!-- joint between motor 3 and link 3_4 -->
+        <!-- link 3_4 -->
+        <!-- joint between link 3_4 and motor 4 -->
+        <!-- motor4 -->
+        <!-- joint between motor 4 and link 4_5 -->
+        <!-- link 4_5 -->
+        <!-- joint between link 4_5 and motor 5 -->
+        <!-- motor 5 -->
+        <!-- joint between motor 5 and link 5_6 -->
+        <!-- link 5_6 -->
+        <!-- joint between link 5_6 and motor6 -->
+        <!-- motor 6 -->
+        <!-- joint between motor6 and link_grasper_base-->
+        <!-- link_grasper_base -->
+        <!-- joint between link_grasper_base and motor7 -->
+        <!-- motor 7 -->
+        <!-- joint between motor 7 and link_claw1-->
+        <!-- link_claw1 -->
+
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
     </xacro:macro>
 
