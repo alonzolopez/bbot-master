@@ -1,6 +1,18 @@
 <?xml version="1.0"?>
 <launch> 
+	<arg name="debug" default="false"/>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="robot_name" default="bbot"/>
 	<!-- This is the top-level launch file for the bbot gazebo sim -->
 	<include file="$(find bbot_gazebo)/launch/bbot_world.launch"> 
+		<arg name="debug" value="$(arg debug)"/>
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+        <arg name="robot_name" value="$(arg robot_name)"/>
 	</include>
 </launch>

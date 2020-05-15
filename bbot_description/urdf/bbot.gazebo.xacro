@@ -14,7 +14,7 @@
             <mu2>0.2</mu2>
         </gazebo>
 
-        <gazebo reference="${robot_name}_link_1_2">
+        <gazebo reference="${robot_name}_link1_2">
             <material>Gazebo/Orange</material>
             <mu1>0.2</mu1>
             <mu2>0.2</mu2>
@@ -26,7 +26,7 @@
             <mu2>0.2</mu2>
         </gazebo>
 
-        <gazebo reference="${robot_name}_link_2_3">
+        <gazebo reference="${robot_name}_link2_3">
             <material>Gazebo/Orange</material>
             <mu1>0.2</mu1>
             <mu2>0.2</mu2>
@@ -38,7 +38,7 @@
             <mu2>0.2</mu2>
         </gazebo>
 
-        <gazebo reference="${robot_name}_link_3_4">
+        <gazebo reference="${robot_name}_link3_4">
             <material>Gazebo/Orange</material>
             <mu1>0.2</mu1>
             <mu2>0.2</mu2>
@@ -50,7 +50,7 @@
             <mu2>0.2</mu2>
         </gazebo>
 
-        <gazebo reference="${robot_name}_link_4_5">
+        <gazebo reference="${robot_name}_link4_5">
             <material>Gazebo/Orange</material>
             <mu1>0.2</mu1>
             <mu2>0.2</mu2>
@@ -62,7 +62,7 @@
             <mu2>0.2</mu2>
         </gazebo>
 
-        <gazebo reference="${robot_name}_link_5_6">
+        <gazebo reference="${robot_name}_link5_6">
             <material>Gazebo/Orange</material>
             <mu1>0.2</mu1>
             <mu2>0.2</mu2>
@@ -74,7 +74,7 @@
             <mu2>0.2</mu2>
         </gazebo>
 
-        <gazebo reference="${robot_name}_link_6_7">
+        <gazebo reference="${robot_name}_link6_7">
             <material>Gazebo/Orange</material>
             <mu1>0.2</mu1>
             <mu2>0.2</mu2>
