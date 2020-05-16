@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(bbot)
+project(bbot_control)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -8,10 +8,9 @@ project(bbot)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  moveit_msgs
-  roscpp
-  rospy
-  std_msgs
+  controller_manager
+  joint_state_controller
+  robot_state_publisher
 )
 
 ## System dependencies are found with CMake's conventions
@@ -21,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Uncomment this if the package has a setup.py. This macro ensures
 ## modules and global scripts declared therein get installed
 ## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-catkin_python_setup()
+# catkin_python_setup()
 
 ################################################
 ## Declare ROS messages, services and actions ##
@@ -71,7 +70,7 @@ catkin_python_setup()
 ## Generate added messages and services with any dependencies listed here
 # generate_messages(
 #   DEPENDENCIES
-#   moveit_msgs#   std_msgs
+#   std_msgs  # Or other packages containing msgs
 # )
 
 ################################################
@@ -94,10 +93,6 @@ catkin_python_setup()
 #   cfg/DynReconf2.cfg
 # )
 
-find_package(catkin REQUIRED COMPONENTS genmsg actionlib_msgs actionlib moveit_msgs)
-add_action_files(DIRECTORY action FILES bbot.action)
-generate_messages(DEPENDENCIES actionlib_msgs moveit_msgs)
-
 ###################################
 ## catkin specific configuration ##
 ###################################
@@ -109,8 +104,8 @@ generate_messages(DEPENDENCIES actionlib_msgs moveit_msgs)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES bbot
-#  CATKIN_DEPENDS moveit_msgs roscpp rospy std_msgs
+#  LIBRARIES bbot_control
+#  CATKIN_DEPENDS controller_manager joint_state_controller robot_state_publisher
 #  DEPENDS system_lib
 )
 
@@ -127,7 +122,7 @@ include_directories(
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
-#   src/${PROJECT_NAME}/bbot.cpp
+#   src/${PROJECT_NAME}/bbot_control.cpp
 # )
 
 ## Add cmake target dependencies of the library
@@ -138,7 +133,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-# add_executable(${PROJECT_NAME}_node src/bbot_node.cpp)
+# add_executable(${PROJECT_NAME}_node src/bbot_control_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -164,11 +159,10 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-install(PROGRAMS
-  nodes/testnode
-  scripts/my_python_script
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+# install(PROGRAMS
+#   scripts/my_python_script
+#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
@@ -203,7 +197,7 @@ install(PROGRAMS
 #############
 
 ## Add gtest based cpp test target and link libraries
-# catkin_add_gtest(${PROJECT_NAME}-test test/test_bbot.cpp)
+# catkin_add_gtest(${PROJECT_NAME}-test test/test_bbot_control.cpp)
 # if(TARGET ${PROJECT_NAME}-test)
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()

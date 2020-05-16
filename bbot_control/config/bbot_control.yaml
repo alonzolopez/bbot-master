@@ -1,0 +1,25 @@
+#iiwa:
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50  
+
+  # Trajectory Controllers --------------------------------------- 
+
+  # Forward Position Controllers ---------------------------------------
+  PositionJointInterface_trajectory_controller:
+    type: position_controllers/JointTrajectoryController
+    joints: 
+      - bbot_joint_motor1_link1_2
+      - bbot_joint_motor2_link2_3
+      - bbot_joint_link2_3_motor3
+      - bbot_joint_motor4_link4_5
+      - bbot_joint_link4_5_motor5
+      - bbot_joint_link5_6_motor6
+
+    constraints:
+      goal_time: 0.5                   # Override default
+
+    state_publish_rate:  25            # Override default
+    action_monitor_rate: 30            # Override default
+    stop_trajectory_duration: 0        # Override default

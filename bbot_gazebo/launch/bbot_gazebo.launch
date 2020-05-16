@@ -1,11 +1,14 @@
 <?xml version="1.0"?>
 <launch> 
 	<arg name="debug" default="false"/>
+    <arg name="hardware_interface" default="PositionJointInterface" />
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="robot_name" default="bbot"/>
+    <!-- mode param is to control either position or velocity in the sim -->
+    <arg name="position" default="true"/> 
 	<!-- This is the top-level launch file for the bbot gazebo sim -->
 	<include file="$(find bbot_gazebo)/launch/bbot_world.launch"> 
 		<arg name="debug" value="$(arg debug)"/>
@@ -14,5 +17,16 @@
         <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="headless" value="$(arg headless)"/>
         <arg name="robot_name" value="$(arg robot_name)"/>
+        <arg name="hardware_interface" value="$(arg hardware_interface)" />
 	</include>
+
+    <!-- Spawn controllers - it uses a JointTrajectoryController -->
+    <group  ns="$(arg robot_name)" if="$(arg position)">
+        
+        <include file="$(find bbot_control)/launch/bbot_control.launch">
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value="joint_state_controller $(arg hardware_interface)_trajectory_controller" />
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+    </group>
 </launch>

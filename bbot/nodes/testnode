@@ -1,0 +1,32 @@
+#! /usr/bin/env python
+
+import roslib
+import rospy
+import actionlib
+import random
+import sys
+from bbot import BBOTTrajectoryClient
+import math
+import numpy as np
+
+from control_msgs.msg import (
+	FollowJointTrajectoryAction,
+	FollowJointTrajectoryGoal,
+	JointTolerance,
+)
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+
+if __name__ == '__main__':
+	try:
+		rospy.init_node('robo_client')
+		btj = BBOTTrajectoryClient()
+		# elements at indeces 0-5 inclusive correspond to joint commands
+		# element at index 6 is the time argument for that waypoint
+		pos = []
+		pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
+		pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 3.0])
+		
+		result = btj.sendPositionTrajectory(pos, 30)
+		rospy.loginfo("Completed. error_code: " + str(result))
+	except rospy.ROSInterruptException:
+		rospy.loginfo("program interrupted before completion")

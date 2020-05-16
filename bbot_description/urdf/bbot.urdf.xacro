@@ -5,17 +5,20 @@
 
 	<!-- Import the bbot macro -->
 	<xacro:include filename="$(find bbot_description)/urdf/bbot.xacro"/>
+
+  <!-- arguments to pass on -->
+  <xacro:arg name="hardware_interface" default="PositionJointInterface"/>
 	<xacro:arg name="robot_name" default="bbot"/>
 	<xacro:arg name="origin_xyz" default="0 0 0"/>
-  	<xacro:arg name="origin_rpy" default="0 0 0"/>
+  <xacro:arg name="origin_rpy" default="0 0 0"/>
 
-  	<!-- Fix to world-->
-  	<link name="world"/>
+  <!-- Fix to world-->
+  <link name="world"/>
 
-  	<!-- call bbot xacro -->
-  	<xacro:bbot robot_name="$(arg robot_name)" parent="world">
-  		<origin xyz="$(arg origin_xyz)" rpy="$(arg origin_rpy)"/>
-  	</xacro:bbot>
+  <!-- call bbot xacro -->
+  <xacro:bbot hardware_interface="$(arg hardware_interface)" robot_name="$(arg robot_name)" parent="world">
+  	<origin xyz="$(arg origin_xyz)" rpy="$(arg origin_rpy)"/>
+  </xacro:bbot>
 
 
 </robot>

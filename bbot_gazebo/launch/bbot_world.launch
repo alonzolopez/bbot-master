@@ -7,6 +7,7 @@
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="robot_name" default="bbot"/>
+    <arg name="hardware_interface" default="PositionJointInterface"/>
 
     <!-- This includes the empty_world.launch to launch an empty world in gazebo with the params we pass-->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -21,6 +22,7 @@
     <!-- Load the bbot URDF-->
     <include file="$(find bbot_description)/launch/bbot_upload.launch">
         <arg name="robot_name" value="$(arg robot_name)"/>
+        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
     </include>
 
     <!-- Spawn the URDF in Gazebo -->

@@ -2,8 +2,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
     <!-- Import all Gazebo customization elements including colors-->
     <xacro:include filename="$(find bbot_description)/urdf/bbot.gazebo.xacro"/>
-    <!-- Import transmissions -->
-
+    <!-- Import Transmissions -->
+    <xacro:include filename="$(find bbot_description)/urdf/bbot.transmission.xacro" />
+  
     <!-- Include Utilities -->
 
     <!--Define properties-->
@@ -14,7 +15,7 @@
     <xacro:property name="max_velocity" value="10"/>
 
 
-    <xacro:macro name="bbot" params="parent robot_name *origin">
+    <xacro:macro name="bbot" params="parent hardware_interface robot_name *origin">
         <!-- joint between parent (a.k.a. world) and link_0 -->
         <joint name="${parent}_${robot_name}_joint" type="fixed">
             <xacro:insert_block name="origin"/>
@@ -441,6 +442,7 @@
         <!-- link_claw1 -->
 
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
+        <xacro:bbot_transmission hardware_interface="${hardware_interface}"/>
     </xacro:macro>
 
 </robot>

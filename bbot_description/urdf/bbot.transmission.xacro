@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:macro name="bbot_transmission" params="hardware_interface">
+
+    <transmission name="${robot_name}_tran_1">
+      <robotNamespace>/${robot_name}</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_motor1_link1_2">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_motor_1">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_tran_2">
+      <robotNamespace>/${robot_name}</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_motor2_link2_3">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_motor_2">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_tran_3">
+      <robotNamespace>/${robot_name}</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_link2_3_motor3">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_motor_3">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_tran_4">
+      <robotNamespace>/${robot_name}</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_motor4_link4_5">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_motor_4">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_tran_5">
+      <robotNamespace>/${robot_name}</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_link4_5_motor5">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_motor_5">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="${robot_name}_tran_6">
+      <robotNamespace>/${robot_name}</robotNamespace>
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="${robot_name}_joint_link5_6_motor6">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+      </joint>
+      <actuator name="${robot_name}_motor_6">
+        <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+  </xacro:macro>
+</robot>
