@@ -3,7 +3,7 @@ import math
 
 def DHToTransMat(ai_1, alphai_1, di, ti):
 	mat = np.matrix([
-		[np.cos(ti), -np.sin(ti), 0, ai],
+		[np.cos(ti), -np.sin(ti), 0, ai_1],
 		[np.sin(ti)*np.cos(alphai_1), np.cos(ti)*np.cos(alphai_1), -np.sin(alphai_1), -np.sin(alphai_1)*di],
 		[np.sin(ti)*np.sin(alphai_1), np.cos(ti)*np.sin(alphai_1), np.cos(alphai_1), np.cos(alphai_1)*di],
 		[0, 0, 0, 1]
@@ -139,19 +139,20 @@ class bbotAnalysis():
 					print(str(configlist[i]) + " failed because Joint 3 violated with command " + str(t3))
 				continue
 
-
 			avar6 = pz
 			bvar6 = -px*np.cos(t1) - py*np.sin(t1)
 			cvar6 = self.a2 + self.a3*np.cos(t3)
 			dvar6 = -px*np.cos(t1) - py*np.sin(t1)
 			evar6 = -pz
 			fvar6 = self.a3*np.sin(t3)
-			if (avar6*evar6 - bvar6*dvar6 <= 0):
-				if verbose == True:
-					print(str(configlist[i]) + " failed the IK condition for Joint 2")
-				continue
+			t2 = wrapAngle(np.arctan2(np.sqrt(avar6**2 + bvar6**2 - cvar6**2),cvar6) + np.arctan2(bvar6,avar6))
 
-			t2 = wrapAngle(np.arctan2(avar6*fvar6 - cvar6*dvar6,cvar6*evar6 - bvar6*fvar6)) # A*E - B*D > 0 for sol to exist
+			# if (avar6*evar6 - bvar6*dvar6 <= 0):
+			# 	if verbose == True:
+			# 		print(str(configlist[i]) + " failed the IK condition for Joint 2")
+			# 	continue
+
+			# t2 = wrapAngle(np.arctan2(avar6*fvar6 - cvar6*dvar6,cvar6*evar6 - bvar6*fvar6)) # A*E - B*D > 0 for sol to exist
 			if t2 > self.j2max or t2 < self.j2min or math.isnan(t2):
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 6 violated with command " + str(t2))
@@ -180,22 +181,31 @@ class bbotAnalysis():
 		T56 = None
 		T = [T01, T12, T23, T34, T45, T56]
 		for i in range(len(T)):
-			T[i] = DHToTransMat(self.a[i], self.alpha[i], self.d[i], jangles[i])
-		T06 = T01*T12*T23*T34*T45*T56
+			if i == 1 or i == 4: # Joint angles theta2 and theta5:
+				T[i] = DHToTransMat(self.a[i], self.alpha[i], self.d[i], jangles[i]+math.pi/2.)
+			else:
+				T[i] = DHToTransMat(self.a[i], self.alpha[i], self.d[i], jangles[i])
+		T01 = T[0]
+		T02 = T01*T[1]
+		T03 = T02*T[2]
+		T04 = T03*T[3]
+		T05 = T04*T[4]
+		T06 = T05*T[5]
 		return T06
 
 
 if __name__ == '__main__':
 	ikfk = bbotAnalysis()
 	M = np.matrix([
-		[0,1,0,0],
+		[0,0,1,.134],
 		[-1,0,0,-.0625],
-		[0,0,1,0.239],
+		[0,-1,0,0.105],
 		[0,0,0,1]
 		])
 
+	print(ikfk.FK([0,0,-np.pi/2.,0,0,0]))
 	print(ikfk.IK(M, configoption = [[1,1,1],[1,-1,1],[-1,1,1],[-1,-1,1],[1,1,-1],[1,-1,-1],[-1,1,-1],[-1,-1,-1]],verbose = True))
-	print(ikfk.solnconfigs)
+	# print(ikfk.solnconfigs)
 
 
 
