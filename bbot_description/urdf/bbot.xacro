@@ -77,7 +77,7 @@
             </collision>
         </link>
 
-        <joint name="${robot_name}_joint_motor1_link1_2" type="revolute">
+        <joint name="${robot_name}_joint_1" type="revolute">
             <parent link="${robot_name}_link_motor1"/>
             <child link="${robot_name}_link1_2"/>
             <origin xyz="0 0 0.0205" rpy="0 0 0"/>
@@ -145,7 +145,7 @@
             </collision>
         </link>
 
-        <joint name="${robot_name}_joint_motor2_link2_3" type="revolute">
+        <joint name="${robot_name}_joint_2" type="revolute">
             <parent link="${robot_name}_link_motor2"/>
             <child link="${robot_name}_link2_3"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -183,7 +183,7 @@
             </collision>
         </link>
 
-        <joint name="${robot_name}_joint_link2_3_motor3" type="revolute">
+        <joint name="${robot_name}_joint_3" type="revolute">
             <parent link="${robot_name}_link2_3"/>
             <child link="${robot_name}_link_motor3"/>
             <origin xyz="0.105 0 0" rpy="0 0 0"/>
@@ -282,7 +282,7 @@
             </collision>
         </link>
 
-        <joint name="${robot_name}_joint_motor4_link4_5" type="revolute">
+        <joint name="${robot_name}_joint_4" type="revolute">
             <parent link="${robot_name}_link_motor4"/>
             <child link="${robot_name}_link4_5"/>
             <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -320,7 +320,7 @@
             </collision>
         </link>
 
-        <joint name="${robot_name}_joint_link4_5_motor5" type="revolute">
+        <joint name="${robot_name}_joint_5" type="revolute">
             <parent link="${robot_name}_link4_5"/>
             <child link="${robot_name}_link_motor5"/>
             <origin xyz="0 0 0.0625" rpy="${pi/2.0} ${-pi/2.0} 0"/>
@@ -388,7 +388,7 @@
             </collision>
         </link>
 
-        <joint name="${robot_name}_joint_link5_6_motor6" type="revolute">
+        <joint name="${robot_name}_joint_6" type="revolute">
             <parent link="${robot_name}_link5_6"/>
             <child link="${robot_name}_link_motor6"/>
             <origin xyz="0 -0.0332 0" rpy="${pi/2.0} 0 0"/>
@@ -426,19 +426,16 @@
             </collision>
         </link>
 
-
-
-
-
-        <!-- joint between motor 5 and link 5_6 -->
-        <!-- link 5_6 -->
-        <!-- joint between link 5_6 and motor6 -->
-        <!-- motor 6 -->
         <!-- joint between motor6 and link_grasper_base-->
+
         <!-- link_grasper_base -->
+
         <!-- joint between link_grasper_base and motor7 -->
+
         <!-- motor 7 -->
+
         <!-- joint between motor 7 and link_claw1-->
+
         <!-- link_claw1 -->
 
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
