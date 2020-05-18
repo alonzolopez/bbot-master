@@ -12,5 +12,3 @@ bbot_gazebo.launch
 				utilities.xacro
 	bbot_control.launch - launches the appropriate controller, loads controller gains from iiwa_control.yaml
 		bbot_control.yaml - set the controller gains for all controllers
-
-

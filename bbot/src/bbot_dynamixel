@@ -6,7 +6,13 @@ roslib.load_manifest('bbot')
 import rospy
 import actionlib
 
-from bbot.msg import bbotAction, bbotFeedback, bbotResult# imports all generated msgs for goals, feedback, result, etc
+# from bbot.msg import bbotAction, bbotFeedback, bbotResult# imports all generated msgs for goals, feedback, result, etc
+
+from control_msgs.msg import (
+	FollowJointTrajectoryAction,
+	FollowJointTrajectoryGoal,
+	JointTolerance,
+)
 
 from moveit_msgs.msg import RobotState, RobotTrajectory
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
@@ -18,6 +24,7 @@ class BBotDynamixel(object):
 	def __init__(self):
 		self.feedback = bbotFeedback() # self.feedback.currentpos is a RobotState msg
 		self.result = bbotResult() # self.result.complete is a bool msg
+		# self.server = actionlib.SimpleActionServer('bbotaxn', bbotAction, self.execute, False)
 		self.server = actionlib.SimpleActionServer('bbotaxn', bbotAction, self.execute, False)
 		self.server.start()
 		self.actionlock = False
