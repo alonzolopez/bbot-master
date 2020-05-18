@@ -26,7 +26,7 @@
         <link name="${robot_name}_link_baseplate">
             <inertial>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
-                <mass value="1"/>
+                <mass value="0.0800"/>
                 <inertia ixx="0.000070" ixy="0" ixz="0" iyy="0.000174" iyz="0" izz="0.000107"/>
             </inertial>
 
@@ -56,7 +56,7 @@
         <link name="${robot_name}_link_motor1">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 ${pi/2.0}"/>
-                <mass value="1"/>
+                <mass value="0.074"/>
                 <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000013" iyz="0" izz="0.000027"/>
             </inertial>
 
@@ -94,8 +94,8 @@
         <link name="${robot_name}_link1_2">
             <inertial>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.0296"/>
+                <inertia ixx="0.000028" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000023"/>
             </inertial>
 
             <visual>
@@ -124,8 +124,8 @@
         <link name="${robot_name}_link_motor2">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 ${-pi/2.0}"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.076"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000018"/>
             </inertial>
 
             <visual>
@@ -162,8 +162,8 @@
         <link name="${robot_name}_link2_3">
             <inertial>
                 <origin xyz="0.0275 0 0" rpy="${pi/2.0} ${-pi/2.0} 0"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.0584"/>
+                <inertia ixx="0.000096" ixy="0" ixz="0" iyy="0.000021" iyz="0" izz="0.00011"/>
             </inertial>
 
             <visual>
@@ -200,8 +200,8 @@
         <link name="${robot_name}_link_motor3">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 ${pi/2.0}"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.076"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000027"/>
             </inertial>
 
             <visual>
@@ -230,8 +230,8 @@
         <link name="${robot_name}_link3_4">
             <inertial>
                 <origin xyz="0.067 0 0.01" rpy="0 0 0"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.0409"/>
+                <inertia ixx="0.000016" ixy="0" ixz="0" iyy="0.000053" iyz="0" izz="0.000049"/>
             </inertial>
 
             <visual>
@@ -261,8 +261,8 @@
         <link name="${robot_name}_link_motor4">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 ${-pi/2.0}"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.076"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000027"/>
             </inertial>
 
             <visual>
@@ -299,8 +299,8 @@
         <link name="${robot_name}_link4_5">
             <inertial>
                 <origin xyz="0 0 0.0235" rpy="0 0 0"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.021"/>
+                <inertia ixx="0.000016" ixy="0" ixz="0" iyy="0.000008" iyz="0" izz="0.00001"/>
             </inertial>
 
             <visual>
@@ -337,8 +337,8 @@
         <link name="${robot_name}_link_motor5">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.076"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000027"/>
             </inertial>
 
             <visual>
@@ -367,8 +367,8 @@
         <link name="${robot_name}_link5_6">
             <inertial>
                 <origin xyz="0 0 0.0173" rpy="${pi/2.0} 0 ${pi/2.0}"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.01588"/>
+                <inertia ixx="0.00001" ixy="0" ixz="0" iyy="0.000003" iyz="0" izz="0.000009"/>
             </inertial>
 
             <visual>
@@ -405,8 +405,8 @@
         <link name="${robot_name}_link_motor6">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
-                <mass value="1"/>
-                <inertia ixx="1.0" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+                <mass value="0.076"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000027"/>
             </inertial>
 
             <visual>
@@ -426,13 +426,68 @@
             </collision>
         </link>
 
-        <!-- joint between motor6 and link_grasper_base-->
+        <!-- joint between motor6 and gripper_palm-->
+        <joint name="${robot_name}_joint_motor6_gripper_palm" type="fixed">
+            <parent link="${robot_name}_link_motor6"/>
+            <child link="${robot_name}_gripper_palm"/>
+            <origin xyz="0 0 0.015" rpy="0 0 0"/>
+        </joint>
+        <!-- link gripper_palm -->
+        <link name="${robot_name}_gripper_palm">
+            <inertial>
+                <origin xyz="0 0 0.0073" rpy="${pi} 0 ${0.0}"/>
+                <mass value="0.0646"/>
+                <inertia ixx="0.000077" ixy="0.000001" ixz="-0.000001" iyy="0.000086" iyz="-0.00001" izz="0.000024"/>
+            </inertial>
 
-        <!-- link_grasper_base -->
+            <visual>
+                <origin xyz="0 0 0.0073" rpy="${pi} 0 ${0.0}"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/gripper_palm.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </visual>
 
-        <!-- joint between link_grasper_base and motor7 -->
+            <collision>
+                <origin xyz="0 0 0.0073" rpy="${pi} 0 ${0.0}"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/gripper_palm.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </collision>
+        </link>
+
+        <!-- joint between gripper_palm and motor7 -->
+        <joint name="${robot_name}_joint_gripper_palm_motor7" type="fixed">
+            <parent link="${robot_name}_gripper_palm"/>
+            <child link="${robot_name}_link_motor7"/>
+            <origin xyz="0 0.2 0" rpy="0 0 0"/>
+        </joint>
 
         <!-- motor 7 -->
+        <link name="${robot_name}_link_motor7">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+                <mass value="0.076"/>
+                <inertia ixx="0.000031" ixy="0" ixz="0" iyy="0.000014" iyz="0" izz="0.000027"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Black"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Black"/>
+            </collision>
+        </link>
 
         <!-- joint between motor 7 and link_claw1-->
 
