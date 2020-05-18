@@ -11,10 +11,12 @@ import actionlib
 from control_msgs.msg import (
 	FollowJointTrajectoryAction,
 	FollowJointTrajectoryGoal,
+	FollowJointTrajectoryActionFeedback,
+	FollowJointTrajectoryActionResult,
 	JointTolerance,
 )
 
-from moveit_msgs.msg import RobotState, RobotTrajectory
+from moveit_msgs.msg import RobotState
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 
 def clamp(value, lower, upper):
@@ -22,10 +24,12 @@ def clamp(value, lower, upper):
 
 class BBotDynamixel(object):
 	def __init__(self):
-		self.feedback = bbotFeedback() # self.feedback.currentpos is a RobotState msg
-		self.result = bbotResult() # self.result.complete is a bool msg
+		# self.feedback = bbotFeedback() # self.feedback.currentpos is a RobotState msg
+		self.feedback = FollowJointTrajectoryActionFeedback()
+		# self.result = bbotResult() # self.result.complete is a bool msg
+		self.result = FollowJointTrajectoryActionResult()
 		# self.server = actionlib.SimpleActionServer('bbotaxn', bbotAction, self.execute, False)
-		self.server = actionlib.SimpleActionServer('bbotaxn', bbotAction, self.execute, False)
+		self.server = actionlib.SimpleActionServer('/bbot/PositionJointInterface_trajectory_controller/follow_joint_trajectory', FollowJointTrajectoryAction, self.execute, False)
 		self.server.start()
 		self.actionlock = False
 		rospy.loginfo('Action server started')
@@ -350,7 +354,7 @@ class BBotDynamixel(object):
 		# execute the traj
 		self.actionlock = True
 		success = True
-		for waypoint in goal.traj.joint_trajectory.points:
+		for waypoint in goal.trajectory.points:
 			# iterates over the JointTrajectoryPoint objects
 			# for now just rospy.loginfo the waypoint, then sleep the duration attached to the waypoint
 			if self.server.is_preempt_requested():
@@ -363,15 +367,19 @@ class BBotDynamixel(object):
 			# iset the motor positions based on the joint commands
 			self.setGoalPos(waypoint.positions)
 			# update state feedback and publish current pos
-			self.feedback.currentpos.joint_state.position = self.updateStateFeedback()
+			# self.feedback.currentpos.joint_state.position = self.updateStateFeedback()
+			self.feedback.feedback.actual.positions = self.updateStateFeedback()
 			# rospy.loginfo(str(self.feedback.currentpos.joint_state.position))
-			self.server.publish_feedback(self.feedback)
+			self.server.publish_feedback(self.feedback.feedback)
 			rospy.sleep(waypoint.time_from_start) # sleeps for duration attached to the waypoint
 		if success:
-			self.result.complete = True
+			# self.result.complete = True
+			self.result.result.error_code = self.result.result.SUCCESSFUL
+			self.result.result.error_string = "Success"
 			self.actionlock = False
 			rospy.loginfo('Succeeded. Completed trajectory')
-			self.server.set_succeeded(self.result)
+			print(self.result.result.error_code)
+			self.server.set_succeeded(self.result.result)
 		self.actionlock = False
 
 	def run(self):
