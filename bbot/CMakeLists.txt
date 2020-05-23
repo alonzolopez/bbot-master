@@ -170,6 +170,10 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
   nodes/testnode
+  nodes/bbot_dynamixel
+  nodes/initializejoints
+  nodes/rundemo
+  nodes/testclient
   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
