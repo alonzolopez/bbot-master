@@ -39,12 +39,12 @@
       - bbot_joint_6
 
     gains:
-      bbot_joint_1: {p: 100,  d: 10, i: 15, i_clamp: 30}
-      bbot_joint_2: {p: 100,  d: 10, i: 10, i_clamp: 30}
-      bbot_joint_3: {p: 65,  d: 10, i: 15, i_clamp: 30}
-      bbot_joint_4: {p: 31,  d: 7, i: 12, i_clamp: 30}
-      bbot_joint_5: {p: 23,  d: 3, i: 5, i_clamp: 30}
-      bbot_joint_6: {p: 13,  d: 3, i: 3, i_clamp: 30}
+      bbot_joint_1: {p: 10,  d: 5, i: 1, i_clamp: 30}
+      bbot_joint_2: {p: 50,  d: 5, i: 5, i_clamp: 30}
+      bbot_joint_3: {p: 10,  d: 1, i: 1, i_clamp: 30}
+      bbot_joint_4: {p: 10,  d: 1, i: 1, i_clamp: 30}
+      bbot_joint_5: {p: 10,  d: 1, i: 1, i_clamp: 30}
+      bbot_joint_6: {p: 10,  d: 1, i: 1, i_clamp: 30}
 
     constraints:
       goal_time: 0.5
