@@ -17,6 +17,12 @@ def wrapAngle(anglein):
 		anglein = anglein + 2*math.pi
 	return anglein
 
+def equivalenceCheck(mat1, mat2, eps = 10**(-6)):
+	for row in range(mat1.shape[0]):
+		for col in range(mat1.shape[1]):
+			if np.abs(mat1[row,col]-mat2[row,col]) > eps:
+				return False
+	return True
 
 
 class bbotAnalysis():
@@ -44,27 +50,36 @@ class bbotAnalysis():
 		self.d = [0, 0, 0, self.d4, 0, 0]
 
 		# Possible solutions form t1, t5, t3
-		self.configs = [
-			[1,1,1],
-			[1,-1,1],
-			[-1,1,1],
-			[-1,-1,1],
-			[1,1,-1],
-			[1,-1,-1],
-			[-1,1,-1],
-			[-1,-1,-1]
+		self.possconfigs = [
+			[1,1,1,1],
+			[1,-1,1,1],
+			[-1,1,1,1],
+			[-1,-1,1,1],
+			[1,1,-1,1],
+			[1,-1,-1,1],
+			[-1,1,-1,1],
+			[-1,-1,-1,1],
+			[1,1,1,-1],
+			[1,-1,1,-1],
+			[-1,1,1,-1],
+			[-1,-1,1,-1],
+			[1,1,-1,-1],
+			[1,-1,-1,-1],
+			[-1,1,-1,-1],
+			[-1,-1,-1,-1]
 		]
+		self.targetPose = None
 		self.iksols = None
 		self.solnconfigs = None
 
 	def IK(self, pose, configoption = 'all', verbose = 'False'):
 		if configoption == 'all':
 			if verbose == True:
-				print("Computing IK for all 8 configurations")
+				print("Computing IK for all 16 configurations")
 			configlist = self.possconfigs
 		else:
 			configlist = configoption
-
+		self.targetPose = pose
 		solnstemp = []
 		configstemp = []
 
@@ -72,6 +87,7 @@ class bbotAnalysis():
 			base = configlist[i][0] #theta1
 			wrist_yaw = configlist[i][1] #theta5
 			elbow = configlist[i][2] #theta3
+			shoulder = configlist[i][3] #theta2
 
 			r11 = pose[0,0]
 			r12 = pose[0,1]
@@ -145,7 +161,7 @@ class bbotAnalysis():
 			dvar6 = -px*np.cos(t1) - py*np.sin(t1)
 			evar6 = -pz
 			fvar6 = self.a3*np.sin(t3)
-			t2 = wrapAngle(np.arctan2(np.sqrt(avar6**2 + bvar6**2 - cvar6**2),cvar6) + np.arctan2(bvar6,avar6))
+			t2 = wrapAngle(np.arctan2(shoulder*np.sqrt(avar6**2 + bvar6**2 - cvar6**2),cvar6) + np.arctan2(bvar6,avar6))
 
 			# if (avar6*evar6 - bvar6*dvar6 <= 0):
 			# 	if verbose == True:
@@ -164,9 +180,13 @@ class bbotAnalysis():
 					print(str(configlist[i]) + " failed because Joint 4 violated with command " + str(t4))
 				continue
 
-
-			solnstemp.append([t1,t2,t3,t4,t5,t6])
-			configstemp.append(configlist[i])
+			if equivalenceCheck(self.FK([t1, t2, t3, t4, t5, t6]),self.targetPose):
+				solnstemp.append([t1,t2,t3,t4,t5,t6])
+				configstemp.append(configlist[i])
+				# print(self.FK([t1,t2,t3,t4,t5,t6]))
+			else:
+				if verbose == True:
+					print(str(configlist[i]) + " failed equivalence test")
 
 		self.iksols = np.matrix(solnstemp)
 		self.solnconfigs = np.matrix(configstemp)
@@ -193,23 +213,68 @@ class bbotAnalysis():
 		T06 = T05*T[5]
 		return T06
 
+	def Jacobian(self, q):
+		T01 = None
+		T02 = None
+		T03 = None
+		T04 = None
+		T05 = None
+		T06 = None
+		Tlink = None
+		T = [T01, T02, T03, T04, T05, T06]
+		T[0] = DHToTransMat(self.a[0], self.alpha[0], self.d[0],q[0])
+		for i in range(1,6):
+			Tlink = DHToTransMat(self.a[i], self.alpha[i], self.d[i], q[i])
+			T[i] = T[i-1]*Tlink
+
+		J = np.matrix(np.empty((6,6)))
+		z0n = None
+		p06 = np.squeeze(np.array(T[5][0:3,3].transpose()))
+		for i in range(0,6):
+			z0n = np.squeeze(np.array(T[i][0:3,2].transpose()))
+			p0n = np.squeeze(np.array(T[i][0:3,3].transpose()))
+			Jv = np.matrix(np.cross(z0n,p06-p0n)).transpose()
+			J[0:3,i] = Jv
+			J[3:6,i] = np.matrix(z0n).transpose()
+		return J
+	
+
+	def invJacobian(self, q):
+		J = self.Jacobian(q)
+		invJ = J.I
+		return invJ
+
+
 
 if __name__ == '__main__':
 	ikfk = bbotAnalysis()
+	# theta3 = -pi/2
+	# M = np.matrix([
+	# 	[0,0,1,.134],
+	# 	[-1,0,0,-.0625],
+	# 	[0,-1,0,0.105],
+	# 	[0,0,0,1]
+	# 	])
+
+	# all zeros
 	M = np.matrix([
-		[0,0,1,.134],
+		[0,1,0,0],
 		[-1,0,0,-.0625],
-		[0,-1,0,0.105],
+		[0,0,1,0.239],
 		[0,0,0,1]
 		])
 
-	print(ikfk.FK([0,0,-np.pi/2.,0,0,0]))
-	print(ikfk.IK(M, configoption = [[1,1,1],[1,-1,1],[-1,1,1],[-1,-1,1],[1,1,-1],[1,-1,-1],[-1,1,-1],[-1,-1,-1]],verbose = True))
-	# print(ikfk.solnconfigs)
+	# t2 = -45, t3 = -90, t4 = 45
+	M = np.matrix([
+		[0,0,1,(np.sqrt(2)*(.239))/2],
+		[-1,0,0,-.0625],
+		[0,-1,0,-0.029],
+		[0,0,0,1]
+		])
 
-
-
-
+	print(ikfk.IK(M,verbose = True))
+	print(ikfk.solnconfigs)
+	print(ikfk.invJacobian(np.squeeze(np.array(ikfk.iksols))))
 
 
 
