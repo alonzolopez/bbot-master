@@ -33,7 +33,7 @@ class BBOTTrajectoryClient():
 		# Create the goal for the action server
 		self.goal = FollowJointTrajectoryGoal() # initialize the goal
 		self.goal.goal_time_tolerance = rospy.Time.from_sec(1) # set goal time tolerance to 1 second
-		self.joint_names = ["bbot_joint_motor1_link1_2", "bbot_joint_motor2_link2_3", "bbot_joint_link2_3_motor3", "bbot_joint_motor4_link4_5", "bbot_joint_link4_5_motor5", "bbot_joint_link5_6_motor6"]
+		self.joint_names = ["bbot_joint_1", "bbot_joint_2", "bbot_joint_3", "bbot_joint_4", "bbot_joint_5", "bbot_joint_6", "bbot_joint_7"]
 		self.j1min = math.pi/180.0*(-170.0) # radians
 		self.j1max = math.pi/180.0*(170.0) # radians
 		self.j2min = math.pi/180.0*(-120.0) # radians
@@ -53,7 +53,7 @@ class BBOTTrajectoryClient():
 
 	def sendRandomGoal(self):
 		bbottraj = JointTrajectory() # instantiate a JointTrajectory object
-		bbottraj.joint_names = self.joint_names # set joint names consistent with rostopic /iiwa/joint_states
+		bbottraj.joint_names = self.joint_names # set joint names consistent with rostopic /bbot/joint_states
 		bbottraj.points = [] 
 		
 		maxcmd = 3.0
@@ -92,7 +92,7 @@ class BBOTTrajectoryClient():
 		# and element at index 7 is the time argument for that waypoint
 
 		bbottraj = JointTrajectory() # instantiate a JointTrajectory object
-		bbottraj.joint_names = self.joint_names # set joint names consistent with rostopic /iiwa/joint_states
+		bbottraj.joint_names = self.joint_names # set joint names consistent with rostopic /bbot/joint_states
 		bbottraj.points = [] 
 		for i in range(len(positions)):
 			jtp = JointTrajectoryPoint()
@@ -132,7 +132,7 @@ class BBOTTrajectoryClient():
 		# where elements at indeces 0-6 inclusive correspond to velocity joint commands
 		
 		bbottraj = JointTrajectory() # instantiate a JointTrajectory object
-		bbottraj.joint_names = self.joint_names # set joint names consistent with rostopic /iiwa/joint_states
+		bbottraj.joint_names = self.joint_names # set joint names consistent with rostopic /bbot/joint_states
 		bbottraj.points = [] 
 
 		for i in range(len(vels)):

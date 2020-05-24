@@ -23,8 +23,8 @@ if __name__ == '__main__':
 		# elements at indeces 0-5 inclusive correspond to joint commands
 		# element at index 6 is the time argument for that waypoint
 		pos = []
-		pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
-		pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 3.0])
+		pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
+		pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
 		
 		result = btj.sendPositionTrajectory(pos, 30)
 		rospy.loginfo("Completed. error_code: " + str(result))
