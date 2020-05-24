@@ -530,14 +530,14 @@
         </link>
 
         <!-- joint between link_claw1 and link_claw1_end-->
-<!--         <joint name="${robot_name}_joint_claw1_claw1_end" type="fixed">
+        <joint name="${robot_name}_joint_claw1_claw1_end" type="fixed">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw1_end"/>
             <origin xyz="-0.03677 -0.03677 -0.00825" rpy="0 0 0"/>
-        </joint> -->
+        </joint>
 
         <!-- link_claw1_end -->
-<!--         <link name="${robot_name}_link_claw1_end">
+        <link name="${robot_name}_link_claw1_end">
             <inertial>
                 <origin xyz="0.01175 -0.0276 0.00325" rpy="${pi/2} 0 1.903"/>
                 <mass value="0.006"/>
@@ -559,17 +559,17 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link> -->
+        </link>
 
         <!-- joint between link_claw1_end and link_claw1_2-->
-<!--         <joint name="${robot_name}_joint_claw1_end_claw1_2" type="fixed">
+        <joint name="${robot_name}_joint_claw1_end_claw1_2" type="fixed">
             <parent link="${robot_name}_link_claw1_end"/>
             <child link="${robot_name}_link_claw1_2"/>
             <origin xyz="0.0098 -0.023 0.00025" rpy="0 0 0"/>
-        </joint> -->
+        </joint>
 
         <!-- link_claw1_2 -->
-<!--         <link name="${robot_name}_link_claw1_2">
+        <link name="${robot_name}_link_claw1_2">
             <inertial>
                 <origin xyz="0.01839 0.01693 0.0135" rpy="${-pi/2} 0 -2.3057"/>
                 <mass value=".00455"/>
@@ -591,17 +591,17 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link> -->
+        </link>
 
         <!-- joint between link_claw1 and link_claw2-->
-<!--         <joint name="${robot_name}_joint_claw1_claw2" type="fixed">
+        <joint name="${robot_name}_joint_claw1_claw2" type="fixed">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw2"/>
             <origin xyz="0.03 0 0" rpy="0 0 0"/>
-        </joint> -->
+        </joint>
 
         <!-- link_claw2 -->
-<!--         <link name="${robot_name}_link_claw2">
+        <link name="${robot_name}_link_claw2">
             <inertial>
                 <origin xyz="0 0 0.005" rpy="0 ${pi} ${pi}"/>
                 <mass value=".0066"/>
@@ -624,16 +624,16 @@
                 <material name="Orange"/>
             </collision>
         </link>
- -->
+
         <!-- joint between link_claw2 and link_claw2_end-->
-<!--         <joint name="${robot_name}_joint_claw2_claw2_end" type="fixed">
+        <joint name="${robot_name}_joint_claw2_claw2_end" type="fixed">
             <parent link="${robot_name}_link_claw2"/>
             <child link="${robot_name}_link_claw2_end"/>
             <origin xyz="0.03581 -0.0377 -0.0085" rpy="0 0 0"/>
-        </joint> -->
+        </joint>
 
         <!-- link_claw2_end -->
-<!--         <link name="${robot_name}_link_claw2_end">
+        <link name="${robot_name}_link_claw2_end">
             <inertial>
                 <origin xyz="-0.01181 -0.02758 0.0085" rpy="${pi/2} ${pi} -1.903"/>
                 <mass value="0.006"/>
@@ -655,17 +655,17 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link> -->
+        </link>
 
         <!-- joint between link_claw2_end and link_claw2_2-->
-<!--         <joint name="${robot_name}_joint_claw1_end_claw2_2" type="fixed">
+        <joint name="${robot_name}_joint_claw1_end_claw2_2" type="fixed">
             <parent link="${robot_name}_link_claw2_end"/>
             <child link="${robot_name}_link_claw2_2"/>
             <origin xyz="-0.00984 -0.02298 0" rpy="0 0 0"/>
-        </joint> -->
+        </joint>
 
         <!-- link_claw2_2 -->
-<!--         <link name="${robot_name}_link_claw2_2">
+        <link name="${robot_name}_link_claw2_2">
             <inertial>
                 <origin xyz="-0.01699 0.01834 0.0135" rpy="${pi/2} ${pi} 2.3057"/>
                 <mass value=".00455"/>
@@ -687,7 +687,7 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link> -->
+        </link>
 
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
         <xacro:bbot_transmission hardware_interface="${hardware_interface}"/>
