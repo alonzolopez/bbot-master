@@ -490,7 +490,7 @@
         </link>
 
         <!-- joint between motor 7 and link_claw1-->
-        <joint name="${robot_name}_joint_motor7_claw1" type="revolute">
+        <joint name="${robot_name}_joint_7" type="revolute">
             <parent link="${robot_name}_link_motor7"/>
             <child link="${robot_name}_link_claw1"/>
             <origin xyz="0.015 0.009 0.0295" rpy="${-pi/2} 0 0"/>
@@ -600,7 +600,7 @@
             <origin xyz="0.03 0 0" rpy="0 0 0"/>
         </joint> -->
 
-        <!-- link_claw2_2 -->
+        <!-- link_claw2 -->
 <!--         <link name="${robot_name}_link_claw2">
             <inertial>
                 <origin xyz="0 0 0.005" rpy="0 ${pi} ${pi}"/>
