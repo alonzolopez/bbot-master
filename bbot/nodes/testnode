@@ -6,6 +6,7 @@ import actionlib
 import random
 import sys
 from bbot import BBOTTrajectoryClient
+from bbot import bbotAnalysis
 import math
 import numpy as np
 
@@ -20,12 +21,23 @@ if __name__ == '__main__':
 	try:
 		rospy.init_node('robo_client')
 		btj = BBOTTrajectoryClient()
-		# elements at indeces 0-5 inclusive correspond to joint commands
+		ikfk = bbotAnalysis()
+		# elements at indices 0-5 inclusive correspond to joint commands
 		# element at index 6 is the time argument for that waypoint
+		M = np.matrix([
+			[0,0,1,(np.sqrt(2)*(.239))/2],
+			[-1,0,0,-.0625],
+			[0,-1,0,-0.029],
+			[0,0,0,1]
+			]) # t2 = -45, t3 = -90, t4 = 45
+		ikfk.IK(M,[[-1,1,-1,1]])
+		jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
+		jtangles[0].append(3.0) #add time arugment at index 6
 		pos = []
 		pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
-		pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
-		
+		# pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
+		pos.append(jtangles[0])
+
 		result = btj.sendPositionTrajectory(pos, 30)
 		rospy.loginfo("Completed. error_code: " + str(result))
 	except rospy.ROSInterruptException:

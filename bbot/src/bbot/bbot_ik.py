@@ -248,7 +248,7 @@ class bbotAnalysis():
 
 if __name__ == '__main__':
 	ikfk = bbotAnalysis()
-	# theta3 = -pi/2
+	# t3 = -pi/2
 	# M = np.matrix([
 	# 	[0,0,1,.134],
 	# 	[-1,0,0,-.0625],
@@ -257,12 +257,12 @@ if __name__ == '__main__':
 	# 	])
 
 	# all zeros
-	M = np.matrix([
-		[0,1,0,0],
-		[-1,0,0,-.0625],
-		[0,0,1,0.239],
-		[0,0,0,1]
-		])
+	# M = np.matrix([
+	# 	[0,1,0,0],
+	# 	[-1,0,0,-.0625],
+	# 	[0,0,1,0.239],
+	# 	[0,0,0,1]
+	# 	])
 
 	# t2 = -45, t3 = -90, t4 = 45
 	M = np.matrix([
@@ -272,9 +272,13 @@ if __name__ == '__main__':
 		[0,0,0,1]
 		])
 
-	print(ikfk.IK(M,verbose = True))
-	print(ikfk.solnconfigs)
-	print(ikfk.invJacobian(np.squeeze(np.array(ikfk.iksols))))
+	ikfk.IK(M,[[-1,1,-1,1]],verbose = True)
+	qwer = ikfk.iksols.tolist()
+	qwer[0].append(3.0)
+	print(qwer[0])
+
+	# print(ikfk.solnconfigs)
+	# print(ikfk.invJacobian(np.squeeze(np.array(ikfk.iksols))))
 
 
 

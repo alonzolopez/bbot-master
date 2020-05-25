@@ -1,1 +1,2 @@
 from bbottrajectoryclient import BBOTTrajectoryClient
+from bbot_ik import bbotAnalysis
