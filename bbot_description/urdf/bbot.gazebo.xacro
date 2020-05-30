@@ -9,6 +9,17 @@
             </plugin>
         </gazebo>
 
+        <!-- Load Closed Loop Plug-in -->
+<!--         <gazebo>
+       <plugin name="Myrobot_ClosedLoopPlugin" filename="libpegasus_gazebo_closed_loop_plugin.so">
+           <joint>${robot_name}_joint_claw1_claw1_end_2</joint>
+           <child>${robot_name}_link_claw1_end</child>
+           <parent>${robot_name}_link_claw1_2</parent>
+           <position>-0.03678 -0.03387 0</position>
+           <rotation>0.00 0.00 0.00</rotation>
+       </plugin>
+        </gazebo> -->
+
         <!-- Link0 -->
         <gazebo reference="${robot_name}_link_baseplate">
             <material>Gazebo/Orange</material>

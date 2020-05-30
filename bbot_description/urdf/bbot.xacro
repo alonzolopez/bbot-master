@@ -432,6 +432,7 @@
             <child link="${robot_name}_gripper_palm"/>
             <origin xyz="0 0 0.015" rpy="0 0 0"/>
         </joint>
+
        <!-- link gripper_palm -->
         <link name="${robot_name}_gripper_palm">
             <inertial>
@@ -529,55 +530,37 @@
             </collision>
         </link>
 
-        <!-- joint between link_claw1 and link_claw1_end-->
-        <joint name="${robot_name}_joint_claw1_claw1_end" type="fixed">
+        <!-- joint between link_claw1 and link_claw1_2-->
+        <joint name="${robot_name}_joint_claw1_claw1_2" type="revolute">
             <parent link="${robot_name}_link_claw1"/>
-            <child link="${robot_name}_link_claw1_end"/>
-            <origin xyz="-0.03677 -0.03677 -0.00825" rpy="0 0 0"/>
-        </joint>
-
-        <!-- link_claw1_end -->
-        <link name="${robot_name}_link_claw1_end">
-            <inertial>
-                <origin xyz="0.01175 -0.0276 0.00325" rpy="${pi/2} 0 1.903"/>
-                <mass value="0.006"/>
-                <inertia ixx="0" ixy="0" ixz="0" iyy="0.000003" iyz="0" izz="0.000003"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="0.01175 -0.0276 0.00325" rpy="${pi/2} 0 1.903"/>
-                <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="Orange"/>
-            </visual>
-
-            <collision>
-                <origin xyz="0.01175 -0.0276 0.00325" rpy="${pi/2} 0 1.903"/>
-                <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="Orange"/>
-            </collision>
-        </link>
-
-        <!-- joint between link_claw1_end and link_claw1_2-->
-        <joint name="${robot_name}_joint_claw1_end_claw1_2" type="fixed">
-            <parent link="${robot_name}_link_claw1_end"/>
             <child link="${robot_name}_link_claw1_2"/>
-            <origin xyz="0.0098 -0.023 0.00025" rpy="0 0 0"/>
+            <origin xyz="0.008 -0.024 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+                effort="${max_effort}" velocity="${max_velocity}" />
+            <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                     soft_upper_limit="${168 * pi / 180}"
+                     k_position="${safety_controller_k_pos}"
+                     k_velocity="${safety_controller_k_vel}"/> 
+            <dynamics damping="${joint_damping}"/>
+            <mimic joint="${robot_name}_joint_7" multiplier="1.0" offset = "0.0"/>
         </joint>
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw1_2"
+            parent_joint="${robot_name}_joint_7" 
+            mimic_joint="${robot_name}_joint_claw1_claw1_2"
+            has_pid="false" multiplier="1.0" max_effort="${max_effort}" />
 
         <!-- link_claw1_2 -->
         <link name="${robot_name}_link_claw1_2">
             <inertial>
-                <origin xyz="0.01839 0.01693 0.0135" rpy="${-pi/2} 0 -2.3057"/>
+                <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
                 <mass value=".00455"/>
                 <inertia ixx="0" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
             </inertial>
 
             <visual>
-                <origin xyz="0.01839 0.01693 0.0135" rpy="${-pi/2} 0 -2.3057"/>
+                <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -585,7 +568,7 @@
             </visual>
 
             <collision>
-                <origin xyz="0.01839 0.01693 0.0135" rpy="${-pi/2} 0 -2.3057"/>
+                <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -612,18 +595,58 @@
         <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw2"
             parent_joint="${robot_name}_joint_7" 
             mimic_joint="${robot_name}_joint_claw1_claw2"
-            has_pid="true" multiplier="-1.0" max_effort="${max_effort}" />
+            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
+
+        <!-- joint between link_claw1 and link_claw1_end-->
+        <joint name="${robot_name}_joint_claw1_claw1_end" type="continuous">
+            <parent link="${robot_name}_link_claw1"/>
+            <child link="${robot_name}_link_claw1_end"/>
+            <origin xyz="-0.03858 -0.03487 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+        </joint>
+
+        <!-- link_claw1_end -->
+        <link name="${robot_name}_link_claw1_end">
+            <inertial>
+                <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
+                <mass value="0.006"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0.000003" iyz="0" izz="0.000003"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </collision>
+        </link>
+
+<!--         <joint name="${robot_name}_joint_claw1_claw1_end_2" type="continuous">
+            <parent link="${robot_name}_link_claw1_2"/>
+            <child link="${robot_name}_link_claw1_end"/>
+            <origin xyz="-0.03678 -0.03387 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+        </joint> -->
 
         <!-- link_claw2 -->
         <link name="${robot_name}_link_claw2">
             <inertial>
-                <origin xyz="0 0 0.005" rpy="0 ${pi} ${pi}"/>
+                <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
                 <mass value=".0066"/>
                 <inertia ixx="0.000004" ixy="0.000003" ixz="0" iyy="0.000002" iyz="0.000001" izz="0.000006"/>
             </inertial>
 
             <visual>
-                <origin xyz="0 0 0.005" rpy="0 ${pi} ${pi}"/>
+                <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link1_left.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -631,31 +654,78 @@
             </visual>
 
             <collision>
-                <origin xyz="0 0 0.005" rpy="0 ${pi} ${pi}"/>
+                <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link1_left.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </collision>
+        </link>
+
+        <!-- joint between link_claw2 and link_claw2_2-->
+        <joint name="${robot_name}_joint_claw2_claw2_2" type="revolute">
+            <parent link="${robot_name}_link_claw2"/>
+            <child link="${robot_name}_link_claw2_2"/>
+            <origin xyz="-0.008 -0.024 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+                effort="${max_effort}" velocity="${max_velocity}" />
+            <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                     soft_upper_limit="${168 * pi / 180}"
+                     k_position="${safety_controller_k_pos}"
+                     k_velocity="${safety_controller_k_vel}"/> 
+            <dynamics damping="${joint_damping}"/>
+            <mimic joint="${robot_name}_joint_7" multiplier="-1.0" offset = "0.0"/>
+        </joint>
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw2_claw2_2"
+            parent_joint="${robot_name}_joint_7" 
+            mimic_joint="${robot_name}_joint_claw2_claw2_2"
+            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
+
+        <!-- link_claw2_2 -->
+        <link name="${robot_name}_link_claw2_2">
+            <inertial>
+                <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
+                <mass value=".00455"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
+                </geometry>
+                <material name="Orange"/>
+            </visual>
+
+            <collision>
+                <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
+                <geometry>
+                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
         </link>
 
         <!-- joint between link_claw2 and link_claw2_end-->
-        <joint name="${robot_name}_joint_claw2_claw2_end" type="fixed">
+        <joint name="${robot_name}_joint_claw2_claw2_end" type="continuous">
             <parent link="${robot_name}_link_claw2"/>
             <child link="${robot_name}_link_claw2_end"/>
-            <origin xyz="0.03581 -0.0377 -0.0085" rpy="0 0 0"/>
+            <origin xyz="0.03581 -0.0377 0" rpy="0 0 0"/>
+            <axis xyz="0 0 1"/>
         </joint>
 
         <!-- link_claw2_end -->
         <link name="${robot_name}_link_claw2_end">
             <inertial>
-                <origin xyz="-0.01181 -0.02758 0.0085" rpy="${pi/2} ${pi} -1.903"/>
+                <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
                 <mass value="0.006"/>
                 <inertia ixx="0" ixy="0" ixz="0" iyy="0.000003" iyz="0" izz="0.000003"/>
             </inertial>
 
             <visual>
-                <origin xyz="-0.01181 -0.02758 0.0085" rpy="${pi/2} ${pi} -1.903"/>
+                <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
@@ -663,41 +733,9 @@
             </visual>
 
             <collision>
-                <origin xyz="-0.01181 -0.02758 0.0085" rpy="${pi/2} ${pi} -1.903"/>
+                <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="Orange"/>
-            </collision>
-        </link>
-
-        <!-- joint between link_claw2_end and link_claw2_2-->
-        <joint name="${robot_name}_joint_claw1_end_claw2_2" type="fixed">
-            <parent link="${robot_name}_link_claw2_end"/>
-            <child link="${robot_name}_link_claw2_2"/>
-            <origin xyz="-0.00984 -0.02298 0" rpy="0 0 0"/>
-        </joint>
-
-        <!-- link_claw2_2 -->
-        <link name="${robot_name}_link_claw2_2">
-            <inertial>
-                <origin xyz="-0.01699 0.01834 0.0135" rpy="${pi/2} ${pi} 2.3057"/>
-                <mass value=".00455"/>
-                <inertia ixx="0" ixy="0" ixz="0" iyy="0.000001" iyz="0" izz="0.000001"/>
-            </inertial>
-
-            <visual>
-                <origin xyz="-0.01699 0.01834 0.0135" rpy="${pi/2} ${pi} 2.3057"/>
-                <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
-                </geometry>
-                <material name="Orange"/>
-            </visual>
-
-            <collision>
-                <origin xyz="-0.01699 0.01834 0.0135" rpy="${pi/2} ${pi} 2.3057"/>
-                <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
