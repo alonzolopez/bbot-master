@@ -598,12 +598,25 @@
             has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
 
         <!-- joint between link_claw1 and link_claw1_end-->
-        <joint name="${robot_name}_joint_claw1_claw1_end" type="continuous">
+        <joint name="${robot_name}_joint_claw1_claw1_end" type="revolute">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw1_end"/>
             <origin xyz="-0.03858 -0.03487 0" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
+            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+                effort="${max_effort}" velocity="${max_velocity}" />
+            <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                     soft_upper_limit="${168 * pi / 180}"
+                     k_position="${safety_controller_k_pos}"
+                     k_velocity="${safety_controller_k_vel}"/> 
+            <dynamics damping="${joint_damping}"/>
+            <mimic joint="${robot_name}_joint_7" multiplier="1.0" offset = "0"/>
         </joint>
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw1_end"
+            parent_joint="${robot_name}_joint_7" 
+            mimic_joint="${robot_name}_joint_claw1_claw1_end"
+            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
 
         <!-- link_claw1_end -->
         <link name="${robot_name}_link_claw1_end">
@@ -629,13 +642,6 @@
                 <material name="Orange"/>
             </collision>
         </link>
-
-<!--         <joint name="${robot_name}_joint_claw1_claw1_end_2" type="continuous">
-            <parent link="${robot_name}_link_claw1_2"/>
-            <child link="${robot_name}_link_claw1_end"/>
-            <origin xyz="-0.03678 -0.03387 0" rpy="0 0 0"/>
-            <axis xyz="0 0 1"/>
-        </joint> -->
 
         <!-- link_claw2 -->
         <link name="${robot_name}_link_claw2">
@@ -714,7 +720,20 @@
             <child link="${robot_name}_link_claw2_end"/>
             <origin xyz="0.03581 -0.0377 0" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
+            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+                effort="${max_effort}" velocity="${max_velocity}" />
+            <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                     soft_upper_limit="${168 * pi / 180}"
+                     k_position="${safety_controller_k_pos}"
+                     k_velocity="${safety_controller_k_vel}"/> 
+            <dynamics damping="${joint_damping}"/>
+            <mimic joint="${robot_name}_joint_7" multiplier="1.0" offset = "0"/>
         </joint>
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw2_claw2_end"
+            parent_joint="${robot_name}_joint_7" 
+            mimic_joint="${robot_name}_joint_claw2_claw2_end"
+            has_pid="false" multiplier="1.0" max_effort="${max_effort}" />
 
         <!-- link_claw2_end -->
         <link name="${robot_name}_link_claw2_end">
