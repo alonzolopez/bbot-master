@@ -1,0 +1,10 @@
+gazebo_ros_control:   
+  pid_gains:
+    bbot_joint_1: {p: 0.0, i: 0.0, d: 0.0}
+    bbot_joint_2: {p: 0.0, i: 0.0, d: 0.0}
+    bbot_joint_3: {p: 0.0, i: 0.0, d: 0.0}
+    bbot_joint_4: {p: 0.0, i: 0.0, d: 0.0}
+    bbot_joint_5: {p: 0.0, i: 0.0, d: 0.0}
+    bbot_joint_6: {p: 0.0, i: 0.0, d: 0.0}
+    bbot_joint_7: {p: 0.0, i: 0.0, d: 0.0}
+      

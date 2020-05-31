@@ -9,10 +9,23 @@
     <arg name="robot_name" default="bbot" />
     <arg name="joint_state_frequency" default="100" />
     <arg name="robot_state_frequency" default="100" />
+    <arg name="position" default="true"/>
     
     <!-- Loads joint controller configurations from YAML file to parameter server -->
     <rosparam file="$(find bbot_control)/config/bbot_control.yaml" command="load" />
     <param name="/$(arg robot_name)/joint_state_controller/publish_rate" value="$(arg joint_state_frequency)" />
+
+    <group if="$(arg position)">
+        <rosparam file="$(find bbot_control)/config/bbot_position_interface.yaml" command="load" />
+    </group>
+
+    <group unless="$(arg position)">
+        <rosparam file="$(find bbot_control)/config/bbot_velocity_interface.yaml" command="load" />
+    </group>
+
+
+
+
     
     <!-- Loads the controllers -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"

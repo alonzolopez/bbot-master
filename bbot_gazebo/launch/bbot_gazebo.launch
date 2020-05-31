@@ -40,6 +40,7 @@
             <arg name="hardware_interface" value="PositionJointInterface" />
             <arg name="controllers" value="joint_state_controller PositionJointInterface_trajectory_controller" />
             <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="position" value="$(arg position)"/>
         </include>
     </group>
 
@@ -49,6 +50,7 @@
             <arg name="hardware_interface" value="VelocityJointInterface"/>
             <arg name="controllers" value="joint_state_controller VelocityJointInterface_trajectory_controller"/>
             <arg name="robot_name" value="$(arg robot_name)"/>
+            <arg name="position" value="$(arg position)"/>
         </include>
     </group>
 </launch>
