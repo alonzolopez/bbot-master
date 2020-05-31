@@ -25,12 +25,12 @@ if __name__ == '__main__':
 		# elements at indices 0-5 inclusive correspond to joint commands
 		# element at index 6 is the time argument for that waypoint
 		M = np.matrix([
-			[0,0,1,(np.sqrt(2)*(.239))/2],
-			[-1,0,0,-.0625],
-			[0,-1,0,-0.029],
+			[0,-1,0,0.0625],
+			[0,0,1,0.2082],
+			[-1,0,0,0.07425],
 			[0,0,0,1]
-			]) # t2 = -45, t3 = -90, t4 = 45
-		ikfk.IK(M,[[-1,1,-1,1]])
+			]) # t1 = 90, t2 = -45, t3 = -45, t6 = 90
+		ikfk.IK(M,[[-1,1,-1,1]]) # which configuration to use, so far [-1,1,-1,1] is best
 		jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
 		jtangles[0].append(3.0) #add time arugment at index 6
 		pos = []

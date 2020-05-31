@@ -116,7 +116,6 @@ class bbotAnalysis():
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 1 violated with command " + str(t1))
 				continue
-
 			s5 = np.sin(t1)*r13 - np.cos(t1)*r23
 
 			t5 = wrapAngle(np.arctan2(s5, wrist_yaw*np.sqrt(1 - s5**2))) # 2 sols for +/- sqrt
@@ -149,7 +148,7 @@ class bbotAnalysis():
 
 
 			c3 = (px**2*np.cos(t1)**2 + py**2*np.sin(t1)**2 + pz**2 + 2*px*py*np.cos(t1)*np.sin(t1) - self.a2**2 - self.a3**2)/(2*self.a2*self.a3)
-			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1 - c3**2),c3)) # 2 sols for +/- sqrt
+			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1.0 - c3**2),c3)) # 2 sols for +/- sqrt
 			if t3 > self.j3max or t3 < self.j3min or math.isnan(t3):
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 3 violated with command " + str(t3))
@@ -256,26 +255,39 @@ if __name__ == '__main__':
 	# 	[0,0,0,1]
 	# 	])
 
-	# all zeros
+
 	# M = np.matrix([
 	# 	[0,1,0,0],
 	# 	[-1,0,0,-.0625],
 	# 	[0,0,1,0.239],
 	# 	[0,0,0,1]
-	# 	])
+	# 	]) # all zeros
 
-	# t2 = -45, t3 = -90, t4 = 45
+	
+	# M = np.matrix([
+	# 	[0,0,1,(np.sqrt(2)*(.239))/2],
+	# 	[-1,0,0,-.0625],
+	# 	[0,-1,0,-0.02051],
+	# 	[0,0,0,1]
+	# 	]) # t2 = -45, t3 = -90, t4 = 45
+
 	M = np.matrix([
-		[0,0,1,(np.sqrt(2)*(.239))/2],
-		[-1,0,0,-.0625],
-		[0,-1,0,-0.029],
+		[0,-1,0,0.0625],
+		[0,0,1,0.2082],
+		[-1,0,0,0.07425],
 		[0,0,0,1]
-		])
+		]) # t1 = 90, t2 = -45, t3 = -45, t6 = 90
 
-	ikfk.IK(M,[[-1,1,-1,1]],verbose = True)
+	print(ikfk.IK(M,[[-1,1,-1,1]],verbose = True))
+
+
 	qwer = ikfk.iksols.tolist()
 	qwer[0].append(3.0)
 	print(qwer[0])
+	print(ikfk.Jacobian(qwer[0]))
+
+
+	# print(ikfk.FK([0, -math.pi/4., -math.pi/2., math.pi/4., 0, 0]))
 
 	# print(ikfk.solnconfigs)
 	# print(ikfk.invJacobian(np.squeeze(np.array(ikfk.iksols))))
