@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<robot name="marker26_5cm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<!-- * * * Link Definitions * * * -->
+	<link name="marker26_5cm">
+		<inertial>
+			<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
+			<mass value="1.0" />
+			<inertia ixx="1.0" ixy="0.0" ixz="0.0" iyy="1.0" iyz="0.0" izz="1.0"/>
+		</inertial>
+		<collision>
+			<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
+			<geometry>
+				<box size="0.07 0.07 0.03"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin rpy="0.0 0 0" xyz="0.0 0 0"/>
+			<geometry>
+				<mesh filename="package://bbot_aruco/meshes/marker26_5cm.dae"/>
+			</geometry>
+		</visual>
+	</link>
+
+	<gazebo reference="marker26_5cm">
+		<kp>100000.0</kp>
+		<kd>100000.0</kd>
+		<mu1>0.1</mu1>
+		<mu2>0.1</mu2>
+		<fdir1>1 0 0</fdir1>
+	</gazebo>
+
+</robot>

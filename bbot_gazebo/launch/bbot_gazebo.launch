@@ -51,4 +51,14 @@
             <arg name="robot_name" value="$(arg robot_name)"/>
         </include>
     </group>
+
+    <!-- Add ingredient_cup1 -->
+    <group ns="ingredient_cup1">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find bbot_description)/urdf/ingredient_cup.urdf"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0"/>
+            <param name="tf_prefix" value="ingredient_cup1"/>
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model ingredient_cup -param robot_description -x 0.2 -y 0 -z 0.4"/>
+    </group>
 </launch>
