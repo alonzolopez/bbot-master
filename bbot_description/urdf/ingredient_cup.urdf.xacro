@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="cup" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+	<!-- Import the bbot macro -->
+	<xacro:include filename="$(find bbot_description)/urdf/ingredient_cup.xacro"/>
+
+  <!-- arguments to pass on -->
+  <xacro:arg name="aruco_dae_path" default="bbot_aruco/markers/aruco_99_50mm.dae"/>
+
+  <!-- call bbot xacro -->
+  <xacro:cup aruco_dae_path="$(arg aruco_dae_path)"/>
+</robot>

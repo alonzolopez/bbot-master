@@ -84,13 +84,13 @@
 			<collision>
 				<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
 				<geometry>
-					<mesh filename="package://bbot_aruco/markers/aruco_99_50mm.dae"/>
+					<mesh filename="package://${aruco_dae_path}"/>
 				</geometry>
 			</collision>
 			<visual>
 				<origin rpy="0.0 0 0" xyz="0.0 0 0"/>
 				<geometry>
-					<mesh filename="package://bbot_aruco/markers/aruco_99_50mm.dae"/>
+					<mesh filename="package://${aruco_dae_path}"/>
 				</geometry>
 			</visual>
 		</link>	
