@@ -71,7 +71,7 @@
 	<joint name="joint_holder_to_aruco" type="fixed">
             <parent link="jigger_holder"/>
             <child link="aruco_marker"/>
-            <origin xyz="0 0 0" rpy="0 1.57 0"/>
+            <origin xyz="0 0.03 -0.0025" rpy="0 3.1415 3.1415"/>
     </joint>
 
 	<link name="aruco_marker">
@@ -83,13 +83,13 @@
 		<collision>
 			<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
 			<geometry>
-				<mesh filename="package://bbot_aruco/markers/aruco_26_50mm.dae"/>
+				<mesh filename="package://bbot_aruco/markers/aruco_99_50mm.dae"/>
 			</geometry>
 		</collision>
 		<visual>
 			<origin rpy="0.0 0 0" xyz="0.0 0 0"/>
 			<geometry>
-				<mesh filename="package://bbot_aruco/markers/aruco_26_50mm.dae"/>
+				<mesh filename="package://bbot_aruco/markers/aruco_99_50mm.dae"/>
 			</geometry>
 		</visual>
 	</link>	

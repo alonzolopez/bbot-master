@@ -5,8 +5,8 @@
       <author>Blender User</author>
       <authoring_tool>Blender 2.83.0 commit date:2020-06-03, commit time:14:38, hash:211b6c29f771</authoring_tool>
     </contributor>
-    <created>2020-06-03T22:10:40</created>
-    <modified>2020-06-03T22:10:40</modified>
+    <created>2020-06-03T22:13:11</created>
+    <modified>2020-06-03T22:13:11</modified>
     <unit name="meter" meter="1"/>
     <up_axis>Z_UP</up_axis>
   </asset>
@@ -92,10 +92,40 @@
         </technique>
       </profile_COMMON>
     </effect>
+    <effect id="_4-effect">
+      <profile_COMMON>
+        <newparam sid="_44_50mm_png-surface">
+          <surface type="2D">
+            <init_from>_44_50mm_png</init_from>
+          </surface>
+        </newparam>
+        <newparam sid="_44_50mm_png-sampler">
+          <sampler2D>
+            <source>_44_50mm_png-surface</source>
+          </sampler2D>
+        </newparam>
+        <technique sid="common">
+          <lambert>
+            <emission>
+              <color sid="emission">0 0 0 1</color>
+            </emission>
+            <diffuse>
+              <texture texture="_44_50mm_png-sampler" texcoord="UVMap"/>
+            </diffuse>
+            <index_of_refraction>
+              <float sid="ior">1.45</float>
+            </index_of_refraction>
+          </lambert>
+        </technique>
+      </profile_COMMON>
+    </effect>
   </library_effects>
   <library_images>
     <image id="_26_50mm_png" name="_26_50mm_png">
       <init_from>026_50mm.png</init_from>
+    </image>
+    <image id="_44_50mm_png" name="_44_50mm_png">
+      <init_from>044_50mm.png</init_from>
     </image>
     <image id="_5_50mm_png" name="_5_50mm_png">
       <init_from>05_50mm.png</init_from>
@@ -110,6 +140,9 @@
     </material>
     <material id="_6-material" name="26">
       <instance_effect url="#_6-effect"/>
+    </material>
+    <material id="_4-material" name="44">
+      <instance_effect url="#_4-effect"/>
     </material>
   </library_materials>
   <library_geometries>
@@ -153,7 +186,7 @@
           <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
           <p>2 1 3 7 1 4 3 1 5 6 2 6 5 2 7 7 2 8 1 3 9 7 3 10 5 3 11 0 4 12 3 4 13 1 4 14 4 5 15 1 5 16 5 5 17 2 1 21 6 1 22 7 1 23 6 2 24 4 2 25 5 2 26 1 3 27 3 3 28 7 3 29 0 4 30 2 4 31 3 4 32 4 5 33 0 5 34 1 5 35</p>
         </triangles>
-        <triangles material="_6-material" count="2">
+        <triangles material="_4-material" count="2">
           <input semantic="VERTEX" source="#Cube-mesh-vertices" offset="0"/>
           <input semantic="NORMAL" source="#Cube-mesh-normals" offset="1"/>
           <input semantic="TEXCOORD" source="#Cube-mesh-map-0" offset="2" set="0"/>
@@ -176,6 +209,9 @@
                 <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
               </instance_material>
               <instance_material symbol="_6-material" target="#_6-material">
+                <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
+              </instance_material>
+              <instance_material symbol="_4-material" target="#_4-material">
                 <bind_vertex_input semantic="UVMap" input_semantic="TEXCOORD" input_set="0"/>
               </instance_material>
             </technique_common>
