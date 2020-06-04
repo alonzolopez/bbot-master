@@ -33,7 +33,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/baseplate.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/baseplate.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -41,7 +41,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/baseplate.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/baseplate.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -63,7 +63,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_no_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_no_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -71,7 +71,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_no_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_no_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -101,7 +101,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link1_2.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link1_2.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -109,7 +109,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link1_2.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link1_2.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -131,7 +131,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 ${-pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -139,7 +139,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 ${-pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -169,7 +169,7 @@
             <visual>
                 <origin xyz="0.0275 0 0" rpy="${pi/2.0} ${-pi/2.0} 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link2_3.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link2_3.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -177,7 +177,7 @@
             <collision>
                 <origin xyz="0.0275 0 0" rpy="${pi/2.0} ${-pi/2.0} 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link2_3.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link2_3.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -207,7 +207,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -215,7 +215,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -237,7 +237,7 @@
             <visual>
                 <origin xyz="0.067 0 0.01" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link3_4.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link3_4.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -245,7 +245,7 @@
             <collision>
                 <origin xyz="0.067 0 0.01" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link3_4.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link3_4.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -268,7 +268,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 ${-pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -276,7 +276,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 ${-pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -306,7 +306,7 @@
             <visual>
                 <origin xyz="0 0 0.0235" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link4_5.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link4_5.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -314,7 +314,7 @@
             <collision>
                 <origin xyz="0 0 0.0235" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link4_5.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link4_5.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -344,7 +344,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -352,7 +352,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -374,7 +374,7 @@
             <visual>
                 <origin xyz="0 0 0.0173" rpy="${pi/2.0} 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link5_6.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link5_6.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -382,7 +382,7 @@
             <collision>
                 <origin xyz="0 0 0.0173" rpy="${pi/2.0} 0 ${pi/2.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/link5_6.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/link5_6.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -412,7 +412,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -420,7 +420,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -444,7 +444,7 @@
             <visual>
                 <origin xyz="0 0.0175 0.008" rpy="${pi} 0 ${0.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_palm.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_palm.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -452,7 +452,7 @@
             <collision>
                 <origin xyz="0 0.0175 0.008" rpy="${pi} 0 ${0.0}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_palm.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_palm.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -476,7 +476,7 @@
             <visual>
                 <origin xyz="0.015 -0.0115 0.0295" rpy="${pi/2} 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </visual>
@@ -484,7 +484,7 @@
             <collision>
                 <origin xyz="0.015 -0.0115 0.0295" rpy="${pi/2} 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Black"/>
             </collision>
@@ -516,7 +516,7 @@
             <visual>
                 <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link1_right.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link1_right.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -524,7 +524,7 @@
             <collision>
                 <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link1_right.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link1_right.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -562,7 +562,7 @@
             <visual>
                 <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -570,7 +570,7 @@
             <collision>
                 <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -629,7 +629,7 @@
             <visual>
                 <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -637,7 +637,7 @@
             <collision>
                 <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -654,7 +654,7 @@
             <visual>
                 <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link1_left.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link1_left.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -662,7 +662,7 @@
             <collision>
                 <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link1_left.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link1_left.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
@@ -700,7 +700,7 @@
             <visual>
                 <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -708,14 +708,14 @@
             <collision>
                 <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link2.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
         </link>
 
         <!-- joint between link_claw2 and link_claw2_end-->
-        <joint name="${robot_name}_joint_claw2_claw2_end" type="continuous">
+        <joint name="${robot_name}_joint_claw2_claw2_end" type="revolute">
             <parent link="${robot_name}_link_claw2"/>
             <child link="${robot_name}_link_claw2_end"/>
             <origin xyz="0.03581 -0.0377 0" rpy="0 0 0"/>
@@ -746,7 +746,7 @@
             <visual>
                 <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </visual>
@@ -754,7 +754,7 @@
             <collision>
                 <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
                 <geometry>
-                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="0.001 0.001 0.001"/>
+                    <mesh filename="package://bbot_description/meshes/gripper_link3.stl" scale="1 1 1"/>
                 </geometry>
                 <material name="Orange"/>
             </collision>
