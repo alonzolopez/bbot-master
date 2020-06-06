@@ -14,9 +14,13 @@
     <arg name="cup2x" default="0.2"/>
     <arg name="cup2y" default="0.2"/>
     <arg name="cup2z" default="0.008"/>
+    <arg name="mixingcupx" default="0.2"/>
+    <arg name="mixingcupy" default="0.4"/>
+    <arg name="mixingcupz" default="0.0"/>
     <arg name="aruco_dae_path1" default="bbot_aruco/markers/aruco_99_50mm.dae"/>
     <arg name="aruco_dae_path2" default="bbot_aruco/markers/aruco_05_50mm.dae"/>
-    <arg name="camx" default="0.3"/>
+    <arg name="aruco_dae_path3" default="bbot_aruco/markers/aruco_44_50mm.dae"/>
+    <arg name="camx" default="0.75"/>
     <arg name="camy" default="0.0"/>
     <arg name="camz" default="0.1"/>
     <arg name="camyaw" default="3.1415"/>
@@ -83,6 +87,15 @@
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model cup2 -param robot_description -x $(arg cup2x) -y $(arg cup2y) -z $(arg cup2z)"/>
     </group>
 
+    <group ns="mixing_cup">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bbot_description)/urdf/mixing_cup.xacro' aruco_dae_path:=$(arg aruco_dae_path3)"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0"/>
+            <param name="tf_prefix" value="mixing_cup"/>
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model mixing_cup -param robot_description -x $(arg mixingcupx) -y $(arg mixingcupy) -z $(arg mixingcupz)"/>
+    </group>
+
     <group ns="bbot_camera">
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find bbot_description)/urdf/bbot_camera.xacro"/>
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
@@ -91,4 +104,7 @@
         </node>
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model bbot_camera -param robot_description -x $(arg camx) -y $(arg camy) -z $(arg camz) -Y $(arg camyaw)"/>
     </group>
+    <!-- use launch file to launch aruco_ros detection nodes -->
+    <include file="$(find aruco_ros)/launch/bbot_aruco_sim.launch" />
+
 </launch>

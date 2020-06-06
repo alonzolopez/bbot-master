@@ -1,13 +1,14 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
-	<xacro:macro name="cup" params="aruco_dae_path">
-		<gazebo reference="jigger">
+<robot name="mixing_cup" xmlns:xacro="http://www.ros.org/wiki/xacro">
+	<xacro:arg name="aruco_dae_path" default="bbot_aruco/markers/aruco_44_50mm.dae"/>
+	<xacro:macro name="mixing_cup" params="aruco_dae_path">
+		<gazebo reference="mixing_cup">
 	        <material>Gazebo/Grey</material>
 	        <mu1>0.2</mu1>
 	        <mu2>0.2</mu2>
 	    </gazebo>
 
-	    <gazebo reference="jigger_holder">
+	    <gazebo reference="aruco_holder">
 	        <material>Gazebo/White</material>
 	        <mu1>0.2</mu1>
 	        <mu2>0.2</mu2>
@@ -16,12 +17,12 @@
 		<link name="base"/>
 		<joint name="joint_base_to_holder" type="fixed">
 	            <parent link="base"/>
-	            <child link="jigger_holder"/>
+	            <child link="aruco_holder"/>
 	            <origin xyz="0 0 0" rpy="${pi/2.0} 0 ${-pi/2.0}"/>
 	    </joint>
 
 
-		<link name="jigger_holder">
+		<link name="aruco_holder">
 			<inertial>
 				<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
 				<mass value="0.01" />
@@ -30,25 +31,25 @@
 			<collision>
 				<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
 				<geometry>
-					<mesh filename="package://bbot_description/meshes/jigger_holder_complete.stl" scale="0.001 0.001 0.001"/>
+					<mesh filename="package://bbot_description/meshes/mixing_cup_aruco_holder_meters.stl"/>
 				</geometry>
 			</collision>
 			<visual>
 				<origin rpy="0.0 0 0" xyz="0.0 0 0"/>
 				<geometry>
-					<mesh filename="package://bbot_description/meshes/jigger_holder_complete.stl" scale="0.001 0.001 0.001"/>
+					<mesh filename="package://bbot_description/meshes/mixing_cup_aruco_holder_meters.stl"/>
 				</geometry>
 				<material name="White"/>
 			</visual>
 		</link>	
 		
-		<joint name="joint_holder_to_jigger" type="fixed">
-	            <parent link="jigger_holder"/>
-	            <child link="jigger"/>
-	            <origin xyz="0 0.04609 0.035" rpy="${pi} 0 0"/>
+		<joint name="joint_holder_to_cup" type="fixed">
+	            <parent link="aruco_holder"/>
+	            <child link="mixing_cup"/>
+	            <origin xyz="0 0 0.04633" rpy="${0} 0 0"/>
 	    </joint>
 
-		<link name="jigger">
+		<link name="mixing_cup">
 			<inertial>
 				<origin xyz="0.0 0 0" rpy="0.0 0.0 0"/>
 				<mass value="0.01" />
@@ -57,22 +58,22 @@
 			<collision>
 				<origin xyz="0.0 0 0" rpy="0.0 0 0"/>
 				<geometry>
-					<mesh filename="package://bbot_description/meshes/jigger.stl" scale="0.001 0.001 0.001"/>
+					<mesh filename="package://bbot_description/meshes/mixing_cup_meters.stl"/>
 				</geometry>
 			</collision>
 			<visual>
 				<origin rpy="0.0 0 0" xyz="0.0 0 0"/>
 				<geometry>
-					<mesh filename="package://bbot_description/meshes/jigger.stl" scale="0.001 0.001 0.001"/>
+					<mesh filename="package://bbot_description/meshes/mixing_cup_meters.stl"/>
 				</geometry>
 				<material name="Grey"/>
 			</visual>
 		</link>
 
 		<joint name="joint_holder_to_aruco" type="fixed">
-	            <parent link="jigger_holder"/>
+	            <parent link="aruco_holder"/>
 	            <child link="aruco_marker"/>
-	            <origin xyz="0 0.0325 -0.002" rpy="0 3.1415 3.1415"/>
+	            <origin xyz="0 0.0325 0.001" rpy="0 3.1415 3.1415"/>
 	    </joint>
 
 		<link name="aruco_marker">
@@ -94,13 +95,6 @@
 				</geometry>
 			</visual>
 		</link>	
-
-		<!-- <gazebo reference="marker26_5cm">
-			<kp>100000.0</kp>
-			<kd>100000.0</kd>
-			<mu1>0.1</mu1>
-			<mu2>0.1</mu2>
-			<fdir1>1 0 0</fdir1>
-		</gazebo> -->
 	</xacro:macro>
+	<xacro:mixing_cup aruco_dae_path="$(arg aruco_dae_path)"/>
 </robot>
