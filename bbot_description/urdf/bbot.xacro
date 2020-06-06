@@ -791,6 +791,34 @@
                 </geometry>
             </collision>
         </link>
+
+        <joint name="${robot_name}_joint_arucobase_aruco" type="fixed">
+            <parent link="${robot_name}_link_arucobase"/>
+            <child link="${robot_name}_link_arucorobot"/>
+            <origin xyz="0 0.026 0.0005" rpy="0 ${pi} ${pi}"/>
+        </joint>
+
+        <link name="${robot_name}_link_arucorobot">
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.006"/>
+                <inertia ixx="0" ixy="0" ixz="0" iyy="0.000003" iyz="0" izz="0.000003"/>
+            </inertial>
+
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://bbot_aruco/markers/aruco_26_50mm.dae"/>
+                </geometry>
+            </visual>
+
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://bbot_aruco/markers/aruco_26_50mm.dae"/>
+                </geometry>
+            </collision>
+        </link>
     </xacro:macro>
 
 </robot>

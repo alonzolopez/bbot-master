@@ -9,13 +9,17 @@
     <!-- mode param is to control either position or velocity in the sim. Set true for position control, false for velocity control -->
     <arg name="position" default="true"/> 
     <arg name="cup1x" default="0.2"/>
-    <arg name="cup1y" default="0.0"/>
-    <arg name="cup1z" default="0.2"/>
-    <arg name="cup2x" default="0.4"/>
-    <arg name="cup2y" default="0.0"/>
-    <arg name="cup2z" default="0.2"/>
+    <arg name="cup1y" default="-0.2"/>
+    <arg name="cup1z" default="0.008"/>
+    <arg name="cup2x" default="0.2"/>
+    <arg name="cup2y" default="0.2"/>
+    <arg name="cup2z" default="0.008"/>
     <arg name="aruco_dae_path1" default="bbot_aruco/markers/aruco_99_50mm.dae"/>
     <arg name="aruco_dae_path2" default="bbot_aruco/markers/aruco_05_50mm.dae"/>
+    <arg name="camx" default="0.3"/>
+    <arg name="camy" default="0.0"/>
+    <arg name="camz" default="0.1"/>
+    <arg name="camyaw" default="3.1415"/>
 	<!-- This is the top-level launch file for the bbot gazebo sim -->
 
     <group if="$(arg position)">
@@ -77,5 +81,14 @@
             <param name="tf_prefix" value="cup2"/>
         </node>
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model cup2 -param robot_description -x $(arg cup2x) -y $(arg cup2y) -z $(arg cup2z)"/>
+    </group>
+
+    <group ns="bbot_camera">
+        <param name="robot_description" command="$(find xacro)/xacro --inorder $(find bbot_description)/urdf/bbot_camera.xacro"/>
+        <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
+            <param name="publish_frequency" type="double" value="50.0"/>
+            <param name="tf_prefix" value="bbot_camera"/>
+        </node>
+        <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model bbot_camera -param robot_description -x $(arg camx) -y $(arg camy) -z $(arg camz) -Y $(arg camyaw)"/>
     </group>
 </launch>
