@@ -10,7 +10,7 @@
     <!--Define properties-->
     <xacro:property name="safety_controller_k_pos" value="100" />
     <xacro:property name="safety_controller_k_vel" value="2" /> 
-    <xacro:property name="joint_damping" value="0.5" />
+    <xacro:property name="joint_damping" value="0.01" />
     <xacro:property name="max_effort" value="300"/>
     <xacro:property name="max_velocity" value="10"/>
 
@@ -433,7 +433,7 @@
             <origin xyz="0 0 0.015" rpy="0 0 0"/>
         </joint>
 
-       <!-- link gripper_palm -->
+        <!-- link gripper_palm -->
         <link name="${robot_name}_gripper_palm">
             <inertial>
                 <origin xyz="0 0.0175 0.008" rpy="${pi} 0 ${0.0}"/>
