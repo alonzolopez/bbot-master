@@ -1,0 +1,97 @@
+#! /usr/bin/env python
+
+import roslib
+import rospy
+import actionlib
+import random
+import sys
+from bbot import BBOTTrajectoryClient
+from bbot import bbotAnalysis
+import math
+import numpy as np
+
+from control_msgs.msg import (
+	FollowJointTrajectoryAction,
+	FollowJointTrajectoryGoal,
+	JointTolerance,
+)
+from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from geometry_msgs.msg import Pose
+from bbot import MixingTaskStateMachine
+from scipy.spatial.transform import Rotation as R
+
+
+##### Rotation helper functions ######
+def quat_to_dcm(quat):
+	r = R.from_quat(quat)
+	return r.as_dcm()
+
+def to_transformation(dcm, translation):
+	trans = np.empty((4,4))
+	trans[0:3,0:3] = dcm
+	trans[3,:] = [0, 0, 0, 1]
+	trans[0:3,3] = translation
+	return(np.matrix(trans))
+
+def msg_to_transformation(msg):
+	quat = [msg.orientation.x, msg.orientation.y, msg.orientation.z, msg.orientation.w]
+	dcm = quat_to_dcm(quat)
+	pos = [msg.position.x, msg.position.y, msg.position.z]
+	return to_transformation(dcm, pos)
+
+##### aruco callbacks #####
+def cup1callback(msg):
+	transmatrix = msg_to_transformation(msg)
+	print(transmatrix)
+	print("\n")
+	
+def cup2callback(msg):
+	# print("callback 2")
+	# print(msg.position)
+	pass
+
+def cupmcallback(msg):
+	# print("callback 3")
+	# print(msg.position)
+	pass
+
+def robotcallback(msg):
+	# print("callback 4")
+	# print(msg.position)
+	pass
+
+##### Functions that run trajectories #####
+def runcup1(btj):
+	pos = []
+	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
+	pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
+	result = btj.sendPositionTrajectory(pos, 30)
+	rospy.loginfo("Completed. error_code: " + str(result))
+
+def runcup2(btj):
+	pass
+
+
+
+if __name__ == '__main__':
+	try:
+		rospy.init_node('demo_node')
+		btj = BBOTTrajectoryClient()
+		bbot = bbotAnalysis()
+
+		
+		# subscribe to all the pose nodes to record where the cups and robot are relative to each other
+		rospy.Subscriber('aruco_1/aruco_double_j/pose', Pose, cup1callback) # sub to cup 1 pose (marker id 99)
+		rospy.Subscriber('aruco_1/aruco_double_j/pose2', Pose, cup2callback) # sub to cup 2 pose (marker id 05)
+		rospy.Subscriber('aruco_2/aruco_double_b/pose', Pose, cupmcallback) # sub to mixing cup pose (marker id 44)
+		rospy.Subscriber('aruco_2/aruco_double_b/pose2', Pose, robotcallback) # sub to robot base pose (marker id 26)
+		rospy.sleep(1) # sleep for 1 sec while the aruco poses come in
+
+		# grab the first cup, dump it, and return it
+		runcup1(btj)
+
+		# grab the second cup, dump it, and return it
+		runcup2(btj)
+
+	except rospy.ROSInterruptException:
+		rospy.loginfo("program interrupted before completion")

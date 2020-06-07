@@ -104,7 +104,8 @@
         </node>
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model bbot_camera -param robot_description -x $(arg camx) -y $(arg camy) -z $(arg camz) -Y $(arg camyaw)"/>
     </group>
+    
     <!-- use launch file to launch aruco_ros detection nodes -->
-    <include file="$(find aruco_ros)/launch/bbot_aruco_sim.launch" />
+    <include file="$(find bbot_aruco)/launch/bbot_aruco_sim.launch" />
 
 </launch>
