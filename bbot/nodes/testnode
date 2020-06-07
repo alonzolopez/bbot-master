@@ -30,6 +30,7 @@ if __name__ == '__main__':
 			[0,-1,0,0],
 			[0,0,0,1]
 			]) # cup1
+
 		ikfk.IK(M,[[-1,1,-1,1]])
 		jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
 		jtangles[0].append(3.0) #add time arugment at index 6
