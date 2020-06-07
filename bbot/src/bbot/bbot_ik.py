@@ -12,12 +12,12 @@ def DHToTransMat(ai_1, alphai_1, di, ti):
 
 def wrapAngle(anglein):
 	while anglein > math.pi:
-		angleout = anglein - 2*math.pi
+		anglein = anglein - 2*math.pi
 	while anglein < -math.pi:
 		anglein = anglein + 2*math.pi
 	return anglein
 
-def equivalenceCheck(mat1, mat2, eps = 10**(-6)):
+def equivalenceCheck(mat1, mat2, eps = 10**(-3)):
 	for row in range(mat1.shape[0]):
 		for col in range(mat1.shape[1]):
 			if np.abs(mat1[row,col]-mat2[row,col]) > eps:
@@ -28,8 +28,8 @@ def equivalenceCheck(mat1, mat2, eps = 10**(-6)):
 class bbotAnalysis():
 	def __init__(self):
 		# Joint Limits [rad]
-		self.j1min = math.pi/180.0*(-135.0)
-		self.j1max = math.pi/180.0*(135.0)
+		self.j1min = math.pi/180.0*(-175.0)
+		self.j1max = math.pi/180.0*(175.0)
 		self.j2min = math.pi/180.0*(-135.0)
 		self.j2max = math.pi/180.0*(135.0)
 		self.j3min = math.pi/180.0*(-135.0)
@@ -38,8 +38,8 @@ class bbotAnalysis():
 		self.j4max = math.pi/180.0*(135.0)
 		self.j5min = math.pi/180.0*(-135.0)
 		self.j5max = math.pi/180.0*(135.0)
-		self.j6min = math.pi/180.0*(-135.0)
-		self.j6max = math.pi/180.0*(135.0)
+		self.j6min = math.pi/180.0*(-175.0)
+		self.j6max = math.pi/180.0*(175.0)
 
 		# DH Parameters
 		self.a2 = 0.105
@@ -49,7 +49,14 @@ class bbotAnalysis():
 		self.alpha = [0, math.pi/2., 0, 0, math.pi/2., math.pi/2.]
 		self.d = [0, 0, 0, self.d4, 0, 0]
 
-		# Possible solutions form t1, t5, t3
+		self.d7 = .231
+		self.transtoEE = np.matrix([
+			[1,0,0,0],
+			[0,1,0,0],
+			[0,0,1,self.d7],
+			[0,0,0,1]])
+
+		# Possible solutions form t1, t5, t3, t2
 		self.possconfigs = [
 			[1,1,1,1],
 			[1,-1,1,1],
@@ -79,7 +86,8 @@ class bbotAnalysis():
 			configlist = self.possconfigs
 		else:
 			configlist = configoption
-		self.targetPose = pose
+		self.targetPose = pose*np.linalg.inv(self.transtoEE)
+		pose = pose*np.linalg.inv(self.transtoEE)
 		solnstemp = []
 		configstemp = []
 
@@ -116,6 +124,7 @@ class bbotAnalysis():
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 1 violated with command " + str(t1))
 				continue
+
 			s5 = np.sin(t1)*r13 - np.cos(t1)*r23
 
 			t5 = wrapAngle(np.arctan2(s5, wrist_yaw*np.sqrt(1 - s5**2))) # 2 sols for +/- sqrt
@@ -148,7 +157,7 @@ class bbotAnalysis():
 
 
 			c3 = (px**2*np.cos(t1)**2 + py**2*np.sin(t1)**2 + pz**2 + 2*px*py*np.cos(t1)*np.sin(t1) - self.a2**2 - self.a3**2)/(2*self.a2*self.a3)
-			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1.0 - c3**2),c3)) # 2 sols for +/- sqrt
+			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1 - c3**2),c3)) # 2 sols for +/- sqrt
 			if t3 > self.j3max or t3 < self.j3min or math.isnan(t3):
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 3 violated with command " + str(t3))
@@ -161,7 +170,6 @@ class bbotAnalysis():
 			evar6 = -pz
 			fvar6 = self.a3*np.sin(t3)
 			t2 = wrapAngle(np.arctan2(shoulder*np.sqrt(avar6**2 + bvar6**2 - cvar6**2),cvar6) + np.arctan2(bvar6,avar6))
-
 			# if (avar6*evar6 - bvar6*dvar6 <= 0):
 			# 	if verbose == True:
 			# 		print(str(configlist[i]) + " failed the IK condition for Joint 2")
@@ -170,7 +178,7 @@ class bbotAnalysis():
 			# t2 = wrapAngle(np.arctan2(avar6*fvar6 - cvar6*dvar6,cvar6*evar6 - bvar6*fvar6)) # A*E - B*D > 0 for sol to exist
 			if t2 > self.j2max or t2 < self.j2min or math.isnan(t2):
 				if verbose == True:
-					print(str(configlist[i]) + " failed because Joint 6 violated with command " + str(t2))
+					print(str(configlist[i]) + " failed because Joint 2 violated with command " + str(t2))
 				continue
 
 			t4 = wrapAngle(t234 - t2 - t3)
@@ -255,7 +263,6 @@ if __name__ == '__main__':
 	# 	[0,0,0,1]
 	# 	])
 
-
 	# M = np.matrix([
 	# 	[0,1,0,0],
 	# 	[-1,0,0,-.0625],
@@ -267,27 +274,28 @@ if __name__ == '__main__':
 	# M = np.matrix([
 	# 	[0,0,1,(np.sqrt(2)*(.239))/2],
 	# 	[-1,0,0,-.0625],
-	# 	[0,-1,0,-0.02051],
+	# 	[0,-1,0,-0.029],
 	# 	[0,0,0,1]
 	# 	]) # t2 = -45, t3 = -90, t4 = 45
 
+	# M = np.matrix([
+	# 	[0,-1,0,0.0625],
+	# 	[0,0,1,0.2082],
+	# 	[-1,0,0,0.07425],
+	# 	[0,0,0,1]
+	# 	]) # t1 = 90, t2 = -45, t3 = -45, t6 = 90
+
 	M = np.matrix([
-		[0,-1,0,0.0625],
-		[0,0,1,0.2082],
-		[-1,0,0,0.07425],
+		[0,0,1,0.47],
+		[-1,0,0,-0.0625],
+		[0,-1,0,0],
 		[0,0,0,1]
-		]) # t1 = 90, t2 = -45, t3 = -45, t6 = 90
+		]) # cup1
 
-	print(ikfk.IK(M,[[-1,1,-1,1]],verbose = True))
-
-
-	qwer = ikfk.iksols.tolist()
-	qwer[0].append(3.0)
-	print(qwer[0])
-	print(ikfk.Jacobian(qwer[0]))
-
-
-	# print(ikfk.FK([0, -math.pi/4., -math.pi/2., math.pi/4., 0, 0]))
+	print(ikfk.IK(M,verbose = True))
+	# qwer = ikfk.iksols.tolist()
+	# qwer[0].append(3.0)
+	# print(qwer[0])
 
 	# print(ikfk.solnconfigs)
 	# print(ikfk.invJacobian(np.squeeze(np.array(ikfk.iksols))))
