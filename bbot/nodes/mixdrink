@@ -73,7 +73,7 @@ def robot_callback(msg, args):
 
 ##### Functions that run trajectories #####
 def run_cup_1(btj, task_space, bbot):
-	grip_open = 0
+	grip_open = -0.7
 	grip_closed = 0
 	pos = []
 	cup1_grip_pose = task_space.TBJ
@@ -81,14 +81,15 @@ def run_cup_1(btj, task_space, bbot):
 	cup1_grip_q, __ = bbot.IK(cup1_grip_pose, default_config)
 	cup1_grip_q = cup1_grip_q.tolist()[0]
 	print(cup1_grip_q)
-	cup1_grip_q.extend((grip_open, 3.0))
+	cup1_grip_q.extend((grip_open, 4.0))
 	# cup1_grip_pose.append()
 	print(cup1_grip_q)
 	print(type(cup1_grip_q))
 
 	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
+	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, grip_open, 1.0])
 	# pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
-	pos.append(cup1_grip_q)
+	# pos.append(cup1_grip_q)
 	result = btj.sendPositionTrajectory(pos, 30)
 	rospy.loginfo("Completed. error_code: " + str(result))
 

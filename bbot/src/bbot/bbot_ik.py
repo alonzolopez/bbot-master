@@ -49,6 +49,15 @@ class bbotAnalysis():
 		self.alpha = [0, math.pi/2., 0, 0, math.pi/2., math.pi/2.]
 		self.d = [0, 0, 0, self.d4, 0, 0]
 
+		self.a0 = 0.0133
+		self.d0 = 0.09193
+
+		self.worldto0 = np.matrix([
+			[1,0,0,self.a0],
+			[0,1,0,0],
+			[0,0,1,self.d0],
+			[0,0,0,1]])
+
 		self.d7 = .231
 		self.transtoEE = np.matrix([
 			[1,0,0,0],
@@ -86,8 +95,8 @@ class bbotAnalysis():
 			configlist = self.possconfigs
 		else:
 			configlist = configoption
-		self.targetPose = pose*np.linalg.inv(self.transtoEE)
-		pose = pose*np.linalg.inv(self.transtoEE)
+		self.targetPose = np.linalg.inv(self.worldto0)*pose*np.linalg.inv(self.transtoEE)
+		pose = np.linalg.inv(self.worldto0)*pose*np.linalg.inv(self.transtoEE)
 		solnstemp = []
 		configstemp = []
 
@@ -186,7 +195,6 @@ class bbotAnalysis():
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 4 violated with command " + str(t4))
 				continue
-
 			if equivalenceCheck(self.FK([t1, t2, t3, t4, t5, t6]),self.targetPose):
 				solnstemp.append([t1,t2,t3,t4,t5,t6])
 				configstemp.append(configlist[i])
@@ -256,41 +264,20 @@ class bbotAnalysis():
 if __name__ == '__main__':
 	ikfk = bbotAnalysis()
 	# t3 = -pi/2
-	# M = np.matrix([
-	# 	[0,0,1,.134],
-	# 	[-1,0,0,-.0625],
-	# 	[0,-1,0,0.105],
-	# 	[0,0,0,1]
-	# 	])
-
-	# M = np.matrix([
-	# 	[0,1,0,0],
-	# 	[-1,0,0,-.0625],
-	# 	[0,0,1,0.239],
-	# 	[0,0,0,1]
-	# 	]) # all zeros
-
-	
-	# M = np.matrix([
-	# 	[0,0,1,(np.sqrt(2)*(.239))/2],
-	# 	[-1,0,0,-.0625],
-	# 	[0,-1,0,-0.029],
-	# 	[0,0,0,1]
-	# 	]) # t2 = -45, t3 = -90, t4 = 45
-
-	# M = np.matrix([
-	# 	[0,-1,0,0.0625],
-	# 	[0,0,1,0.2082],
-	# 	[-1,0,0,0.07425],
-	# 	[0,0,0,1]
-	# 	]) # t1 = 90, t2 = -45, t3 = -45, t6 = 90
 
 	M = np.matrix([
-		[0,0,1,0.47],
-		[-1,0,0,-0.0625],
-		[0,-1,0,0],
+		[1,0,0,0.0625],
+		[0,0,1,0.365],
+		[0,-1,0,0.105],
 		[0,0,0,1]
-		]) # cup1
+		])
+
+	# M = np.matrix([
+	# 	[-.7071,0.5,0.5,0.2304],
+	# 	[.7071,0.5,0.5,-0.08775],
+	# 	[0,.7071,-.7071,-0.1108],
+	# 	[0,0,0,1]
+	# 	]) # test1
 
 	print(ikfk.IK(M,verbose = True))
 	# qwer = ikfk.iksols.tolist()
