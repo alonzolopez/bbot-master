@@ -25,9 +25,9 @@ if __name__ == '__main__':
 		# elements at indices 0-5 inclusive correspond to joint commands
 		# element at index 6 is the time argument for that waypoint
 		M = np.matrix([
-			[1,0,0,0.0625],
-			[0,0,1,0.365],
-			[0,-1,0,0.105],
+			[0,0,1,0.4357],
+			[0,1,0,.1031],
+			[-1,0,0,0.1662],
 			[0,0,0,1]
 			])
 
