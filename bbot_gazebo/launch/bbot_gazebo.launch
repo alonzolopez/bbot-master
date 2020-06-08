@@ -8,8 +8,8 @@
     <arg name="robot_name" default="bbot"/>
     <!-- mode param is to control either position or velocity in the sim. Set true for position control, false for velocity control -->
     <arg name="position" default="true"/> 
-    <arg name="cup1x" default="0.2"/>
-    <arg name="cup1y" default="-0.2"/>
+    <arg name="cup1x" default="0.4"/>
+    <arg name="cup1y" default="-0.1"/>
     <arg name="cup1z" default="0.008"/>
     <arg name="cup2x" default="0.2"/>
     <arg name="cup2y" default="0.2"/>
@@ -78,6 +78,7 @@
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model cup1 -param robot_description -x $(arg cup1x) -y $(arg cup1y) -z $(arg cup1z)"/>
     </group>
 
+    <!-- Add ingredient_cup2 -->
     <group ns="cup2">
         <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bbot_description)/urdf/ingredient_cup.urdf.xacro' aruco_dae_path:=$(arg aruco_dae_path2)"/>
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
@@ -87,6 +88,7 @@
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model cup2 -param robot_description -x $(arg cup2x) -y $(arg cup2y) -z $(arg cup2z)"/>
     </group>
 
+    <!-- Add mixing_cup -->
     <group ns="mixing_cup">
         <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find bbot_description)/urdf/mixing_cup.xacro' aruco_dae_path:=$(arg aruco_dae_path3)"/>
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">
@@ -96,6 +98,7 @@
         <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model mixing_cup -param robot_description -x $(arg mixingcupx) -y $(arg mixingcupy) -z $(arg mixingcupz)"/>
     </group>
 
+    <!-- Add camera -->
     <group ns="bbot_camera">
         <param name="robot_description" command="$(find xacro)/xacro --inorder $(find bbot_description)/urdf/bbot_camera.xacro"/>
         <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" output="screen">

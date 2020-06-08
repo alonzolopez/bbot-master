@@ -51,31 +51,43 @@ def cup_1_callback(msg, args):
 	task_space.update_cup_1(transmatrix)
 	
 def cup_2_callback(msg, args):
-	# print("callback 2")
-	# print(msg.position)
+	# this method is called everytime the pose is estimated for cup 2 aruco
+	# this method updates the task_space model given the new reading
 	transmatrix = msg_to_transformation(msg)
 	task_space = args
 	task_space.update_cup_2(transmatrix)
 
 def cup_m_callback(msg, args):
-	# print("callback 3")
-	# print(msg.position)
+	# this method is called everytime the pose is estimated for mixing cup aruco
+	# this method updates the task_space model given the new reading
 	transmatrix = msg_to_transformation(msg)
 	task_space = args
 	task_space.update_cup_m(transmatrix)
 
 def robot_callback(msg, args):
-	# print("callback 4")
-	# print(msg.position)
+	# this method is called everytime the pose is estimated for bbot's base aruco
+	# this method updates the task_space model given the new reading
 	transmatrix = msg_to_transformation(msg)
 	task_space = args
 	task_space.update_base(transmatrix)
 
 ##### Functions that run trajectories #####
-def run_cup_1(btj):
+def run_cup_1(btj, task_space, bbot):
+	grip_open = 90
+	grip_closed = 100
 	pos = []
+	cup1_grip_pose = task_space.TBJ
+	default_config = [[-1,1,-1,1]]
+	cup1_grip_q, __ = bbot.IK(cup1_grip_pose, default_config)
+	cup1_grip_q = cup1_grip_q.tolist()
+	cup1_grip_q.extend([grip_open, 3.0])
+	# cup1_grip_pose.append()
+	print(cup1_grip_q)
+	print(type(cup1_grip_q.tolist()))
+
 	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
-	pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
+	# pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
+	pos.append(cup1_grip_q)
 	result = btj.sendPositionTrajectory(pos, 30)
 	rospy.loginfo("Completed. error_code: " + str(result))
 
@@ -100,7 +112,7 @@ if __name__ == '__main__':
 		rospy.sleep(1) # sleep for 1 sec while the aruco poses come in
 
 		# grab the first cup, dump it, and return it
-		run_cup_1(btj)
+		run_cup_1(btj, task_space, bbot)
 
 		# grab the second cup, dump it, and return it
 		run_cup_2(btj)
