@@ -43,7 +43,7 @@ class MixingTaskStateMachine():
 		self.TCF = None # 4x4 transform from camera to cupm's aruco (cupm's aruco described in camera)
 		self.TFM = np.matrix([
 			[0.0, -1.0, 0.0, 0.1875],
-			[1.0, 0.0, 0.0, 0.0],
+			[1.0, 0.0, 0.0, 0.035],
 			[0.0, 0.0, 1.0, -0.04533],
 			[0.0, 0.0, 0.0, 1.0]
 			]) # 4x4 transform from cupm's aruco to dropoff pose (dropoff pose described in cupm's aruco)

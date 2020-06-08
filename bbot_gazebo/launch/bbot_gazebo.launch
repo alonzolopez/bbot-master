@@ -8,7 +8,7 @@
     <arg name="robot_name" default="bbot"/>
     <!-- mode param is to control either position or velocity in the sim. Set true for position control, false for velocity control -->
     <arg name="position" default="true"/> 
-    <arg name="cup1x" default="0.4"/>
+    <arg name="cup1x" default="0.35"/>
     <arg name="cup1y" default="-0.1"/>
     <arg name="cup1z" default="0.008"/>
     <arg name="cup2x" default="0.3"/>
