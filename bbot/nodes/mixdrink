@@ -42,6 +42,19 @@ def msg_to_transformation(msg):
 	pos = [msg.position.x, msg.position.y, msg.position.z]
 	return to_transformation(dcm, pos)
 
+def add_z(pose, dz):
+	print("pose")
+	print(pose)
+	new_pose = np.matrix(np.copy(pose))
+	print("new_pose before")
+	print(new_pose)
+	new_pose[2,3] += dz
+	print("new_pose after")
+	print(new_pose)
+	# print("adding z")
+	# print(type(new_pose))
+
+
 ##### aruco callbacks #####
 def cup_1_callback(msg, args):
 	# this method is called everytime the pose is estimated for cup 1 aruco
@@ -77,14 +90,11 @@ def run_cup_1(btj, task_space, bbot):
 	grip_closed = 0
 	pos = []
 	cup1_grip_pose = task_space.TBJ
+	add_z(cup1_grip_pose, 1.0)
 	default_config = [[-1,1,-1,1]]
 	cup1_grip_q, __ = bbot.IK(cup1_grip_pose, default_config)
 	cup1_grip_q = cup1_grip_q.tolist()[0]
-	print(cup1_grip_q)
 	cup1_grip_q.extend((grip_open, 4.0))
-	# cup1_grip_pose.append()
-	print(cup1_grip_q)
-	print(type(cup1_grip_q))
 
 	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
 	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, grip_open, 1.0])

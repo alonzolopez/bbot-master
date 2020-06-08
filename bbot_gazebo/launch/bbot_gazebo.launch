@@ -11,11 +11,11 @@
     <arg name="cup1x" default="0.4"/>
     <arg name="cup1y" default="-0.1"/>
     <arg name="cup1z" default="0.008"/>
-    <arg name="cup2x" default="0.2"/>
-    <arg name="cup2y" default="0.2"/>
+    <arg name="cup2x" default="0.3"/>
+    <arg name="cup2y" default="-0.25"/>
     <arg name="cup2z" default="0.008"/>
-    <arg name="mixingcupx" default="0.2"/>
-    <arg name="mixingcupy" default="0.4"/>
+    <arg name="mixingcupx" default="0.4"/>
+    <arg name="mixingcupy" default="0.1"/>
     <arg name="mixingcupz" default="0.0"/>
     <arg name="aruco_dae_path1" default="bbot_aruco/markers/aruco_99_50mm.dae"/>
     <arg name="aruco_dae_path2" default="bbot_aruco/markers/aruco_05_50mm.dae"/>
