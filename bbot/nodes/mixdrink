@@ -89,7 +89,7 @@ def run_cup_1(btj, task_space, bbot):
 	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
 	pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, grip_open, 1.0])
 	# pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
-	# pos.append(cup1_grip_q)
+	pos.append(cup1_grip_q)
 	result = btj.sendPositionTrajectory(pos, 30)
 	rospy.loginfo("Completed. error_code: " + str(result))
 
