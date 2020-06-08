@@ -8,6 +8,8 @@
     <arg name="headless" default="false"/>
     <arg name="robot_name" default="bbot"/>
     <arg name="hardware_interface" default="PositionJointInterface"/>
+    <arg name="j30" default="-1.57"/>
+
 
     <!-- This includes the empty_world.launch to launch an empty world in gazebo with the params we pass-->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -26,5 +28,5 @@
     </include>
 
     <!-- Spawn the URDF in Gazebo -->
-    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model bbot -param robot_description"/>
+    <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" respawn="false" output="screen" args="-urdf -model bbot -param robot_description -J $(arg robot_name)_joint_3 $(arg j30)"/>
 </launch>

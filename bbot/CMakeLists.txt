@@ -97,7 +97,7 @@ catkin_python_setup()
 #   cfg/DynReconf2.cfg
 # )
 
-find_package(catkin REQUIRED COMPONENTS genmsg actionlib_msgs actionlib moveit_msgs)
+find_package(catkin REQUIRED COMPONENTS genmsg actionlib_msgs actionlib moveit_msgs geometry_msgs)
 add_action_files(DIRECTORY action FILES bbot.action)
 generate_messages(DEPENDENCIES actionlib_msgs moveit_msgs)
 
@@ -114,7 +114,7 @@ catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES bbot
 #  CATKIN_DEPENDS moveit_msgs roscpp rospy std_msgs
-  CATKIN_DEPENDS moveit_msgs control_msgs trajectory_msgs actionlib_msgs std_msgs roscpp rospy
+  CATKIN_DEPENDS moveit_msgs control_msgs trajectory_msgs actionlib_msgs std_msgs roscpp rospy geometry_msgs
 #  DEPENDS system_lib
 )
 
@@ -174,6 +174,7 @@ install(PROGRAMS
   nodes/initializejoints
   nodes/rundemo
   nodes/testclient
+  nodes/mixdrink
   scripts/my_python_script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )

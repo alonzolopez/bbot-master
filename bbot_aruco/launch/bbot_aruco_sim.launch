@@ -1,0 +1,48 @@
+<launch>
+
+    <arg name="marker1Id"         default="99"/>
+    <arg name="marker2Id"         default="05"/>
+    <arg name="marker3Id"         default="44"/>
+    <arg name="marker4Id"         default="26"/>
+    <arg name="markerSize"        default="0.05"/>    <!-- in m -->
+    <arg name="eye"               default="left"/>
+    <arg name="dct_normalization" default="True" />
+    <arg name="dct_filter_size"   default="2" />
+    <arg name="marker1_frame"     default="marker1_frame" />
+    <arg name="marker2_frame"     default="marker2_frame" />
+    <arg name="marker3_frame"     default="marker3_frame" />
+    <arg name="marker4_frame"     default="marker4_frame" />
+
+    <group ns="aruco_1">
+        <node pkg="aruco_ros" type="double" name="aruco_double_j">    
+            <remap from="/camera_info" to="/bbot_camera/iiwa/camera1/camera_info" />
+            <remap from="/image" to="/bbot_camera/iiwa/camera1/image_raw" />
+            <param name="image_is_rectified" value="True"/>
+            <param name="marker_size" value="$(arg markerSize)"/>
+            <param name="marker_id1" value="$(arg marker1Id)"/>
+            <param name="marker_id2" value="$(arg marker2Id)"/>
+            <param name="normalizeImage" value="$(arg dct_normalization)"/>
+            <param name="dct_components_to_remove" value="$(arg dct_filter_size)"/>
+            <param name="parent_name" value="stereo_gazebo_$(arg eye)_camera_optical_frame"/>
+            <param name="child_name1" value="$(arg marker1_frame)" />
+            <param name="child_name2" value="$(arg marker2_frame)" />
+        </node>
+    </group>
+    <group ns="aruco_2">
+        <node pkg="aruco_ros" type="double" name="aruco_double_b">    
+            <remap from="/camera_info" to="/bbot_camera/iiwa/camera1/camera_info" />
+            <remap from="/image" to="/bbot_camera/iiwa/camera1/image_raw" />
+            <param name="image_is_rectified" value="True"/>
+            <param name="marker_size" value="$(arg markerSize)"/>
+            <param name="marker_id1" value="$(arg marker3Id)"/>
+            <param name="marker_id2" value="$(arg marker4Id)"/>
+            <param name="normalizeImage" value="$(arg dct_normalization)"/>
+            <param name="dct_components_to_remove" value="$(arg dct_filter_size)"/>
+            <param name="parent_name" value="stereo_gazebo_$(arg eye)_camera_optical_frame"/>
+            <param name="child_name1" value="$(arg marker3_frame)" />
+            <param name="child_name2" value="$(arg marker4_frame)" />
+        </node>
+    </group>
+
+</launch>
+
