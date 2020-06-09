@@ -30,14 +30,14 @@ class bbotAnalysis():
 		# Joint Limits [rad]
 		self.j1min = math.pi/180.0*(-175.0)
 		self.j1max = math.pi/180.0*(175.0)
-		self.j2min = math.pi/180.0*(-135.0)
-		self.j2max = math.pi/180.0*(135.0)
-		self.j3min = math.pi/180.0*(-135.0)
-		self.j3max = math.pi/180.0*(135.0)
-		self.j4min = math.pi/180.0*(-135.0)
-		self.j4max = math.pi/180.0*(135.0)
-		self.j5min = math.pi/180.0*(-135.0)
-		self.j5max = math.pi/180.0*(135.0)
+		self.j2min = math.pi/180.0*(-95.0)
+		self.j2max = math.pi/180.0*(95.0)
+		self.j3min = math.pi/180.0*(-100.0)
+		self.j3max = math.pi/180.0*(100.0)
+		self.j4min = math.pi/180.0*(-120.0)
+		self.j4max = math.pi/180.0*(120.0)
+		self.j5min = math.pi/180.0*(-35.0)
+		self.j5max = math.pi/180.0*(120.0)
 		self.j6min = math.pi/180.0*(-175.0)
 		self.j6max = math.pi/180.0*(175.0)
 
@@ -196,13 +196,16 @@ class bbotAnalysis():
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 4 violated with command " + str(t4))
 				continue
+			# print("FK Sol: " + str(self.FK([t1,t2,t3,t4,t5,t6])))
+			# print("Target Pose: " + str(self.targetPose))
 			if equivalenceCheck(self.FK([t1, t2, t3, t4, t5, t6]),self.targetPose):
 				solnstemp.append([t1,t2,t3,t4,t5,t6])
-				configstemp.append(configlist[i])
-				# print(self.FK([t1,t2,t3,t4,t5,t6]))
+				configstemp.append(configlist[i])	
 			else:
 				if verbose == True:
 					print(str(configlist[i]) + " failed equivalence test")
+				solnstemp.append([t1,t2,t3,t4,t5,t6]) #dont forget to remove
+				configstemp.append(configlist[i]) #remove this as well
 
 		self.iksols = np.matrix(solnstemp)
 		self.solnconfigs = np.matrix(configstemp)
@@ -274,9 +277,9 @@ if __name__ == '__main__':
 	# 	])
 
 	M = np.matrix([
-		[0,0,1,.257775591],
-		[-1,0,0,-.210662956],
-		[0,-1,0,-0.0207127125],
+		[-.01629,-.13063,1,.25],
+		[-1,0,-.0165,.20],
+		[0,-1,-.130607,0.0],
 		[0,0,0,1]
 		]) # test1
 

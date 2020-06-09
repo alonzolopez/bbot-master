@@ -111,7 +111,7 @@ def run_cup_1(btj, task_space, bbot):
 	cup1_grip_pose = task_space.TBJ # change for cup 2
 	cup_m_dropoff_pose = task_space.TBM
 	default_config = [[-1,1,-1,1]]
-	dz = cup_m_dropoff_pose[2,3]
+	dz = cup_m_dropoff_pose[2,3] - cup1_grip_pose[2,3]
 	dump_angle = -3*math.pi/4.0
 
 	# add_z(cup1_grip_pose, 1.0)
@@ -241,8 +241,8 @@ def run_cup_2(btj, task_space, bbot):
 	pos2 = []
 	cup2_grip_pose = task_space.TBK # change for cup 2
 	cup_m_dropoff_pose = task_space.TBM
-	default_config = [[-1,1,-1,1]]
-	dz = cup_m_dropoff_pose[2,3]
+	default_config = [[-1,-1,-1,1]]
+	dz = cup_m_dropoff_pose[2,3] - cup2_grip_pose[2,3]
 	dump_angle = -3*math.pi/4.0
 
 	# add_z(cup2_grip_pose, 1.0)
@@ -299,9 +299,10 @@ def run_cup_2(btj, task_space, bbot):
 	time_h = time_f + 3.0
 	print(time_h)
 	print("\n")
-	q_h, __ = bbot.IK(cup_m_dropoff_pose, default_config)
+	q_h, __ = bbot.IK(cup_m_dropoff_pose, [[-1,1,-1,1]])
 	print("IK result q_h")
 	print(q_h)
+	print(cup_m_dropoff_pose)
 	q_h = q_h.tolist()[0]
 	q_h.extend((grip_close_angle, time_h))
 	pos2.append(q_h)
