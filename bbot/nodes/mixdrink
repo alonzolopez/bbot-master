@@ -7,6 +7,8 @@ import random
 import sys
 from bbot import BBOTTrajectoryClient
 from bbot import bbotAnalysis
+from bbot import MixingTaskStateMachine
+
 import math
 import numpy as np
 
@@ -17,7 +19,6 @@ from control_msgs.msg import (
 )
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import Pose
-from bbot import MixingTaskStateMachine
 from scipy.spatial.transform import Rotation as R
 
 grip_open_angle = -0.7
@@ -379,10 +380,10 @@ if __name__ == '__main__':
 
 		
 		# subscribe to all the pose nodes to record where the cups and robot are relative to each other
-		rospy.Subscriber('aruco_1/aruco_double_j/pose', Pose, cup_1_callback, (task_space)) # sub to cup 1 pose (marker id 99)
-		rospy.Subscriber('aruco_1/aruco_double_j/pose2', Pose, cup_2_callback, (task_space)) # sub to cup 2 pose (marker id 05)
-		rospy.Subscriber('aruco_2/aruco_double_b/pose', Pose, cup_m_callback, (task_space)) # sub to mixing cup pose (marker id 44)
-		rospy.Subscriber('aruco_2/aruco_double_b/pose2', Pose, robot_callback, (task_space)) # sub to robot base pose (marker id 26)
+		rospy.Subscriber('aruco_1/aruco_double/pose', Pose, cup_1_callback, (task_space)) # sub to cup 1 pose (marker id 99)
+		rospy.Subscriber('aruco_1/aruco_double/pose2', Pose, cup_2_callback, (task_space)) # sub to cup 2 pose (marker id 05)
+		rospy.Subscriber('aruco_2/aruco_double/pose', Pose, cup_m_callback, (task_space)) # sub to mixing cup pose (marker id 44)
+		rospy.Subscriber('aruco_2/aruco_double/pose2', Pose, robot_callback, (task_space)) # sub to robot base pose (marker id 26)
 		rospy.sleep(1) # sleep for 1 sec while the aruco poses come in
 
 		# grab the first cup, dump it, and return it

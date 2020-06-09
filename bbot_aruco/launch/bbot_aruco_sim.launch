@@ -14,7 +14,7 @@
     <arg name="marker4_frame"     default="marker4_frame" />
 
     <group ns="aruco_1">
-        <node pkg="aruco_ros" type="double" name="aruco_double_j">    
+        <node pkg="aruco_ros" type="double" name="aruco_double">    
             <remap from="/camera_info" to="/bbot_camera/iiwa/camera1/camera_info" />
             <remap from="/image" to="/bbot_camera/iiwa/camera1/image_raw" />
             <param name="image_is_rectified" value="True"/>
@@ -29,7 +29,7 @@
         </node>
     </group>
     <group ns="aruco_2">
-        <node pkg="aruco_ros" type="double" name="aruco_double_b">    
+        <node pkg="aruco_ros" type="double" name="aruco_double">    
             <remap from="/camera_info" to="/bbot_camera/iiwa/camera1/camera_info" />
             <remap from="/image" to="/bbot_camera/iiwa/camera1/image_raw" />
             <param name="image_is_rectified" value="True"/>

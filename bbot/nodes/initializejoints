@@ -2,10 +2,13 @@
 
 
 import roslib
-roslib.load_manifest('bbot')
 import rospy
 import actionlib
 import random
+from bbot import BBotDynamixel
+from bbot import BBOTTrajectoryClient
+
+
 
 from control_msgs.msg import (
 	FollowJointTrajectoryAction,
@@ -13,8 +16,10 @@ from control_msgs.msg import (
 	JointTolerance,
 )
 
-from moveit_msgs.msg import RobotState
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
+from moveit_msgs.msg import RobotState
+
+import math
 
 def initializeJoints():
 	client = actionlib.SimpleActionClient('/bbot/PositionJointInterface_trajectory_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
@@ -22,13 +27,13 @@ def initializeJoints():
 	client.wait_for_server()
 	rospy.loginfo("Action client started")
 	bbottraj = JointTrajectory()
-	# bbottraj.joint_trajectory.joint_names = ['1', '2', '3', '4', '5','6', '7']
 	bbottraj.joint_names = ['1', '2', '3', '4', '5','6', '7']
-	# bbottraj.joint_trajectory.points = []
 	bbottraj.points = []
 	
 	zero = 2047
 	opengrip = 2150
+	open_grip_angle = math.pi/180.0*9.0 # degrees
+	close_grip_angle = math.pi/180.0 * 54 # degrees
 	closegrip = 2775
 	rightturn = 4095/4
 	zero = 2047
@@ -36,8 +41,10 @@ def initializeJoints():
 	fortyfivedeg = rightturn/2
 	sixtydeg = 2*rightturn/3
 	jtp = JointTrajectoryPoint()
-	jtp.positions = [zero, zero, zero - rightturn, zero, zero, zero, opengrip]
-	jtp.time_from_start = rospy.Duration.from_sec(1.0)
+	# jtp.positions = [zero, zero, zero - rightturn, zero, zero, zero, opengrip]
+	# jtp.positions = [0.0, -math.pi/4.0, -math.pi/2.0, 0.0, 0.0, 0.0, open_grip_angle]
+	jtp.positions = [0.0, 0, -math.pi/2.0, 0.0, 0.0, 0.0, open_grip_angle]
+	jtp.time_from_start = rospy.Duration.from_sec(3.0)
 	# bbottraj.joint_trajectory.points.append(jtp)
 	bbottraj.points.append(jtp)
 
