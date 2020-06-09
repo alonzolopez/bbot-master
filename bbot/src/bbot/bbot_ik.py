@@ -204,8 +204,8 @@ class bbotAnalysis():
 			else:
 				if verbose == True:
 					print(str(configlist[i]) + " failed equivalence test")
-				solnstemp.append([t1,t2,t3,t4,t5,t6]) #dont forget to remove
-				configstemp.append(configlist[i]) #remove this as well
+				# solnstemp.append([t1,t2,t3,t4,t5,t6]) #dont forget to remove
+				# configstemp.append(configlist[i]) #remove this as well
 
 		self.iksols = np.matrix(solnstemp)
 		self.solnconfigs = np.matrix(configstemp)
