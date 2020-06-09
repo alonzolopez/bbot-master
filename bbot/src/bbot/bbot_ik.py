@@ -30,14 +30,14 @@ class bbotAnalysis():
 		# Joint Limits [rad]
 		self.j1min = math.pi/180.0*(-175.0)
 		self.j1max = math.pi/180.0*(175.0)
-		self.j2min = math.pi/180.0*(-135.0)
-		self.j2max = math.pi/180.0*(135.0)
-		self.j3min = math.pi/180.0*(-135.0)
-		self.j3max = math.pi/180.0*(135.0)
-		self.j4min = math.pi/180.0*(-135.0)
-		self.j4max = math.pi/180.0*(135.0)
-		self.j5min = math.pi/180.0*(-135.0)
-		self.j5max = math.pi/180.0*(135.0)
+		self.j2min = math.pi/180.0*(-95.0)
+		self.j2max = math.pi/180.0*(95.0)
+		self.j3min = math.pi/180.0*(-100.0)
+		self.j3max = math.pi/180.0*(100.0)
+		self.j4min = math.pi/180.0*(-120.0)
+		self.j4max = math.pi/180.0*(120.0)
+		self.j5min = math.pi/180.0*(-35.0)
+		self.j5max = math.pi/180.0*(120.0)
 		self.j6min = math.pi/180.0*(-175.0)
 		self.j6max = math.pi/180.0*(175.0)
 
@@ -166,6 +166,7 @@ class bbotAnalysis():
 
 
 			c3 = (px**2*np.cos(t1)**2 + py**2*np.sin(t1)**2 + pz**2 + 2*px*py*np.cos(t1)*np.sin(t1) - self.a2**2 - self.a3**2)/(2*self.a2*self.a3)
+			print("c3 value: " + str(c3))
 			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1 - c3**2),c3)) # 2 sols for +/- sqrt
 			if t3 > self.j3max or t3 < self.j3min or math.isnan(t3):
 				if verbose == True:
@@ -195,13 +196,16 @@ class bbotAnalysis():
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 4 violated with command " + str(t4))
 				continue
+			# print("FK Sol: " + str(self.FK([t1,t2,t3,t4,t5,t6])))
+			# print("Target Pose: " + str(self.targetPose))
 			if equivalenceCheck(self.FK([t1, t2, t3, t4, t5, t6]),self.targetPose):
 				solnstemp.append([t1,t2,t3,t4,t5,t6])
-				configstemp.append(configlist[i])
-				# print(self.FK([t1,t2,t3,t4,t5,t6]))
+				configstemp.append(configlist[i])	
 			else:
 				if verbose == True:
 					print(str(configlist[i]) + " failed equivalence test")
+				# solnstemp.append([t1,t2,t3,t4,t5,t6]) #dont forget to remove
+				# configstemp.append(configlist[i]) #remove this as well
 
 		self.iksols = np.matrix(solnstemp)
 		self.solnconfigs = np.matrix(configstemp)
@@ -265,19 +269,19 @@ if __name__ == '__main__':
 	ikfk = bbotAnalysis()
 	# t3 = -pi/2
 
-	M = np.matrix([
-		[1,0,0,0.0625],
-		[0,0,1,0.365],
-		[0,-1,0,0.105],
-		[0,0,0,1]
-		])
-
 	# M = np.matrix([
-	# 	[-.7071,0.5,0.5,0.2304],
-	# 	[.7071,0.5,0.5,-0.08775],
-	# 	[0,.7071,-.7071,-0.1108],
+	# 	[1,0,0,0.0625],
+	# 	[0,0,1,0.365],
+	# 	[0,-1,0,0.105],
 	# 	[0,0,0,1]
-	# 	]) # test1
+	# 	])
+
+	M = np.matrix([
+		[-.01629,-.13063,1,.25],
+		[-1,0,-.0165,.20],
+		[0,-1,-.130607,0.0],
+		[0,0,0,1]
+		]) # test1
 
 	print(ikfk.IK(M,verbose = True))
 	# qwer = ikfk.iksols.tolist()

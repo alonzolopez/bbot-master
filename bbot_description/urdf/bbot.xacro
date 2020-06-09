@@ -463,19 +463,19 @@
         <joint name="${robot_name}_joint_gripper_palm_motor7" type="fixed">
             <parent link="${robot_name}_gripper_palm"/>
             <child link="${robot_name}_link_motor7"/>
-            <origin xyz="-0.0305 -0.0065 0.0215" rpy="0 0 0"/>
+            <origin xyz="-0.0155 -0.018 0.0513" rpy="0 0 0"/>
         </joint>
 
         <!-- motor 7 -->
         <link name="${robot_name}_link_motor7">
             <inertial>
-                <origin xyz="0.015 -0.0115 0.0295" rpy="${pi/2} 0 ${pi}"/>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi}"/>
                 <mass value="0.076"/>
                 <inertia ixx="${scaling*0.000022}" ixy="0" ixz="0" iyy="${scaling*0.000014}" iyz="0" izz="${scaling*0.000018}"/>
             </inertial>
 
             <visual>
-                <origin xyz="0.015 -0.0115 0.0295" rpy="${pi/2} 0 ${pi}"/>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi}"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
@@ -483,7 +483,7 @@
             </visual>
 
             <collision>
-                <origin xyz="0.015 -0.0115 0.0295" rpy="${pi/2} 0 ${pi}"/>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi}"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/motor_with_idler.stl" scale="1 1 1"/>
                 </geometry>
@@ -491,11 +491,10 @@
             </collision>
         </link>
 
-        <!-- joint between motor 7 and link_claw1-->
         <joint name="${robot_name}_joint_7" type="revolute">
             <parent link="${robot_name}_link_motor7"/>
             <child link="${robot_name}_link_claw1"/>
-            <origin xyz="0.015 0.009 0.0295" rpy="${-pi/2} 0 0"/>
+            <origin xyz="0 0 0" rpy="${-pi/2} 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
                 effort="${max_effort}" velocity="${max_velocity}" />
@@ -506,16 +505,15 @@
             <dynamics damping="${joint_damping}"/>
         </joint>
 
-        <!-- link_claw1 -->
         <link name="${robot_name}_link_claw1">
             <inertial>
-                <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+                <origin xyz="0 0 0.0205" rpy="0 0 ${pi}"/>
                 <mass value="0.0065"/>
                 <inertia ixx="${scaling*0.000001}" ixy="${scaling*0.000001}" ixz="0" iyy="${scaling*0.000002}" iyz="0" izz="${scaling*0.000003}"/>
             </inertial>
 
             <visual>
-                <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+                <origin xyz="0 0 0.0205" rpy="0 0 ${pi}"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link1_right.stl" scale="1 1 1"/>
                 </geometry>
@@ -523,7 +521,7 @@
             </visual>
 
             <collision>
-                <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
+                <origin xyz="0 0 0.0205" rpy="0 0 ${pi}"/>
                 <geometry>
                     <mesh filename="package://bbot_description/meshes/gripper_link1_right.stl" scale="1 1 1"/>
                 </geometry>
@@ -531,11 +529,10 @@
             </collision>
         </link>
 
-        <!-- joint between link_claw1 and link_claw1_2-->
         <joint name="${robot_name}_joint_claw1_claw1_2" type="revolute">
-            <parent link="${robot_name}_link_claw1"/>
+            <parent link="${robot_name}_link_motor7"/>
             <child link="${robot_name}_link_claw1_2"/>
-            <origin xyz="0.008 -0.024 0" rpy="0 0 0"/>
+            <origin xyz="0.008 0.0205 0.024" rpy="${-pi/2} 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
                 effort="${max_effort}" velocity="${max_velocity}" />
@@ -552,7 +549,6 @@
             mimic_joint="${robot_name}_joint_claw1_claw1_2"
             has_pid="false" multiplier="1.0" max_effort="${max_effort}" />
 
-        <!-- link_claw1_2 -->
         <link name="${robot_name}_link_claw1_2">
             <inertial>
                 <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
@@ -577,32 +573,10 @@
             </collision>
         </link>
 
-        <!-- joint between link_claw1 and link_claw2-->
-        <joint name="${robot_name}_joint_claw1_claw2" type="revolute">
-            <parent link="${robot_name}_link_claw1"/>
-            <child link="${robot_name}_link_claw2"/>
-            <origin xyz="0.03 0 0" rpy="0 0 0"/>
-            <axis xyz="0 0 1"/>
-            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
-                effort="${max_effort}" velocity="${max_velocity}" />
-            <safety_controller soft_lower_limit="${-168 * pi / 180}"
-                     soft_upper_limit="${168 * pi / 180}"
-                     k_position="${safety_controller_k_pos}"
-                     k_velocity="${safety_controller_k_vel}"/> 
-            <dynamics damping="${joint_damping}"/>
-            <mimic joint="${robot_name}_joint_7" multiplier="-1.0" offset = "0.0"/>
-        </joint>
-
-        <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw2"
-            parent_joint="${robot_name}_joint_7" 
-            mimic_joint="${robot_name}_joint_claw1_claw2"
-            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
-
-        <!-- joint between link_claw1 and link_claw1_end-->
         <joint name="${robot_name}_joint_claw1_claw1_end" type="revolute">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw1_end"/>
-            <origin xyz="-0.03858 -0.03487 0" rpy="0 0 0"/>
+            <origin xyz="-0.03858 -0.03858 0.0205" rpy="0 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
                 effort="${max_effort}" velocity="${max_velocity}" />
@@ -611,7 +585,7 @@
                      k_position="${safety_controller_k_pos}"
                      k_velocity="${safety_controller_k_vel}"/> 
             <dynamics damping="${joint_damping}"/>
-            <mimic joint="${robot_name}_joint_7" multiplier="1.0" offset = "0"/>
+            <mimic joint="${robot_name}_joint_7" multiplier="-1.0" offset = "0"/>
         </joint>
 
         <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw1_end"
@@ -619,7 +593,6 @@
             mimic_joint="${robot_name}_joint_claw1_claw1_end"
             has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
 
-        <!-- link_claw1_end -->
         <link name="${robot_name}_link_claw1_end">
             <inertial>
                 <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
@@ -644,7 +617,26 @@
             </collision>
         </link>
 
-        <!-- link_claw2 -->
+        <joint name="${robot_name}_joint_claw1_claw2" type="revolute">
+            <parent link="${robot_name}_link_motor7"/>
+            <child link="${robot_name}_link_claw2"/>
+            <origin xyz="0.03 0.0205 0" rpy="${-pi/2} 0 0"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
+                effort="${max_effort}" velocity="${max_velocity}" />
+            <safety_controller soft_lower_limit="${-168 * pi / 180}"
+                     soft_upper_limit="${168 * pi / 180}"
+                     k_position="${safety_controller_k_pos}"
+                     k_velocity="${safety_controller_k_vel}"/> 
+            <dynamics damping="${joint_damping}"/>
+            <mimic joint="${robot_name}_joint_7" multiplier="-1.0" offset = "0.0"/>
+        </joint>
+
+        <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw2"
+            parent_joint="${robot_name}_joint_7" 
+            mimic_joint="${robot_name}_joint_claw1_claw2"
+            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
+
         <link name="${robot_name}_link_claw2">
             <inertial>
                 <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
@@ -669,11 +661,10 @@
             </collision>
         </link>
 
-        <!-- joint between link_claw2 and link_claw2_2-->
         <joint name="${robot_name}_joint_claw2_claw2_2" type="revolute">
-            <parent link="${robot_name}_link_claw2"/>
+            <parent link="${robot_name}_link_motor7"/>
             <child link="${robot_name}_link_claw2_2"/>
-            <origin xyz="-0.008 -0.024 0" rpy="0 0 0"/>
+            <origin xyz="0.022 .0205 0.024" rpy="${-pi/2} 0 0"/>
             <axis xyz="0 0 1"/>
             <limit lower="${-170 * pi / 180}" upper="${170 * pi / 180}"
                 effort="${max_effort}" velocity="${max_velocity}" />
@@ -690,7 +681,6 @@
             mimic_joint="${robot_name}_joint_claw2_claw2_2"
             has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
 
-        <!-- link_claw2_2 -->
         <link name="${robot_name}_link_claw2_2">
             <inertial>
                 <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
@@ -715,7 +705,6 @@
             </collision>
         </link>
 
-        <!-- joint between link_claw2 and link_claw2_end-->
         <joint name="${robot_name}_joint_claw2_claw2_end" type="revolute">
             <parent link="${robot_name}_link_claw2"/>
             <child link="${robot_name}_link_claw2_end"/>
@@ -736,7 +725,6 @@
             mimic_joint="${robot_name}_joint_claw2_claw2_end"
             has_pid="false" multiplier="1.0" max_effort="${max_effort}" />
 
-        <!-- link_claw2_end -->
         <link name="${robot_name}_link_claw2_end">
             <inertial>
                 <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
@@ -764,7 +752,6 @@
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
         <xacro:bbot_transmission hardware_interface="${hardware_interface}"/>
         
-        <!-- Aruco marker joints and links -->
         <joint name="${robot_name}_joint_baseplate_arucobase" type="fixed">
             <parent link="${robot_name}_link_baseplate"/>
             <child link="${robot_name}_link_arucobase"/>
