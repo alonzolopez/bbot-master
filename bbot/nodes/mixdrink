@@ -21,8 +21,12 @@ from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from geometry_msgs.msg import Pose
 from scipy.spatial.transform import Rotation as R
 
-grip_open_angle = -0.750
-grip_close_angle = 0.155
+# real values
+grip_open_angle = math.pi/180.0*9.0 # degrees
+grip_close_angle = math.pi/180.0 * 65.0 # degrees
+# sim values
+grip_open_angle = -0.7# math.pi/180.0*-9.0 # degrees
+grip_close_angle = 0.1#math.pi/180.0 * 50.0 # degrees
 
 
 ##### Rotation helper functions ######
@@ -371,15 +375,32 @@ def run_cup_2(btj, task_space, bbot):
 	result = btj.sendPositionTrajectory(pos2, 30)
 	rospy.loginfo("Completed. error_code: " + str(result))
 
+def check_IK_2(task_space, bbot):
+	cup2_grip_pose = task_space.TBK # change for cup 2
+	cup_m_dropoff_pose = task_space.TBM
+	default_config = [[-1,-1,-1,1]]
+	dz = cup_m_dropoff_pose[2,3] - cup2_grip_pose[2,3]
+	dump_angle = -3*math.pi/4.0
+	q_d_pre, __ = bbot.IK(add_x(cup2_grip_pose, -0.05), default_config)
+	q_d, __ = bbot.IK(cup2_grip_pose, default_config)
+	q_f, __ = bbot.IK(add_z(cup2_grip_pose, dz), default_config)
+	q_h, __ = bbot.IK(cup_m_dropoff_pose, [[-1,1,-1,1]])
+	if q_d_pre is None:
+		return "q_d_pre invalid"
+	if q_d is None:
+		return "q_d invalid"
+	if q_f is None:
+		return "q_f invalid"
+	if q_h is None:
+		return "q_h invalid"
+	return "good to go"
 
 
 if __name__ == '__main__':
 	try:
 		rospy.init_node('demo_node')
-		btj = BBOTTrajectoryClient()
-		bbot = bbotAnalysis()
 		task_space = MixingTaskStateMachine()
-
+		bbot = bbotAnalysis()
 		
 		# subscribe to all the pose nodes to record where the cups and robot are relative to each other
 		rospy.Subscriber('aruco_1/aruco_double/pose', Pose, cup_1_callback, (task_space)) # sub to cup 1 pose (marker id 99)
@@ -387,13 +408,16 @@ if __name__ == '__main__':
 		rospy.Subscriber('aruco_2/aruco_double/pose', Pose, cup_m_callback, (task_space)) # sub to mixing cup pose (marker id 44)
 		rospy.Subscriber('aruco_2/aruco_double/pose2', Pose, robot_callback, (task_space)) # sub to robot base pose (marker id 26)
 		rospy.sleep(3) # sleep for 3 sec while the aruco poses come in
+		print(check_IK_2(task_space, bbot))
 
+		btj = BBOTTrajectoryClient()
+		
 
 		# grab the first cup, dump it, and return it
-		# run_cup_1(btj, task_space, bbot)
+		run_cup_1(btj, task_space, bbot)
 
 		# grab the second cup, dump it, and return it
-		run_cup_2(btj, task_space, bbot)
+		# run_cup_2(btj, task_space, bbot)
 
 
 	except rospy.ROSInterruptException:

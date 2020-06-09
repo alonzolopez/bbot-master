@@ -33,7 +33,7 @@ def initializeJoints():
 	zero = 2047
 	opengrip = 2150
 	open_grip_angle = math.pi/180.0*9.0 # degrees
-	close_grip_angle = math.pi/180.0 * 54 # degrees
+	close_grip_angle = math.pi/180.0 * 65 # degrees
 	closegrip = 2775
 	rightturn = 4095/4
 	zero = 2047
@@ -43,7 +43,8 @@ def initializeJoints():
 	jtp = JointTrajectoryPoint()
 	# jtp.positions = [zero, zero, zero - rightturn, zero, zero, zero, opengrip]
 	# jtp.positions = [0.0, -math.pi/4.0, -math.pi/2.0, 0.0, 0.0, 0.0, open_grip_angle]
-	jtp.positions = [0.0, 0, -math.pi/2.0, 0.0, 0.0, 0.0, open_grip_angle]
+	# jtp.positions = [0.0, 0, -math.pi/2.0, 0.0, 0.0, 0.0, open_grip_angle]
+	jtp.positions = [0.0, 0, 0.0, 0.0, 0.0, 0.0, open_grip_angle]
 	jtp.time_from_start = rospy.Duration.from_sec(3.0)
 	# bbottraj.joint_trajectory.points.append(jtp)
 	bbottraj.points.append(jtp)
