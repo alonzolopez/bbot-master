@@ -166,6 +166,7 @@ class bbotAnalysis():
 
 
 			c3 = (px**2*np.cos(t1)**2 + py**2*np.sin(t1)**2 + pz**2 + 2*px*py*np.cos(t1)*np.sin(t1) - self.a2**2 - self.a3**2)/(2*self.a2*self.a3)
+			print("c3 value: " + str(c3))
 			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1 - c3**2),c3)) # 2 sols for +/- sqrt
 			if t3 > self.j3max or t3 < self.j3min or math.isnan(t3):
 				if verbose == True:
@@ -265,19 +266,19 @@ if __name__ == '__main__':
 	ikfk = bbotAnalysis()
 	# t3 = -pi/2
 
-	M = np.matrix([
-		[1,0,0,0.0625],
-		[0,0,1,0.365],
-		[0,-1,0,0.105],
-		[0,0,0,1]
-		])
-
 	# M = np.matrix([
-	# 	[-.7071,0.5,0.5,0.2304],
-	# 	[.7071,0.5,0.5,-0.08775],
-	# 	[0,.7071,-.7071,-0.1108],
+	# 	[1,0,0,0.0625],
+	# 	[0,0,1,0.365],
+	# 	[0,-1,0,0.105],
 	# 	[0,0,0,1]
-	# 	]) # test1
+	# 	])
+
+	M = np.matrix([
+		[0,0,1,.257775591],
+		[-1,0,0,-.210662956],
+		[0,-1,0,-0.0207127125],
+		[0,0,0,1]
+		]) # test1
 
 	print(ikfk.IK(M,verbose = True))
 	# qwer = ikfk.iksols.tolist()
