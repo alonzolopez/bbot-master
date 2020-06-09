@@ -135,8 +135,9 @@ class bbotAnalysis():
 				continue
 
 			s5 = np.sin(t1)*r13 - np.cos(t1)*r23
-
+			# print("s5 value: " + str(s5))
 			t5 = wrapAngle(np.arctan2(s5, wrist_yaw*np.sqrt(1 - s5**2))) # 2 sols for +/- sqrt
+			# print("t5 value: " + str(t5))
 			if t5 > self.j5max or t5 < self.j5min or math.isnan(t5):
 				if verbose == True:
 					print(str(configlist[i]) + " failed because Joint 5 violated with command " + str(t5))
@@ -166,7 +167,7 @@ class bbotAnalysis():
 
 
 			c3 = (px**2*np.cos(t1)**2 + py**2*np.sin(t1)**2 + pz**2 + 2*px*py*np.cos(t1)*np.sin(t1) - self.a2**2 - self.a3**2)/(2*self.a2*self.a3)
-			print("c3 value: " + str(c3))
+			# print("c3 value: " + str(c3))
 			t3 = wrapAngle(np.arctan2(elbow*np.sqrt(1 - c3**2),c3)) # 2 sols for +/- sqrt
 			if t3 > self.j3max or t3 < self.j3min or math.isnan(t3):
 				if verbose == True:
@@ -277,9 +278,9 @@ if __name__ == '__main__':
 	# 	])
 
 	M = np.matrix([
-		[-.01629,-.13063,1,.25],
-		[-1,0,-.0165,.20],
-		[0,-1,-.130607,0.0],
+		[0.0,.0271,1,.301],
+		[-1,0,0,.0668],
+		[0,-1,.0272,.223104],
 		[0,0,0,1]
 		]) # test1
 
