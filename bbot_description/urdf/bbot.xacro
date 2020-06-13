@@ -460,14 +460,14 @@
         </link>
 
         <!-- joint between gripper_palm and motor7 -->
-        <joint name="${robot_name}_joint_gripper_palm_motor7" type="fixed">
+        <!-- <joint name="${robot_name}_joint_gripper_palm_motor7" type="fixed">
             <parent link="${robot_name}_gripper_palm"/>
             <child link="${robot_name}_link_motor7"/>
             <origin xyz="-0.0155 -0.018 0.0513" rpy="0 0 0"/>
-        </joint>
+        </joint> -->
 
         <!-- motor 7 -->
-        <link name="${robot_name}_link_motor7">
+        <!-- <link name="${robot_name}_link_motor7">
             <inertial>
                 <origin xyz="0 0 0" rpy="${pi/2} 0 ${pi}"/>
                 <mass value="0.076"/>
@@ -747,7 +747,7 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
         <xacro:bbot_transmission hardware_interface="${hardware_interface}"/>

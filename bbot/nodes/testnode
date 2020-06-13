@@ -24,19 +24,43 @@ if __name__ == '__main__':
 		ikfk = bbotAnalysis()
 		# elements at indices 0-5 inclusive correspond to joint commands
 		# element at index 6 is the time argument for that waypoint
-		M = np.matrix([
-			[0,-1,0,0.0625],
-			[0,0,1,0.2082],
-			[-1,0,0,0.07425],
-			[0,0,0,1]
-			]) # t1 = 90, t2 = -45, t3 = -45, t6 = 90
-		ikfk.IK(M,[[-1,1,-1,1]]) # which configuration to use, so far [-1,1,-1,1] is best
-		jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
-		jtangles[0].append(3.0) #add time arugment at index 6
+		# M = np.matrix([
+		# 	[0,0,1,0.4357],
+		# 	[0,1,0,.1031],
+		# 	[-1,0,0,0.1662],
+		# 	[0,0,0,1]
+		# 	])
+
+		### TESTING IK 
+		# ikfk.IK(M,[[-1,1,-1,1]])
+		# jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
+		# jtangles[0].append(3.0) #add time arugment at index 6
+
 		pos = []
-		pos.append([0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.1])
-		# pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
-		pos.append(jtangles[0])
+
+		### Two different starting configs. 1 for jts 1, 5, 6 and another for jts 2, 3, 4
+		# Joint 1 60 degree turn
+		pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 1.0])
+		pos.append([1.047, 0.0, -1.57, 0.0, 0.0, 0.0, 2.0])
+		# # Joint 2 60 degrees up
+		# pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 1.0])
+		# pos.append([0.0, 1.047, -1.57, 0.0, 0.0, 0.0, 2.0])
+		# # Joint3 60 degrees up
+		# pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 1.0])
+		# pos.append([0.0, 0.0, -1.57+1.047, 0.0, 0.0, 0.0, 2.0])
+		# # Joint 4 60 degrees up
+		# pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 1.0])
+		# pos.append([0.0, 0.0, -1.57, 1.047, 0.0, 0.0, 2.0])
+		# # Joint 5 60 degrees yaw
+		# pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 1.0])
+		# pos.append([0.0, 0.0, -1.57, 0.0, 1.047, 0.0, 2.0])
+		# # Joint 6 60 degrees roll
+		# pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 1.0])
+		# pos.append([0.0, 0.0, -1.57, 0.0, 0.0, -1.047, 2.0])
+
+
+
+		# pos.append(jtangles[0])
 
 		result = btj.sendPositionTrajectory(pos, 30)
 		rospy.loginfo("Completed. error_code: " + str(result))

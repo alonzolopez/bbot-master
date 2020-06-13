@@ -74,7 +74,7 @@
       </actuator>
     </transmission>
 
-    <transmission name="${robot_name}_tran_7">
+    <!-- <transmission name="${robot_name}_tran_7">
       <robotNamespace>/${robot_name}</robotNamespace>
       <type>transmission_interface/SimpleTransmission</type>
       <joint name="${robot_name}_joint_7">
@@ -84,6 +84,6 @@
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
         <mechanicalReduction>1</mechanicalReduction>
       </actuator>
-    </transmission>
+    </transmission> -->
   </xacro:macro>
 </robot>
