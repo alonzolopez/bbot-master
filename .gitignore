@@ -4,3 +4,4 @@
 *.pyc
 bbot/src/bbot/test_interp.py
 bbot/src/bbot/test_math.py
+env*
