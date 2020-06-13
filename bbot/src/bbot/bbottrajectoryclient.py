@@ -33,7 +33,8 @@ class BBOTTrajectoryClient():
 		# Create the goal for the action server
 		self.goal = FollowJointTrajectoryGoal() # initialize the goal
 		self.goal.goal_time_tolerance = rospy.Time.from_sec(1) # set goal time tolerance to 1 second
-		self.joint_names = ["bbot_joint_1", "bbot_joint_2", "bbot_joint_3", "bbot_joint_4", "bbot_joint_5", "bbot_joint_6", "bbot_joint_7"]
+		# self.joint_names = ["bbot_joint_1", "bbot_joint_2", "bbot_joint_3", "bbot_joint_4", "bbot_joint_5", "bbot_joint_6", "bbot_joint_7"]
+		self.joint_names = ["bbot_joint_1", "bbot_joint_2", "bbot_joint_3", "bbot_joint_4", "bbot_joint_5", "bbot_joint_6"]
 		self.j1min = math.pi/180.0*(-170.0) # radians
 		self.j1max = math.pi/180.0*(170.0) # radians
 		self.j2min = math.pi/180.0*(-120.0) # radians
@@ -46,8 +47,8 @@ class BBOTTrajectoryClient():
 		self.j5max = math.pi/180.0*(170.0) # radians
 		self.j6min = math.pi/180.0*(-120.0) # radians
 		self.j6max = math.pi/180.0*(120.0) # radians
-		self.j7min = math.pi/180.0*(-175.0) # radians
-		self.j7max = math.pi/180.0*(175.0) # radians
+		# self.j7min = math.pi/180.0*(-175.0) # radians
+		# self.j7max = math.pi/180.0*(175.0) # radians
 	def stop(self):
 		self.client.cancel_goal()
 

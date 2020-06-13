@@ -434,7 +434,7 @@
             <origin xyz="0 0 0.015" rpy="0 0 0"/>
         </joint>
 
-       <!-- link gripper_palm -->
+        <!-- link gripper_palm -->
         <link name="${robot_name}_gripper_palm">
             <inertial>
                 <origin xyz="0 0.0175 0.008" rpy="${pi} 0 ${0.0}"/>
@@ -460,14 +460,14 @@
         </link>
 
         <!-- joint between gripper_palm and motor7 -->
-        <joint name="${robot_name}_joint_gripper_palm_motor7" type="fixed">
+        <!-- <joint name="${robot_name}_joint_gripper_palm_motor7" type="fixed">
             <parent link="${robot_name}_gripper_palm"/>
             <child link="${robot_name}_link_motor7"/>
             <origin xyz="-0.0305 -0.0065 0.0215" rpy="0 0 0"/>
-        </joint>
+        </joint> -->
 
         <!-- motor 7 -->
-        <link name="${robot_name}_link_motor7">
+        <!-- <link name="${robot_name}_link_motor7">
             <inertial>
                 <origin xyz="0.015 -0.0115 0.0295" rpy="${pi/2} 0 ${pi}"/>
                 <mass value="0.076"/>
@@ -489,10 +489,10 @@
                 </geometry>
                 <material name="Black"/>
             </collision>
-        </link>
+        </link> -->
 
         <!-- joint between motor 7 and link_claw1-->
-        <joint name="${robot_name}_joint_7" type="revolute">
+        <!-- <joint name="${robot_name}_joint_7" type="revolute">
             <parent link="${robot_name}_link_motor7"/>
             <child link="${robot_name}_link_claw1"/>
             <origin xyz="0.015 0.009 0.0295" rpy="${-pi/2} 0 0"/>
@@ -504,10 +504,10 @@
                      k_position="${safety_controller_k_pos}"
                      k_velocity="${safety_controller_k_vel}"/> 
             <dynamics damping="${joint_damping}"/>
-        </joint>
+        </joint> -->
 
         <!-- link_claw1 -->
-        <link name="${robot_name}_link_claw1">
+        <!-- <link name="${robot_name}_link_claw1">
             <inertial>
                 <origin xyz="0 0 0" rpy="0 0 ${pi}"/>
                 <mass value="0.0065"/>
@@ -529,10 +529,10 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <!-- joint between link_claw1 and link_claw1_2-->
-        <joint name="${robot_name}_joint_claw1_claw1_2" type="revolute">
+        <!-- <joint name="${robot_name}_joint_claw1_claw1_2" type="revolute">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw1_2"/>
             <origin xyz="0.008 -0.024 0" rpy="0 0 0"/>
@@ -550,10 +550,10 @@
         <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw1_2"
             parent_joint="${robot_name}_joint_7" 
             mimic_joint="${robot_name}_joint_claw1_claw1_2"
-            has_pid="false" multiplier="1.0" max_effort="${max_effort}" />
+            has_pid="false" multiplier="1.0" max_effort="${max_effort}" /> -->
 
         <!-- link_claw1_2 -->
-        <link name="${robot_name}_link_claw1_2">
+        <!-- <link name="${robot_name}_link_claw1_2">
             <inertial>
                 <origin xyz="-0.01839 -0.01693 0.005" rpy="${-pi/2} 0 -2.3057"/>
                 <mass value=".00455"/>
@@ -575,10 +575,10 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <!-- joint between link_claw1 and link_claw2-->
-        <joint name="${robot_name}_joint_claw1_claw2" type="revolute">
+        <!-- <joint name="${robot_name}_joint_claw1_claw2" type="revolute">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw2"/>
             <origin xyz="0.03 0 0" rpy="0 0 0"/>
@@ -597,9 +597,9 @@
             parent_joint="${robot_name}_joint_7" 
             mimic_joint="${robot_name}_joint_claw1_claw2"
             has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
-
+ -->
         <!-- joint between link_claw1 and link_claw1_end-->
-        <joint name="${robot_name}_joint_claw1_claw1_end" type="revolute">
+        <!-- <joint name="${robot_name}_joint_claw1_claw1_end" type="revolute">
             <parent link="${robot_name}_link_claw1"/>
             <child link="${robot_name}_link_claw1_end"/>
             <origin xyz="-0.03858 -0.03487 0" rpy="0 0 0"/>
@@ -617,10 +617,10 @@
         <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw1_claw1_end"
             parent_joint="${robot_name}_joint_7" 
             mimic_joint="${robot_name}_joint_claw1_claw1_end"
-            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
+            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" /> -->
 
         <!-- link_claw1_end -->
-        <link name="${robot_name}_link_claw1_end">
+        <!-- <link name="${robot_name}_link_claw1_end">
             <inertial>
                 <origin xyz="0.01175 -0.0276 -0.005" rpy="${pi/2} 0 1.903"/>
                 <mass value="0.006"/>
@@ -642,10 +642,10 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <!-- link_claw2 -->
-        <link name="${robot_name}_link_claw2">
+        <!-- <link name="${robot_name}_link_claw2">
             <inertial>
                 <origin xyz="0 0 0.005" rpy="0 ${pi} 3.307"/>
                 <mass value=".0066"/>
@@ -667,10 +667,10 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <!-- joint between link_claw2 and link_claw2_2-->
-        <joint name="${robot_name}_joint_claw2_claw2_2" type="revolute">
+        <!-- <joint name="${robot_name}_joint_claw2_claw2_2" type="revolute">
             <parent link="${robot_name}_link_claw2"/>
             <child link="${robot_name}_link_claw2_2"/>
             <origin xyz="-0.008 -0.024 0" rpy="0 0 0"/>
@@ -688,10 +688,10 @@
         <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw2_claw2_2"
             parent_joint="${robot_name}_joint_7" 
             mimic_joint="${robot_name}_joint_claw2_claw2_2"
-            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" />
+            has_pid="false" multiplier="-1.0" max_effort="${max_effort}" /> -->
 
         <!-- link_claw2_2 -->
-        <link name="${robot_name}_link_claw2_2">
+        <!-- <link name="${robot_name}_link_claw2_2">
             <inertial>
                 <origin xyz="0.01699 -0.01834 0.005" rpy="${pi/2} ${pi} 2.3057"/>
                 <mass value=".00455"/>
@@ -713,10 +713,10 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <!-- joint between link_claw2 and link_claw2_end-->
-        <joint name="${robot_name}_joint_claw2_claw2_end" type="revolute">
+        <!-- <joint name="${robot_name}_joint_claw2_claw2_end" type="revolute">
             <parent link="${robot_name}_link_claw2"/>
             <child link="${robot_name}_link_claw2_end"/>
             <origin xyz="0.03581 -0.0377 0" rpy="0 0 0"/>
@@ -734,10 +734,10 @@
         <xacro:mimic_joint_plugin_gazebo name_prefix="${robot_name}_joint_claw2_claw2_end"
             parent_joint="${robot_name}_joint_7" 
             mimic_joint="${robot_name}_joint_claw2_claw2_end"
-            has_pid="false" multiplier="1.0" max_effort="${max_effort}" />
+            has_pid="false" multiplier="1.0" max_effort="${max_effort}" /> -->
 
         <!-- link_claw2_end -->
-        <link name="${robot_name}_link_claw2_end">
+        <!-- <link name="${robot_name}_link_claw2_end">
             <inertial>
                 <origin xyz="-0.01181 -0.02758 0" rpy="${pi/2} ${pi} -1.903"/>
                 <mass value="0.006"/>
@@ -759,7 +759,7 @@
                 </geometry>
                 <material name="Orange"/>
             </collision>
-        </link>
+        </link> -->
 
         <xacro:bbot_gazebo robot_name="${robot_name}"/>
         <xacro:bbot_transmission hardware_interface="${hardware_interface}"/>

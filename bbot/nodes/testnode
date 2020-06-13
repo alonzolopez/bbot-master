@@ -24,20 +24,22 @@ if __name__ == '__main__':
 		ikfk = bbotAnalysis()
 		# elements at indices 0-5 inclusive correspond to joint commands
 		# element at index 6 is the time argument for that waypoint
-		M = np.matrix([
-			[0,0,1,0.4357],
-			[0,1,0,.1031],
-			[-1,0,0,0.1662],
-			[0,0,0,1]
-			])
+		# M = np.matrix([
+		# 	[0,0,1,0.4357],
+		# 	[0,1,0,.1031],
+		# 	[-1,0,0,0.1662],
+		# 	[0,0,0,1]
+		# 	])
 
-		ikfk.IK(M,[[-1,1,-1,1]])
-		jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
-		jtangles[0].append(3.0) #add time arugment at index 6
+		### TESTING IK 
+		# ikfk.IK(M,[[-1,1,-1,1]])
+		# jtangles = ikfk.iksols.tolist() #puts IK solution into list indices 0-5
+		# jtangles[0].append(3.0) #add time arugment at index 6
+
 		pos = []
-		pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 0.0, 0.1])
-		# pos.append([0.0, 0.0, -1.517, 0.0, 0.0, 0.0, 1.0, 3.0])
-		pos.append(jtangles[0])
+		pos.append([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 0.1])
+		pos.append([1.57, 0.0, -1.57, 0.0, 0.0, 0.0, 3.0])
+		# pos.append(jtangles[0])
 
 		result = btj.sendPositionTrajectory(pos, 30)
 		rospy.loginfo("Completed. error_code: " + str(result))

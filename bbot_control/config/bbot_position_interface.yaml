@@ -6,4 +6,4 @@ gazebo_ros_control:
     bbot_joint_4: {p: 8.0, i: 0.0, d: 0.1}
     bbot_joint_5: {p: 2.5, i: 0.0, d: 0.0}
     bbot_joint_6: {p: 1.0, i: 0.0, d: 0.2}
-    bbot_joint_7: {p: 1.0, i: 0.0, d: 0.0} 
+    # bbot_joint_7: {p: 1.0, i: 0.0, d: 0.0} 
