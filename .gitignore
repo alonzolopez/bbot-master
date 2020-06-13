@@ -1,0 +1,4 @@
+*.pyc
+*.blend
+*test_interp.py
+*test_math.py
