@@ -276,19 +276,17 @@ if __name__ == '__main__':
 	# 	[0,-1,0,0.105],
 	# 	[0,0,0,1]
 	# 	])
-
+	
 	M = np.matrix([
-		[0,0,1,.32],
-		[-1,0,0,.1],
-		[0,-1,0,.22],
+		[0,0,1,.38],
+		[-1,0,0,-.1],
+		[0,-1,0,.07],
 		[0,0,0,1]
-		]) # test1
+		]) # cup1 Dpre
 
-	print(ikfk.IK(M,[[-1,1,-1,1]],verbose = True))
+	print(ikfk.IK(M,verbose = True))
 	print([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 2.0])
-	posB = [0.0, 0.0, -1.57, 0.0, 0.0, 0.0] #initial position
-
-	print(posB + [3.0])
+	
 	# print(posB.extend(1.0))
 
 	# qwer = ikfk.iksols.tolist()
