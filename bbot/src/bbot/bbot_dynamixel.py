@@ -71,6 +71,14 @@ class BBotDynamixel(object):
 		self.velocityprofile = [30] * 7 # [1000, 1000, 1000, 1000, 1000, 1000, 1000] # units: ms. These vals correspond to time-based profiles
 		self.accelprofile = [1] * 7
 		self.drive_modes = [4, 4, 4, 4, 4, 4, 4] # 1 = velocity-based profilew/reverse enabled, 4 = time-based with reverse disabled 5 = time-based profile w/reverse enabled
+		self.pid_gains = [
+		[850, 0, 0],
+		[850, 0, 0],
+		[850, 0, 0],
+		[850, 0, 0],
+		[850, 0, 0],
+		[850, 0, 0]
+		]
 
 		self.statepub = rospy.Publisher('/bbot/jointStates', RobotState, queue_size = 1)		# initialize state publisher
 		# self.rospy.init_node('bbotdynamixel', anonymous = True)
@@ -148,11 +156,20 @@ class BBotDynamixel(object):
 			rospy.loginfo("Failed to change the baudrate")
 			quit()
 		# self.setExtendedPositionControl(self.idlist[0])	# set motor 1 to extended position control
+
+		# set the Drive Mode to time-based or velocity-based profiles
 		self.setDriveMode()
 		rospy.loginfo("Drive mode: " + str(self.readDriveMode()))
+
+		# run the setup
 		self.setup()
-		rospy.loginfo("PID gains: " + str(self.readGains()))
-		
+
+		# set PID gains
+		rospy.loginfo("PID gains before setting: " + str(self.readGains()))
+		self.setGains(self.pid_gains)
+		rospy.loginfo("PID gains after setting: " + str(self.readGains()))
+
+		# set vel limits and read back limits and profile accel/vel
 		self.velocitylimits = self.readVelocityLimits() # motors come with max velocity 230 on a scale [0, 1023]
 		rospy.loginfo("Velocity Limits: " + str(self.velocitylimits))
 		rospy.loginfo("Goal Velocities: " + str(self.readGoalVelocity()))
@@ -163,13 +180,36 @@ class BBotDynamixel(object):
 		# rospy.loginfo("Profile Velocities: " + str(self.readProfileVelocity()))
 		# rospy.loginfo("Profile Acclerations: " + str(self.readProfileAcceleration()))
 
+
 		self.state = RobotState()	# initialize the state variable as RobotState msg type
 		self.updateStateFeedback()	# reads the present motor positions and publishes them
 		
-		
-		# self.statepubperiod = 10
+		# state pub when action server is idle (not fielding trajs)		
 		rospy.Timer(rospy.Duration(0.5), self.timercallback)
 		rospy.loginfo("Robot successfully created")
+
+	def setGains(self, gains):
+		for motor_id in range(len(self.idlist)):
+			dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.idlist[motor_id], self.ADDR_P_GAIN, gains[motor_id][0])
+			if dxl_comm_result != COMM_SUCCESS:
+				print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+			elif dxl_error != 0:
+				print("%s" % self.packetHandler.getRxPacketError(dxl_error))
+
+			dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.idlist[motor_id], self.ADDR_I_GAIN, gains[motor_id][1])
+			if dxl_comm_result != COMM_SUCCESS:
+				print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+			elif dxl_error != 0:
+				print("%s" % self.packetHandler.getRxPacketError(dxl_error))
+
+			dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.idlist[motor_id], self.ADDR_D_GAIN, gains[motor_id][2])
+			if dxl_comm_result != COMM_SUCCESS:
+				print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+			elif dxl_error != 0:
+				print("%s" % self.packetHandler.getRxPacketError(dxl_error))
+		print("Gains successfully set to \n" + str(gains))
+
+
 
 	def readGains(self):
 		gains = []
@@ -588,11 +628,11 @@ class BBotDynamixel(object):
 			
 
 			while (now - start_time) < (duration - prev_duration):
-				print("updating")
-				print(now)
-				print(start_time)
-				print(duration)
-				print(prev_duration)
+				# print("updating")
+				# print(now)
+				# print(start_time)
+				# print(duration)
+				# print(prev_duration)
 				self.feedback.feedback.header.stamp = rospy.get_rostime()
 				self.feedback.feedback.actual.positions, self.feedback.feedback.desired.positions = self.updateStateFeedback()
 				# rospy.loginfo(str(self.feedback.currentpos.joint_state.position))
