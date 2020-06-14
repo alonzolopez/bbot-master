@@ -42,14 +42,14 @@ if __name__ == '__main__':
 
 		### Two different starting configs. 1 for jts 1, 5, 6 and another for jts 2, 3, 4
 		# Joint 1 60 degree turn
-		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 2.0])
-		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
-		# pos.append([angle, 0.0, -ninety, 0.0, 0.0, 0.0, 21.0])
-		# pos.append([angle, 0.0, -ninety, 0.0, 0.0, 0.0, 30.0])
+		pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 2.0])
+		pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
+		pos.append([angle, 0.0, -ninety, 0.0, 0.0, 0.0, 21.0])
+		pos.append([angle, 0.0, -ninety, 0.0, 0.0, 0.0, 30.0])
 
 		# # Joint 2 60 degrees up
 		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 2.0])
-		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
+			# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
 		# pos.append([0.0, angle, -ninety, 0.0, 0.0, 0.0, 21.0])
 		# pos.append([0.0, angle, -ninety, 0.0, 0.0, 0.0, 30.0])
 
@@ -72,10 +72,10 @@ if __name__ == '__main__':
 		# pos.append([0.0, 0.0, -ninety, 0.0, angle, 0.0, 30.0])
 
 		# # Joint 6 60 degrees roll
-		pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 2.0])
-		pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
-		pos.append([0.0, 0.0, -ninety, 0.0, 0.0, -angle, 21.0])
-		pos.append([0.0, 0.0, -ninety, 0.0, 0.0, -angle, 30.0])
+		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 2.0])
+		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
+		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, -angle, 21.0])
+		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, -angle, 30.0])
 
 
 

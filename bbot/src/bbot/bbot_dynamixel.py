@@ -86,6 +86,10 @@ class BBotDynamixel(object):
 		self.ADDR_VELOCITY_LIMIT		= 44
 		self.ADDR_PROFILE_VELOCITY 		= 112
 		self.ADDR_PROFILE_ACCELERATION 	= 108
+		self.ADDR_P_GAIN = 84
+		self.ADDR_I_GAIN = 82
+		self.ADDR_D_GAIN = 80
+		self.ADDR_POS_TRAJ = 140
 
 
 		# Data Byte Length
@@ -93,11 +97,12 @@ class BBotDynamixel(object):
 		self.LEN_PRO_PRESENT_POSITION    = 4
 		self.LEN_PROFILE_VELOCITY		= 4
 		self.LEN_PROFILE_ACCELERATION		= 4
+		self.LEN_POS_TRAJ		= 4
 
 		# Protocol version
 		self.PROTOCOL_VERSION            = 2.0				# See which protocol version is used in the Dynamixel
 
-		self.idlist = [1, 2, 3, 4, 5, 6, 7]					# list of motor ids. must represent current motors connected for script to work
+		self.idlist = [1, 2, 3, 4, 5, 6] #, 7]					# list of motor ids. must represent current motors connected for script to work
 
 		self.BAUDRATE                    = 57600			# Dynamixel default baudrate : 57600
 		self.DEVICENAME                  = '/dev/ttyUSB0'	# Check which port is being used on your controller
@@ -127,6 +132,7 @@ class BBotDynamixel(object):
 		self.groupSyncWriteAccelVel = GroupSyncWrite(self.portHandler, self.packetHandler, self.ADDR_PROFILE_ACCELERATION, self.LEN_PROFILE_ACCELERATION)
 		# Initialize GroupSyncRead instace for Present Position
 		self.groupSyncRead = GroupSyncRead(self.portHandler, self.packetHandler, self.ADDR_PRO_PRESENT_POSITION, self.LEN_PRO_PRESENT_POSITION)
+		self.groupSyncReadTraj = GroupSyncRead(self.portHandler, self.packetHandler, self.ADDR_POS_TRAJ, self.LEN_POS_TRAJ)
 
 		# Open port
 		if self.portHandler.openPort():
@@ -145,6 +151,7 @@ class BBotDynamixel(object):
 		self.setDriveMode()
 		rospy.loginfo("Drive mode: " + str(self.readDriveMode()))
 		self.setup()
+		rospy.loginfo("PID gains: " + str(self.readGains()))
 		
 		self.velocitylimits = self.readVelocityLimits() # motors come with max velocity 230 on a scale [0, 1023]
 		rospy.loginfo("Velocity Limits: " + str(self.velocitylimits))
@@ -163,6 +170,38 @@ class BBotDynamixel(object):
 		# self.statepubperiod = 10
 		rospy.Timer(rospy.Duration(0.5), self.timercallback)
 		rospy.loginfo("Robot successfully created")
+
+	def readGains(self):
+		gains = []
+		for motor_id in range(len(self.idlist)):
+			m_gains = []
+			dxl_p_gain, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, self.idlist[motor_id], self.ADDR_P_GAIN)
+			if dxl_comm_result != COMM_SUCCESS:
+				print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+			elif dxl_error != 0:
+				print("%s" % self.packetHandler.getRxPacketError(dxl_error))
+			else:
+				m_gains.append(dxl_p_gain)
+
+			dxl_i_gain, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, self.idlist[motor_id], self.ADDR_I_GAIN)
+			if dxl_comm_result != COMM_SUCCESS:
+				print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+			elif dxl_error != 0:
+				print("%s" % self.packetHandler.getRxPacketError(dxl_error))
+			else:
+				m_gains.append(dxl_i_gain)
+
+			dxl_d_gain, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, self.idlist[motor_id], self.ADDR_D_GAIN)
+			if dxl_comm_result != COMM_SUCCESS:
+				print("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
+			elif dxl_error != 0:
+				print("%s" % self.packetHandler.getRxPacketError(dxl_error))
+			else:
+				m_gains.append(dxl_d_gain)
+
+			gains.append(m_gains)
+
+		return gains
 
 	def readDriveMode(self):
 		drive_modes = []
@@ -312,6 +351,14 @@ class BBotDynamixel(object):
 				rospy.loginfo("[ID:%03d] groupSyncRead addparam failed" % motorid)
 				quit()
 
+	def readAddParamListTraj(self, motorids):
+		# Add parameter storage for each DXL_ID trajectory value
+		for motorid in motorids:
+			dxl_addparam_result = self.groupSyncReadTraj.addParam(motorid)
+			if dxl_addparam_result != True:
+				rospy.loginfo("[ID:%03d] groupSyncReadTraj addparam failed" % motorid)
+				quit()
+
 	def writeAddParamListAccelVel(self, motorids, param_goal_accel_list):
 		for index in range(len(motorids)):
 			dxl_addparam_result = self.groupSyncWriteAccelVel.addParam(motorids[index], param_goal_accel_list[index])
@@ -348,6 +395,14 @@ class BBotDynamixel(object):
 				rospy.loginfo("[ID:%03d] groupSyncRead getdata failed" % motorid)
 				quit()
 
+	def readIsAvailableTraj(self, motorids):
+		# Check if groupsyncread data of Dynamixels is available
+		for motorid in motorids:
+			dxl_getdata_result = self.groupSyncReadTraj.isAvailable(motorid, self.ADDR_POS_TRAJ, self.LEN_POS_TRAJ)
+			if dxl_getdata_result != True:
+				rospy.loginfo("[ID:%03d] groupSyncReadTraj getdata failed" % motorid)
+				quit()
+
 	def updateStateFeedback(self):
 		# Syncread present position
 		dxl_comm_result = self.groupSyncRead.txRxPacket()
@@ -357,12 +412,25 @@ class BBotDynamixel(object):
 			rospy.loginfo("%s" % self.packetHandler.getTxRxResult(dxl_comm_result))
 			dxl_comm_result = self.groupSyncRead.txRxPacket()
 			# quit()
+		dxl_comm_result_traj = self.groupSyncReadTraj.txRxPacket()
+		# rospy.loginfo("syncread present pos succeeded")
+		# rospy.loginfo("dxl_comm_result: " + str(dxl_comm_result))
+		while dxl_comm_result_traj != COMM_SUCCESS:
+			rospy.loginfo("%s" % self.packetHandler.getTxRxResult(dxl_comm_result_traj))
+			dxl_comm_result_traj = self.groupSyncReadTraj.txRxPacket()
+			# quit()
 
 		# Check if groupsyncread data of Dynamixels is available
 		self.readIsAvailable(self.idlist)
+		self.readIsAvailableTraj(self.idlist)
 		pos_list = []
+		traj_list = []
 		for motorid in self.idlist:
-			pos_list.append(self.groupSyncRead.getData(motorid, self.ADDR_PRO_PRESENT_POSITION, self.LEN_PRO_PRESENT_POSITION))
+			motorreading = self.groupSyncRead.getData(motorid, self.ADDR_PRO_PRESENT_POSITION, self.LEN_PRO_PRESENT_POSITION)
+			pos_list.append(float(motorreading)/4096.0*360.0-180.0)
+			trajreading = self.groupSyncReadTraj.getData(motorid, self.ADDR_POS_TRAJ, self.LEN_POS_TRAJ)
+			traj_list.append(float(trajreading)/4096.0*360.0-180.0)
+			# print("trajreading: " + str(float(trajreading)/4096.0*360.0-180.0))
 
 		self.state.joint_state.position = pos_list
 		self.state.joint_state.header.stamp = rospy.Time.now()
@@ -370,7 +438,7 @@ class BBotDynamixel(object):
 		self.statepub.publish(self.state)
 		rospy.loginfo("motor states updated")
 		# rospy.loginfo(pos_list)
-		return pos_list
+		return pos_list, traj_list;
 
 	def listIntToByteArr(self, goal_pos_list):
 		param_goal_positions = []
@@ -458,10 +526,12 @@ class BBotDynamixel(object):
 		self.enabletorque(self.idlist)
 		# Add parameter storage for each DXL_ID present position value
 		self.readAddParamList(self.idlist)
+		self.readAddParamListTraj(self.idlist)
 
 	def shutdownMotors(self):
 		# Clear syncread parameter storage
 		self.groupSyncRead.clearParam()
+		self.groupSyncReadTraj.clearParam()
 		# disable torque for each motor
 		self.disabletorque(self.idlist)
 		# Close port
@@ -484,6 +554,7 @@ class BBotDynamixel(object):
 		self.actionlock = True
 		success = True
 		prev_time = 0
+		prev_duration = 0.0
 		for waypoint in goal.trajectory.points:
 			# iterates over the JointTrajectoryPoint objects
 			# for now just rospy.loginfo the waypoint, then sleep the duration attached to the waypoint
@@ -496,18 +567,42 @@ class BBotDynamixel(object):
 			# act on the waypoint
 			positions_motor_cmd = self.angles_to_bits(waypoint.positions)
 			rospy.loginfo(positions_motor_cmd)
-			time_allotted = int(waypoint.time_from_start.to_sec()*1000) - prev_time # units: ms, type: int
-			prev_time = time_allotted
+
+			# update time info
+			duration = waypoint.time_from_start.to_sec()
+			time_allotted = int(duration*1000) - int(prev_duration*1000) # units: ms, type: int
 			accel_time = time_allotted/4
+			now_split = rospy.get_rostime()
+			now = float(now_split.secs) + float(now_split.nsecs)/10.0**9
+			start_time = now
+
+			print("duration: " + str(duration))
+			print("now: " + str(now))
+			print("start_time: " + str(start_time))
 			# set the motor positions based on the joint commands and time arg
 			self.setGoalPos(positions_motor_cmd, time_allotted, accel_time)
 			rospy.loginfo("time alloted = " + str(time_allotted))
+
 			# update state feedback and publish current pos
 			# self.feedback.currentpos.joint_state.position = self.updateStateFeedback()
-			self.feedback.feedback.actual.positions = self.updateStateFeedback()
-			# rospy.loginfo(str(self.feedback.currentpos.joint_state.position))
-			self.server.publish_feedback(self.feedback.feedback)
-			rospy.sleep(waypoint.time_from_start) # sleeps for duration attached to the waypoint
+			
+
+			while (now - start_time) < (duration - prev_duration):
+				print("updating")
+				print(now)
+				print(start_time)
+				print(duration)
+				print(prev_duration)
+				self.feedback.feedback.header.stamp = rospy.get_rostime()
+				self.feedback.feedback.actual.positions, self.feedback.feedback.desired.positions = self.updateStateFeedback()
+				# rospy.loginfo(str(self.feedback.currentpos.joint_state.position))
+				self.server.publish_feedback(self.feedback.feedback)
+				rospy.sleep(0.01)
+				now_split = rospy.get_rostime()
+				now = float(now_split.secs) + float(now_split.nsecs)/10.0**9
+			prev_duration = duration
+
+			# rospy.sleep(waypoint.time_from_start) # sleeps for duration attached to the waypoint
 		if success:
 			# self.result.complete = True
 			self.result.result.error_code = self.result.result.SUCCESSFUL
@@ -526,6 +621,9 @@ class BBotDynamixel(object):
 	def timercallback(self, event=None):
 		if self.actionlock == False:
 			self.updateStateFeedback()
+			now_split = rospy.get_rostime()
+			now = float(now_split.secs) + float(now_split.nsecs)/10.0**9
+			rospy.loginfo("now: " + str(now))
 
 
 if __name__=='__main__':
