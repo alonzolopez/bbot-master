@@ -161,7 +161,7 @@ class BBOTTrajectoryClient():
 
 		# the joints are all currently set to a uniform tolerance
 		tol = JointTolerance()
-		tol.position = -1 # rad for revolute, m for prismatic
+		tol.position = 0.02 # rad for revolute, m for prismatic
 		for j in bbottraj.joint_names:
 			self.goal.path_tolerance.append(tol)
 			self.goal.goal_tolerance.append(tol)
