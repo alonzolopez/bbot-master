@@ -10,7 +10,7 @@
       </joint>
       <actuator name="${robot_name}_motor_1">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission>
 
@@ -22,7 +22,7 @@
       </joint>
       <actuator name="${robot_name}_motor_2">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission>
 
@@ -34,7 +34,7 @@
       </joint>
       <actuator name="${robot_name}_motor_3">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission>
 
@@ -46,7 +46,7 @@
       </joint>
       <actuator name="${robot_name}_motor_4">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission>
 
@@ -58,7 +58,7 @@
       </joint>
       <actuator name="${robot_name}_motor_5">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission>
 
@@ -70,7 +70,7 @@
       </joint>
       <actuator name="${robot_name}_motor_6">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission>
 
@@ -82,7 +82,7 @@
       </joint>
       <actuator name="${robot_name}_motor_7">
         <hardwareInterface>hardware_interface/${hardware_interface}</hardwareInterface>
-        <mechanicalReduction>1</mechanicalReduction>
+        <mechanicalReduction>193</mechanicalReduction>
       </actuator>
     </transmission> -->
   </xacro:macro>

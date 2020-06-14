@@ -278,13 +278,19 @@ if __name__ == '__main__':
 	# 	])
 
 	M = np.matrix([
-		[0.0,.0271,1,.301],
-		[-1,0,0,.0668],
-		[0,-1,.0272,.223104],
+		[0,0,1,.32],
+		[-1,0,0,.1],
+		[0,-1,0,.22],
 		[0,0,0,1]
 		]) # test1
 
-	print(ikfk.IK(M,verbose = True))
+	print(ikfk.IK(M,[[-1,1,-1,1]],verbose = True))
+	print([0.0, 0.0, -1.57, 0.0, 0.0, 0.0, 2.0])
+	posB = [0.0, 0.0, -1.57, 0.0, 0.0, 0.0] #initial position
+
+	print(posB + [3.0])
+	# print(posB.extend(1.0))
+
 	# qwer = ikfk.iksols.tolist()
 	# qwer[0].append(3.0)
 	# print(qwer[0])

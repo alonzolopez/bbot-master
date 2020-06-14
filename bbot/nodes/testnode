@@ -47,6 +47,7 @@ if __name__ == '__main__':
 		pos.append([angle, 0.0, -ninety, 0.0, 0.0, 0.0, 21.0])
 		pos.append([angle, 0.0, -ninety, 0.0, 0.0, 0.0, 30.0])
 
+
 		# # Joint 2 60 degrees up
 		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 2.0])
 			# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, 0.0, 20.0])
@@ -77,11 +78,30 @@ if __name__ == '__main__':
 		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, -angle, 21.0])
 		# pos.append([0.0, 0.0, -ninety, 0.0, 0.0, -angle, 30.0])
 
+		#### Full trajectory
+		# posB = [0.0, 0.0, -1.57, 0.0, 0.0, 0.0] #initial position
+		# posC = [-0.20312473, -0.68947868, -0.52251674, -0.35880092, -0.20312473, 0.0] #above cup1
+		# posDpre = [-0.27235946, -1.16208201, -1.58409576,  1.17538145, -0.27235946, 0.0] #pre cup 1 (x offset)
+		# posD = [-0.20312473, -1.39509709, -1.0213237, 0.84562446, -0.20312473, 0.0] #at cup 1
+		# posH = [1.44449097,  0.21886201, -1.59762382, -0.19203451, 1.44449097, 0.0] #mixing cup location
+		# posI = [1.44449097,  0.21886201, -1.59762382, -0.19203451, 1.44449097, 1.57] #dump over mix cup
 
+		# pos.append(posB + [5.0])
+		# pos.append(posC + [10.0])
+		# pos.append(posDpre + [15.0])
+		# pos.append(posD + [20.0])
+		# pos.append(posC + [25.0])
+		# pos.append(posH + [30.0])
+		# pos.append(posI + [35.0])
+		# pos.append(posH + [40.0])
+		# pos.append(posC + [45.0])
+		# pos.append(posD + [50.0])
+		# pos.append(posDpre + [55.0])
+		# pos.append(posB + [60.0])
 
 		# pos.append(jtangles[0])
 
-		result = btj.sendPositionTrajectory(pos, 30)
+		result = btj.sendPositionTrajectory(pos, 60)
 		rospy.loginfo("Completed. error_code: " + str(result))
 	except rospy.ROSInterruptException:
 		rospy.loginfo("program interrupted before completion")
