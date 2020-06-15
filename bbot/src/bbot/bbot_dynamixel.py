@@ -73,8 +73,8 @@ class BBotDynamixel(object):
 		self.drive_modes = [4, 4, 4, 4, 4, 4, 4] # 1 = velocity-based profilew/reverse enabled, 4 = time-based with reverse disabled 5 = time-based profile w/reverse enabled
 		self.pid_gains = [
 		[850, 0, 0],
-		[850, 0, 0],
-		[850, 0, 0],
+		[2000, 500, 0],
+		[850, 50, 0],
 		[850, 0, 0],
 		[850, 0, 0],
 		[850, 0, 0]
